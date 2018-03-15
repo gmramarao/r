@@ -1,0 +1,61 @@
+.main-container{
+  position: relative;
+  display: block;
+  min-height: 100vh;
+  max-height: auto;
+  height: auto;
+  width: 100%;
+}
+.edits-divs{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.edits-div{
+  flex-basis: 0;
+  flex-grow: 1;
+}
+.edits-btns{
+  height: 40px;
+  width: 90%;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+.table-div{
+  margin-top: 30px;
+}
+.action-btns{
+  height: 35px;
+  width: 100%;
+  white-space: normal;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  padding-left: 10px;
+  padding-right: 10px;
+  flex-direction: row;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  font-size: 80%;
+}
+.actions{
+  position: relative;
+}
+.action-menu{
+  z-index: 4;
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  height: auto;
+  width: 160px;
+  /* border: 1px solid rgba(0, 0, 0, .2); */
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  background-color: #fff;
+  display: none;
+}
+.actions:hover > .action-menu{
+  display: block;
+}

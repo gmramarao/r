@@ -1,0 +1,31 @@
+<app-main-header></app-main-header>
+<app-sub-header></app-sub-header>
+<div class="main-container">
+  <div class="width-control">
+    <h2 class="page-head">
+      Your Wishlist
+    </h2>
+    <div class="wishlist-container">
+      <!-- Businesses -->
+      <div class="business-core">
+        <h3 class="sub-head">Businesses</h3>
+        <ul>
+          <li *ngFor='let b of businesses'>
+            <div class="item-name">
+              {{ b.name }}
+            </div>
+            <div class="item-action" (click)='removeFromFavorites(b._id)'>
+              <i class="fas fa-heart"></i>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- Items -->
+      <div class="items-core">
+        <h3 class="sub-head">Items</h3>
+
+      </div>
+    </div>
+  </div>
+</div>
+<app-main-footer></app-main-footer>

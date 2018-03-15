@@ -1,0 +1,246 @@
+<app-main-header></app-main-header>
+<app-sub-header></app-sub-header>
+
+<div class="main-container">
+  <div class="store-cover-pic">
+    <div class="db"></div>
+    <div class="store-logo-pic"></div>
+  </div>
+  <div class="width-control">
+    <div class="store-details">
+      <h1 class="store-name">{{ business_name }}</h1>
+      <h5 class="store-cap">Business caption</h5>
+      <div class="store-action-core">
+        <!-- Share -->
+        <div class="action-divs">
+          <a class="social-btns" href="#" *ngIf='facebook_available === true'><i class="fab fa-facebook"></i></a>
+          <a class="social-btns" href="#" *ngIf='twitter_available === true'><i class="fab fa-twitter-square"></i></a>
+          <a class="social-btns" href="#" *ngIf='twitter_available === true'><i class="fab fa-linkedin"></i></a>
+        </div>
+        <!-- Add to wishlist -->
+        <div class="action-divs">
+          <button class="action-btns" (click)='addWishlistClicked()'>
+            <!-- if added to wishlist -->
+              <span *ngIf='added_to_wishlist === true' class="added-wishlist-span">
+                <i class="fas fa-heart"></i>&nbsp;&nbsp;Added to Wishlist
+              </span>
+              <span *ngIf='added_to_wishlist === false' class="not-in-wishlist-span">
+                  <i class="far fa-heart"></i> &nbsp;&nbsp;Add to Wishlist
+              </span>
+          </button>
+        </div>
+        <!-- View on Social Media -->
+        <div class="action-divs">
+          <button class="action-btns">Action</button>
+        </div>
+      </div>
+      <div class="store-dets-core">
+        <div class="store-tabs">
+          <div class="tab-top">
+            <ul>
+              <li class="tab-trig selected-trig" id="tab-one-trig">
+                Products
+              </li>
+              <li class="tab-trig" id="tab-two-trig">
+                Reviews
+              </li>
+              <li class="tab-trig" id="tab-three-trig">
+                Other details
+              </li>
+              <li class="tab-trig" id="tab-four-trig">
+                Custom Order
+              </li>
+            </ul>
+          </div>
+          <div class="tab-container">
+            <div class="tab-one tabs">
+                <h4 class="tab-heads">Products</h4>
+                <div class="products-core">
+                  <div *ngFor='let list of display_lists'>
+                    <div class="list-name-div">
+                      <h4>
+                        {{ list.list_name }}
+                      </h4>
+                    </div>
+                    <div class="list-items-div">
+                        <div class="table">
+                        <table class="table table-striped">
+                          <tr>
+                            <th>
+                              Name
+                            </th>
+                            <th>
+                              Price
+                            </th>
+                            <th>
+                              Discount
+                            </th>
+                            <th>
+                              Action
+                            </th>
+                          </tr>
+                          <tr *ngFor='let item of list.list_items'>
+                            <td>
+                              {{ item.item_name }}
+                            </td>
+                            <td>
+                              {{ item.item_price }}
+                            </td>
+                            <td>
+                              -
+                            </td>
+                            <td>
+                              <span class="a-cart-ico" (click)='addToCartClicked($event,item._id, item.inCart, item.cart_status)'>
+                                <span class="body-fill"></span>
+                                <span class="cart-ico">
+                                  <span *ngIf='!item.cart_status'>
+                                    <i class="fas fa-cart-plus" style="z-index:-1"></i>
+                                  </span>
+                                  <span *ngIf='item.cart_status'>
+                                      <i class="fas fa-check" style="z-index:-1"></i>
+                                  </span>
+                                </span>
+                              </span>
+                            </td>
+                          </tr>
+                        </table>
+                    </div>
+                  </div>
+                  </div>
+                  <button class="order-btn" (click)="postOrder()">
+                    ORDER NOW
+                  </button>
+                </div>
+            </div>
+            <div class="tab-two tabs">
+              <h4 class="tab-heads">Reviews</h4>
+
+              <div class="rev-core">
+                <div class="write-rev">
+                  <div class="w-r-top">
+                      <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                  </div>
+                  <div class="w-r-btm">
+                    <textarea class="w-r-text" placeholder="Write your review here.. "></textarea>
+                  </div>
+                  <div class="w-r-btn">
+                    <button class="rev-submit-btn">
+                      SUBMIT
+                    </button>
+                  </div>
+                </div>
+
+                <div class="rev">
+                  <div class="rev-top">
+                    <div class="rev-img">
+                      <div class="r-img"></div>
+                      <div class="r-name"><h6>Name</h6></div>
+                    </div>
+                    <div class="rev-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                    </div>
+                  </div>
+                  <div class="rev-btm">
+                    <p class="review">
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae ipsa voluptatem repellat rem deleniti amet dignissimos voluptate vitae! Ipsam aliquam fugit recusandae nam quod voluptatum eligendi sapiente ducimus nobis. Inventore dolores placeat sequi earum illo rerum architecto distinctio odio. Voluptates!
+                    </p>
+                  </div>
+                </div>
+
+                <div class="rev">
+                  <div class="rev-top">
+                    <div class="rev-img">
+                      <div class="r-img"></div>
+                      <div class="r-name"><h6>Name</h6></div>
+                    </div>
+                    <div class="rev-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                    </div>
+                  </div>
+                  <div class="rev-btm">
+                    <p class="review">
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae ipsa voluptatem repellat rem deleniti amet dignissimos voluptate vitae! Ipsam aliquam fugit recusandae nam quod voluptatum eligendi sapiente ducimus nobis. Inventore dolores placeat sequi earum illo rerum architecto distinctio odio. Voluptates!
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="tab-three tabs">
+                <h4 class="tab-heads">About</h4>
+
+                <div class="description">
+                  <h6 class="sub-heads">Description</h6>
+                  <div class="desc-p">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis at culpa dolores, iure ipsum aut amet alias modi inventore. Eos veniam vero saepe excepturi laborum possimus rem animi pariatur. Incidunt.</p>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis at culpa dolores, iure ipsum aut amet alias modi inventore. Eos veniam vero saepe excepturi laborum possimus rem animi pariatur. Incidunt.</p>
+                  </div>
+                </div>
+            </div>
+            <div class="tab-four tabs">
+                <h4 class="tab-heads">Custom Order</h4>
+
+                <div class="description">
+                  <h6 class="sub-heads">You can request a custom made order for you !</h6>
+                  <div class="desc-p">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis at culpa dolores, iure ipsum aut amet alias modi inventore. Eos veniam vero saepe excepturi laborum possimus rem animi pariatur. Incidunt.</p>
+                  </div>
+                </div>
+
+                <h6 class="sub-heads">Upload a jpg or excel or pdf file containing the details of your order</h6>
+
+                <label for="custom-order-file" class="custom-order-label">
+                  <input type="file" name="custom-order-file" id="custom-order-file" hidden (change)='customFileUploaded($event)'>
+                  <h6>Click here to upload</h6>
+                </label>
+                <button class="custom-order-submit-btn" (click)='requestCustomOrder()'>Request Order</button>
+            </div>
+          </div>
+        </div>
+        <!-- Offers of the store -->
+        <div class="store-offers">
+          <h4>Offers from this store</h4>
+          <div class="offer">
+            <h5 class="offer-title">
+              Offer Title
+            </h5>
+            <p class="offer-desc">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam voluptas exercitationem adipisci tempore explicabo possimus, mollitia distinctio officiis et corporis.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="db" *ngIf="ord_cnfr || order_status">
+  
+  <!-- No response from the vendor -->
+  <div class="wb" id="unresponsive" *ngIf="order_status && order_status=='not responded'">
+    <img src="https://cdn3.iconfinder.com/data/icons/auto-racing/423/Stopwatch_Timer-512.png" alt="" srcset="">
+    <h5>Vendor is not responding</h5>
+    <!-- Show other options -->
+
+  </div>
+
+  <!-- Order Rejected -->
+  <div class="wb" id="rejected" *ngIf="order_status && order_status=='cancled'">
+    <img src="http://moziru.com/images/symbol-clipart-multiplication-3.gif" alt="" srcset="">
+    <h5>Your order has been rejected by the vendor</h5>
+    <!-- Show other options -->
+    
+  </div>
+  <!-- Order accepted -->
+  <div class="wb" id="accepted" *ngIf="order_status && order_status=='accepted'">
+    <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/446229-200.png" alt="" srcset="">
+    <h5>Your order has been placed successfully.</h5>
+    <h5>Your order id is : </h5>
+  </div>
+
+  <!-- Waiting for vendor conformation -->
+  <div class="wb" id="waiting" *ngIf="ord_cnfr">
+    <img src="../../assets/img/loading.gif" alt="" srcset="">
+    <h5>Wating for conformation from the vendor</h5>
+  </div>
+</div>
+<app-main-footer></app-main-footer>

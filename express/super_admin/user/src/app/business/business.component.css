@@ -1,0 +1,195 @@
+.vendor-container{
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin: 20px;
+}
+.dets-heads{
+  font-weight: 500;
+  font-size: 110%;
+  margin-bottom: 12px;
+}
+.vendor-dets{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 100%;
+  height: 200px;
+  border-bottom: 1px solid rgba(0, 0, 0, .3);
+  background-color: papayawhip;
+}
+.dets-img{
+  background-color: #afafaf;
+}
+.dets-img img{
+  height: 100px;
+  width: auto;
+}
+.dets-core{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.dets-core ul{
+  margin-right: 15px;
+}
+.dets-core ul li{
+  margin: 5px auto;
+  font-size: 80%;
+}
+.dets-core ul li label{
+  font-weight: 500;
+  font-size: 90%;
+}
+.stats-div{
+  position: relative;
+  display: block;
+  width: 100%;
+}
+.stats-core{
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+}
+.stat{
+  height: 150px;
+  width: 150px;
+  box-shadow: 0 0 13px 1px rgba(0, 0, 0, .2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.stat:nth-child(odd){
+  background-color: #6ab04c;
+  color: #fff;
+}
+.stat:nth-child(even){
+  background-color: #f0932b;
+  color: #fff;
+}
+.stat h6{
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 110%;
+  color: #fff;
+}
+.stat .number{
+  font-weight: 700;
+  font-size: 300%;
+}
+.actions-div{
+  position: relative;
+  display: block;
+  width: 100%;
+}
+.sub-head{
+  position: relative;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  font-size: 140%;
+}
+.actions-core {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.act{
+  height: 150px;
+  width: 150px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, .3);
+  outline: none;
+}
+.act:hover{
+  cursor: pointer;
+  box-shadow: 8px 2px 10px 1px rgba(0, 0, 0, .3);
+}
+.act .icon {
+  font-size: 250%;
+  margin-bottom: 20px;
+}
+.act h6{
+  font-size: 80%;
+  font-weight: 500;
+}
+.db{
+  z-index: 10;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .5);
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  display: none;
+}
+.wb{
+  height: 300px;
+  width: 500px;
+  background-color: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  display: none;
+}
+.wb h5{
+  font-size: 110%;
+  font-weight: 500;
+}
+.wb p{
+  width: 70%;
+  margin: 30px auto;
+  font-size: 90%;
+}
+.wb button{
+  height: 40px;
+  width: 150px;
+  border: none;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  font-size: 90%;
+}
+.confirmButton{
+  background-color: #27ae60;
+}
+.cancelButton{
+  background-color: #7f8c8d;
+}
+.msg-wb{
+  height: 400px;
+}
+.message-box{
+  position: relative;
+  display: block;
+  margin: 30px auto;
+  height: 200px;
+  width: 300px;
+  resize: none;
+  outline: none;
+}

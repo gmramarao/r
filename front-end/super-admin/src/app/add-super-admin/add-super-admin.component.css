@@ -1,0 +1,37 @@
+.form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 30px;
+}
+label, input {
+  width: 300px;
+}
+label{
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.delete-btn{
+  border: none;
+  background-color: transparent;
+  color: #666;
+  cursor: pointer;
+}
+th{
+  font-weight: 500;
+}
+
+input[type= 'checkbox'] { 
+  height: 16px;
+}
+.form .table{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+}
+.form th{
+  text-align: center;
+}

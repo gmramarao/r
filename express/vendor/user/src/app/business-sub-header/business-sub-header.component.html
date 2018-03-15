@@ -1,0 +1,40 @@
+<div class="business-header">
+    <nav *ngIf='business_type === "product"'>
+      <ul>
+        <li [routerLink]="['/business-dashboard', business_id]">
+          Dashboard
+        </li>
+        <li [routerLink]="['/business-orders', business_id]">
+          Orders
+        </li>
+        <li [routerLink]="['/business-notifications', business_id]">
+          Notifications
+        </li>
+        <li [routerLink]="['/business-settings', business_id]">
+          Settings
+        </li>
+        <li [routerLink]="['/add-products', business_id]">
+          Add Products
+        </li>
+      </ul>
+    </nav>
+    <nav *ngIf='business_type === "service"'>
+      <ul>
+        <li [routerLink]="['/business-dashboard', business_id]">
+          Dashboard
+        </li>
+        <li [routerLink]="['/business-orders', business_id]">
+          Orders
+        </li>
+        <li [routerLink]="['/business-notifications', business_id]">
+          Notifications
+        </li>
+        <li [routerLink]="['/business-settings', business_id]">
+          Settings
+        </li>
+        <li [routerLink]="['/business-add-services', business_id]">
+          Add Services
+        </li>
+      </ul>
+    </nav>
+  </div>

@@ -1,0 +1,31 @@
+<div class="main-container">
+    <h2 class="page-heads">Featured Businesses</h2>
+  <div class="list-core">
+    <div class="table">
+      <table class="table table-striped">
+        <tr>
+          <th>
+            Business Name
+          </th>
+          <th>
+            Vendor Name
+          </th>
+          <th>
+            Action
+          </th>
+        </tr>
+        <tr *ngFor='let b of businesses'>
+          <td>
+            {{ b.business.name }}
+          </td>
+          <td>
+            {{ b.vendor }}
+          </td>
+          <td>
+            <input type="checkbox" (change)='checkChanged($event, b._id)' [checked]='b.isAdded'>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

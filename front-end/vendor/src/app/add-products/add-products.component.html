@@ -1,0 +1,116 @@
+<app-main-header></app-main-header>
+<div class="main-container">
+  <app-business-sub-header></app-business-sub-header>
+  <div class="dashboard-container">
+    <div class="width-control">
+      <h2 class="page-heads">
+        Add Products
+      </h2>
+      <div class="a-p-core">
+
+        <!-- Left side for lists -->
+        <div class="lists-div">
+          <h3 class="sub-head">Your Lists</h3>
+          <div class="lists-core">
+            <!-- List of lists -->
+            <div *ngIf='business_lists_number === 0' class="no-lists-div" (click)='addListClicked()'>
+              <h6>You have no lists yet. Create one.</h6>
+            </div>
+            <div *ngIf='business_lists_number !== 0' class="items-display-div">
+              <!-- Display lists here -->
+              <ul class="item-display-ul">
+                  <li *ngFor='let list of business_lists'>
+                    <div class="item">
+                      <div class="item-name" target='_blank' [routerLink]="['/list',business_id, list._id]">
+                        <h6 class="item-name-core">
+                          {{ list.list_name }}
+                        </h6>
+                      </div>
+                      <div class="item-actions">
+                        <div class="item-action item-delete" (click)='deleteList(list._id)'>
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                        <div class="item-action item-edit" (click)='editList(list._id)'>
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+            </div>
+          </div>
+          <!-- Add list button -->
+          <button class="add-btn add-list-btn" (click)='addListClicked()'>ADD LIST</button>
+        </div>
+
+        <!-- Right side for items -->
+          <!-- List of products -->
+          <div class="items-div">
+            <h3 class="sub-head">YOUR ITEMS</h3>
+            <div class="items-core">
+              <div *ngIf='items_number === 0' class="no-lists-div" (click)='addItemClicked()'>
+                  <h6>You have no items yet. Click to create one.</h6>
+                </div>
+                <div *ngIf='items_number !== 0' class="items-display-div">
+                  <!-- Display lists here -->
+                  <ul class="item-display-ul">
+                    <li *ngFor='let item of items'>
+                      <div class="item">
+                        <div class="item-name">
+                          <h6 class="item-name-core">
+                            {{ item.item_name }}
+                          </h6>
+                        </div>
+                        <div class="item-actions">
+                          <div class="item-action item-delete" (click)='deleteItem(item._id)'>
+                              <i class="fas fa-trash-alt"></i>
+                          </div>
+                          <div class="item-action item-edit" (click)='editItem(item._id)'>
+                              <i class="fas fa-pencil-alt"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+  
+            <!-- Add Product -->
+            <button class="add-btn add-list-btn" (click)='addItemClicked()'>ADD ITEM</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="db">
+  <!-- Add list -->
+  <div class="add-divs add-list-div">
+    <span class="main-close-btn" (click)='mainCloseClicked()'><i class="fas fa-times"></i></span>
+    <h3 class="pop-up-head">ADD LIST</h3>
+    <div class="center-input-div">
+      <input type="text" [(ngModel)]='newListName' placeholder="Type list name here">
+      <p class="add-list-res"></p>
+      <button (click)='addListName()' class="main-add-btn">ADD LIST</button>
+    </div>
+  </div>
+
+  <!-- Add Item -->
+  <div class="add-divs add-item-div">
+    <span class="main-close-btn" (click)='mainCloseClicked()'><i class="fas fa-times"></i></span>
+    <h3 class="pop-up-head">ADD ITEM</h3>
+    <label for="item-name">Item Name</label>
+    <input type="text" [(ngModel)]='newItemName' id="item-name">
+    <label for="item-price">Item Price</label>
+    <input type="text" [(ngModel)]='newItemPrice' id="item-price">
+    <label for="item-quality">Item Quality</label>
+    <input type="text" [(ngModel)]='newItemQuality' id="item-quality">
+    <label for="selecte-list">Select list name if you wish to add the item to a list</label>
+    <select id="select-list" (change)='newItemListSelected($event)'>
+      <option value="" selected disabled> Select List </option>
+      <option value="{{ list._id }}" *ngFor='let list of business_lists'>{{ list.list_name }}</option>
+    </select>
+    <p id="add-item-res"></p>
+    <button (click)='addItem()' class="main-add-btn">ADD ITEM</button>
+  </div>
+</div>
+<app-main-footer></app-main-footer>

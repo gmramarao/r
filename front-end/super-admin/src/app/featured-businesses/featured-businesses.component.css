@@ -1,0 +1,8 @@
+input[type='checkbox'] {
+  display: block;
+  margin: 0 auto;
+  height: 16px !important;
+}
+table th {
+  text-align: center;
+}

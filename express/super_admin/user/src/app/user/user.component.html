@@ -1,0 +1,120 @@
+<div class="user-container">
+    <h4 class="page-heads">{{ user_name }}'s details</h4>
+  <div class="user-dets">
+    <div class="dets-img">
+      <img src="https://www.seoclerk.com/pics/551103-1TOqFD1502285018.jpg" alt="">
+    </div>
+    <div class="dets-core">
+      <ul>
+        <li>
+          <label>Name : </label>  {{ user_name }}
+        </li>
+        <li>
+          <label>Mobile : </label>  {{ user_mobile }}
+        </li>
+        <li>
+          <label>Email : </label>  {{ user_email }}
+        </li>
+        <li>
+          <label>Registered Time : </label>  {{ user_reg_time }}
+        </li>
+        <li>
+          <label>Last Login : </label>  {{ user_last_login }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="stats-div">
+    <div class="stats-core">
+
+      <div class="stat">
+        <span class="number">0</span>
+        <h6>Orders</h6>
+      </div>
+      
+      <div class="stat">
+       <span class="number">0</span>
+       <h6>Spent</h6>
+      </div>
+
+      <div class="stat">
+        <span class="number">0</span>
+        <h6>Reviews</h6>
+      </div>
+
+    </div>
+  </div>
+  <div class="actions-div">
+    <h3 class="sub-head">Actions</h3>
+    <div class="actions-core">
+
+      
+      <div class="act" (click)='sendMessageToUserClicked()'>
+        <!-- Send message -->
+        <!-- Icon -->
+        <span class="icon">
+          <i class="fas fa-comments"></i>
+        </span>
+        <!-- Button -->
+        <h6>Send Message</h6>
+      </div>
+      
+      <div class="act" (click)='pauseUserClicked()'>
+        <!-- Send message -->
+        <!-- Icon -->
+        <span class="icon">
+            <i class="fas fa-pause"></i>
+        </span>
+        <!-- Button -->
+        <h6>Pause User</h6>
+      </div>
+
+      <div class="act" (click)='deleteUserClicked()'>
+        <!-- Send message -->
+        <!-- Icon -->
+        <span class="icon">
+            <i class="fas fa-trash-alt"></i>
+        </span>
+        <!-- Button -->
+        <h6>Delete User</h6>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<div class="db">
+  <!-- Pause User Conformation -->
+  <div class="wb pause-wb">
+    <h5>Are you sure ?</h5>
+    <p>
+      Pausing user suspends all user's businesses amd activites until you resume them back again.
+    </p>
+    <div class="btn-hor">
+      <button (click)='confirmPauseClicked()' class='confirmButton'>Confirm</button>
+      <button (click)='cancelPauseClicked()' class="cancelButton">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Delete User Conformation -->
+  <div class="wb delete-wb">
+    <h5>Are you sure ?</h5>
+    <p>
+      This action deletes user entirely from website and you'll not be able to access the vebdor details again.
+    </p>
+    <div class="btn-hor">
+      <button (click)='confirmDeleteClicked()' class='confirmButton'>Confirm</button>
+      <button (click)='cancelPauseClicked()' class="cancelButton">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Send text to User -->
+  <div class="wb msg-wb">
+      <h5>Send Message to User</h5>
+      <textarea class="message-box" placeholder="Type your message here"></textarea>
+      <div class="btn-hor">
+        <button (click)='confirmPauseClicked()' class='confirmButton'>Confirm</button>
+        <button (click)='cancelPauseClicked()' class="cancelButton">Cancel</button>
+      </div>
+    </div>
+</div>

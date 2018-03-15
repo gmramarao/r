@@ -1,0 +1,236 @@
+.main-container{
+  position: relative;
+  display: block;
+  min-height: 100vh;
+  max-height: auto;
+  height: auto;
+  width: 100%;
+}
+.a-p-core{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 30px;
+  height: 80vh;
+}
+.lists-div, .items-div{
+  position: relative;
+  display: flex;
+  width: 50%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.lists-core, .items-core{
+  position: relative;
+  display: flex;
+  height: 60%;
+  width: 300px;
+}
+.no-lists-div, .no-items-div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100%;
+  border: 1px dashed #666;
+  color: #666;
+  cursor: pointer;
+  font-size: 80%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, .1);
+}
+.add-btn{
+  height: 40px;
+  width: 200px;
+  font-size: 80%;
+  border: none;
+  background-color: #3498db;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+.add-btn:hover{
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, .3);
+}
+.db{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, .6);
+  z-index: 10;
+  display: none;
+}
+.add-divs{
+  position: absolute;
+  height: 500px;
+  width: 500px;
+  background-color: #fff;
+  color: #555;
+  border-radius: 4px;
+}
+.add-item-div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 20px 0;
+}
+.add-list-div{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 20px 0;
+  height: 300px;
+  display: none;
+}
+.pop-up-head{
+  position: relative;
+  font-size: 130%;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.pop-up-head::after{
+  position: absolute;
+  content: '';
+  top: 110%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  height: 1px;
+  width: 100px;
+  background-color: #e67e22;
+}
+.center-input-div{
+  position: absolute;
+  display: block;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 80%;
+}
+.center-input-div input{
+  height: 60px;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .3);
+  transition: all 0.2s ease-out;
+  outline: none;
+  padding: 0 10px;
+  background-color: #eaeaea;
+}
+.center-input-div input:focus{
+  /* background-color: #fff; */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .2);
+}
+.main-add-btn{
+  position: relative;
+  display: block;
+  margin: 20px auto;
+  height: 40px;
+  width: 300px;
+  background-color: #d35400;
+  color: #fff;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+.main-add-btn:hover{
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .3);
+}
+.main-close-btn{
+  position: absolute;
+  top: 3%;
+  left: 95%;
+  cursor: pointer;
+}
+.add-item-div label,.add-item-div input,.add-item-div select{
+  width: 250px;
+}
+.add-item-div label{
+  margin: 10px auto 5px auto;
+  font-size: 80%;
+  font-weight: 500;
+}
+.add-item-div input,.add-item-div select{
+  height: 35px;
+  outline: none;
+  padding: 0 6px;
+}
+.items-display-div{
+  position: relative;
+  display: block;
+  width: 100%;
+}
+.item-display-ul{
+  position: relative;
+  display: block;
+  width: 100%;
+}
+.item-display-ul li{
+  display: flex;
+  width: 100%;
+}
+.item{
+  position: relative;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  background-color: #fbf1f1;
+}
+.item-name {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  outline: none;
+  cursor: pointer;
+}
+.item-name-core{
+  margin-left: 10px;
+}
+.item-actions{
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.item-action{
+  width: 50%;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  background-color: #fbf1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.item-action:hover{
+  background-color: #eaeaea;
+}
+.add-item-res, .add-list-res {
+  margin-top: 10px;
+  color: #d35400;
+  font-size: 90%;
+}

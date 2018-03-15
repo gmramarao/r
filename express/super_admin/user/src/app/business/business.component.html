@@ -1,0 +1,158 @@
+<div class="vendor-container">
+    <h4 class="page-heads">{{ business_name }}'s details</h4>
+  <div class="vendor-dets">
+    <div class="dets-img">
+      <img src="https://www.seoclerk.com/pics/551103-1TOqFD1502285018.jpg" alt="">
+    </div>
+    <div class="dets-core">
+      <ul>
+        <li>
+          <h5 class="dets-heads">Business details</h5>
+        </li>
+        <li>
+          <label>Name : </label>  {{ business_name }}
+        </li>
+        <li>
+          <label>Mobile : </label>  {{ vendor_mobile }}
+        </li>
+        <li>
+          <label>Email : </label>  {{ vendor_email }}
+        </li>
+        <li>
+          <label>Registered : </label>  {{ business_reg_time }}
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <h5 class="dets-heads">Vendor details</h5>
+        </li>
+        <li>
+          <label>Name : </label>  {{ vendor_name }}
+        </li>
+        <li>
+          <label>Mobile : </label>  {{ vendor_mobile }}
+        </li>
+        <li>
+          <label>Email : </label>  {{ vendor_email }}
+        </li>
+        <li>
+          <label>Registered : </label>  {{ vendor_reg_time }}
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <h5 class="dets-heads">Contact person details</h5>
+        </li>
+        <li>
+          <label>Name : </label>  {{ vendor_name }}
+        </li>
+        <li>
+          <label>Mobile : </label>  {{ vendor_mobile }}
+        </li>
+        <li>
+          <label>Email : </label>  {{ vendor_email }}
+        </li>
+        <li>
+          <label>Registered : </label>  {{ business_reg_time }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="stats-div">
+    <div class="stats-core">
+
+      <div class="stat">
+        <span class="number">0</span>
+        <h6>Orders</h6>
+      </div>
+      
+      <div class="stat">
+       <span class="number">0</span>
+       <h6>Earned</h6>
+      </div>
+      
+      <div class="stat">
+        <span class="number">0</span>
+        <h6>Views</h6>
+      </div>
+      <div class="stat">
+        <span class="number">0</span>
+        <h6>Businesses</h6>
+      </div>
+
+    </div>
+  </div>
+  <div class="actions-div">
+    <h3 class="sub-head">Actions</h3>
+    <div class="actions-core">
+
+      
+      <div class="act" (click)='sendMessageToVendorClicked()'>
+        <!-- Send message -->
+        <!-- Icon -->
+        <span class="icon">
+          <i class="fas fa-comments"></i>
+        </span>
+        <!-- Button -->
+        <h6>Send Message to Vendor</h6>
+      </div>
+      
+      <div class="act" (click)='pauseBusinessClicked()'>
+        <!-- Send message -->
+        <!-- Icon -->
+        <span class="icon">
+            <i class="fas fa-pause"></i>
+        </span>
+        <!-- Button -->
+        <h6>Pause Business</h6>
+      </div>
+
+      <div class="act" (click)='deleteVendorClicked()'>
+        <!-- Send message -->
+        <!-- Icon -->
+        <span class="icon">
+            <i class="fas fa-trash-alt"></i>
+        </span>
+        <!-- Button -->
+        <h6>Delete Business</h6>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<div class="db">
+  <!-- Pause Vendor Conformation -->
+  <div class="wb pause-wb">
+    <h5>Are you sure ?</h5>
+    <p>
+      Pausing vendor suspends all vendor's businesses amd activites until you resume them back again.
+    </p>
+    <div class="btn-hor">
+      <button (click)='confirmPauseClicked()' class='confirmButton'>Confirm</button>
+      <button (click)='cancelPauseClicked()' class="cancelButton">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Delete Vendor Conformation -->
+  <div class="wb delete-wb">
+    <h5>Are you sure ?</h5>
+    <p>
+      This action deletes vendor entirely from website and you'll not be able to access the vendor details again.
+    </p>
+    <div class="btn-hor">
+      <button (click)='confirmDeleteClicked()' class='confirmButton'>Confirm</button>
+      <button (click)='cancelPauseClicked()' class="cancelButton">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Send text to Vendor -->
+  <div class="wb msg-wb">
+      <h5>Send Message to Vendor</h5>
+      <textarea class="message-box" placeholder="Type your message here"></textarea>
+      <div class="btn-hor">
+        <button (click)='confirmPauseClicked()' class='confirmButton'>Confirm</button>
+        <button (click)='cancelPauseClicked()' class="cancelButton">Cancel</button>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,174 @@
+<div class="main-container">
+  <h2 class="page-heads">Add Super Admin</h2>
+  <div class="form">
+    <label for="email">Email : </label>
+    <input type="email" [(ngModel)] = 'email'>
+    <label for="email">Password : </label>
+    <input type="password" [(ngModel)] = 'password'>
+    <div class="table">
+      <!-- Access states -->
+      <table class="table-striped">
+        <tr>
+          <th>
+            Page
+          </th>
+          <th>
+            Access
+          </th>
+        </tr>
+        <!-- vendors page -->
+        <tr>
+          <td>
+            Vendors Page
+          </td>
+          <td>
+            <input type="checkbox" name="" id="" [(ngModel)]='vendor_page_check'>
+          </td>
+        </tr>
+        <!-- business page -->
+        <tr>
+          <td>
+            Business Page
+          </td>
+          <td>
+            <input type="checkbox" name="" id="" [(ngModel)]='business_page_check'>
+          </td>
+        </tr>
+        <!-- Users page -->
+        <tr>
+          <td>
+            Users Page
+          </td>
+          <td>
+            <input type="checkbox" name="" id="" [(ngModel)]='users_page_check'>
+          </td>
+        </tr>
+        <!-- Orders page -->
+        <tr>
+          <td>
+            Orders Page
+          </td>
+          <td>
+            <input type="checkbox" name="" id="" [(ngModel)]='orders_page_check'>
+          </td>
+        </tr>
+        <!-- Main menu settings page -->
+        <tr>
+          <td>
+            Main Menu Page
+          </td>
+          <td>
+            <input type="checkbox" name="" id="" [(ngModel)]='main_menu_page_check'>
+          </td>
+        </tr>
+        <!-- Add Categories page -->
+          <tr>
+            <td>
+              Add Categories
+            </td>
+            <td>
+              <input type="checkbox" name="" id="" [(ngModel)]='add_categories_page_check'>
+            </td>
+          </tr>
+        <!-- Add Sub Categories page -->
+          <tr>
+            <td>
+              Add Sub Categories
+            </td>
+            <td>
+              <input type="checkbox" name="" id="" [(ngModel)]='add_sub_categories_page_check'>
+            </td>
+          </tr>
+          <!-- Add Edit Categories page -->
+          <tr>
+            <td>
+              Edit Categories
+            </td>
+            <td>
+              <input type="checkbox" name="" id="" [(ngModel)]='edit_categories_page_check'>
+            </td>
+          </tr>
+          <!-- Add CMS page -->
+          <tr>
+            <td>
+              CMS
+            </td>
+            <td>
+              <input type="checkbox" name="" id="" [(ngModel)]='cms_page_check'>
+            </td>
+          </tr>
+          <!-- Add Employee Database -->
+          <tr>
+            <td>
+              Employee Database
+            </td>
+            <td>
+              <input type="checkbox" name="" id="" [(ngModel)]='emp_page_check'>
+            </td>
+          </tr>
+          <!-- Delivery tracking -->
+          <tr>
+            <td>
+              Delivery Tracking
+            </td>
+            <td>
+              <input type="checkbox" name="" id="" [(ngModel)]='delivery_tracking_page_check'>
+            </td>
+          </tr>
+          <!-- Ads -->
+          <tr>
+            <td>
+              Ads
+            </td>
+            <td>
+              <input type="checkbox" name="" id="" [(ngModel)]='delivery_tracking_page_check'>
+            </td>
+          </tr>
+          <!-- Add Super Admin -->
+          <tr>
+            <td>
+              Add Super Admin
+            </td>
+            <td>
+              <input type="checkbox" name="" id="" [(ngModel)]='add_super_admin_page_check'>
+            </td>
+          </tr>
+          <!-- Add Sub Admin -->
+          <tr>
+            <td>
+              Add Sub Admin
+            </td>
+            <td>
+              <input type="checkbox" name="" id="" [(ngModel)]='add_sub_admin_page_check'>
+            </td>
+          </tr>
+      </table>
+    </div>
+    <button class="submit" (click)="addSuperAdminClicked()">ADD SUPER ADMIN</button>
+    <p class="out" style="color:#f00">{{ out }}</p>
+  </div>
+  <div class="all-admins">
+    <div class="table">
+      <table class="table table-responsie table-striped">
+        <tr>
+          <th>
+            Email
+          </th>
+          <th>
+            Delete Admin
+          </th>
+        </tr>
+        <tr *ngFor='let admin of admins'>
+          <td>
+            {{ admin.email }}
+          </td>
+          <td>
+            <button (click)='deleteAdmin(admin._id)' class="delete-btn">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
