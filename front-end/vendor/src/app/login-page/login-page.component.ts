@@ -84,9 +84,11 @@ export class LoginPageComponent implements OnInit {
                 this.auth.storeUserData(user_status.token, user_status.vendor);
                 this.router.navigate(['/home']);
               }else {
-                console.log(user_status);
+                alert('Wrong Password');
               }
             });
+          } else {
+            alert('mobile number not registered');
           }
         });
       }else {

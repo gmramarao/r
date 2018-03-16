@@ -17,6 +17,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "forcedomain": "^0.8.1",
+    "https": "^1.0.0",
     "jsonwebtoken": "^8.1.0",
     "moment": "^2.20.1",
     "mongoose": "^4.13.9",
@@ -27,6 +28,8 @@
     "nodemailer": "^4.6.2",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
+    "querystring": "^0.2.0",
+    "request": "^2.85.0",
     "shortid": "^2.2.8"
   }
 }

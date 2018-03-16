@@ -1,0 +1,14 @@
+<app-main-header></app-main-header>
+<h2>Forgot</h2>
+
+Phone Number: <input type="text" id="mobile" [(ngModel)]='mobile' placeholder="Phone Number">
+<button (click)='requestVerification()'>Request Verification</button>
+
+<div *ngIf="otp">
+    Verification Code: <input type="text" id="mobile" [(ngModel)]='i_otp' placeholder="Verification Code">
+    <button (click)='verifyCode()'>verify</button>
+</div>
+<div *ngIf="otp_verify">
+    New Password: <input type="password" id="n_pwd" [(ngModel)]='n_pwd' placeholder="New Password">
+    <button (click)='resetPwd()'>Reset Password</button>
+</div>

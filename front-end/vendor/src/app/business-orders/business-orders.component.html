@@ -1,33 +1,35 @@
 <app-main-header></app-main-header>
 <div class="main-container">
-<app-business-sub-header></app-business-sub-header>
-  <div class="orders-container">
-    <div class="width-control">
-      <h2 class="page-heads">Orders</h2>
-      <div class="filter-bar">
-        <select name="" id="">
-          <option value="">All Orders</option>
-          <option value="">Awating reply</option>
-          <option value="">Accepted Orders</option>
-          <option value="">Ignored Orders</option>
-          <option value="">Delivered Orders</option>
+    <app-business-sub-header></app-business-sub-header>
+    <div class="orders-container">
+        <div class="width-control">
+            <h2 class="page-heads">Orders</h2>
+            <div class="filter-bar">
+                <select name="" id="" [(ngModel)]="status" (change)="getOrdersByStatus()">
+          <option value="all">All Orders</option>
+          <option value="pending">Awating reply</option>
+          <option value="accepted">Accepted Orders</option>
+          <option value="cancled">Ignored Orders</option>
+          <option value="delivered">Delivered Orders</option>
+          <option value="not responded">Not Responded Orders</option>
         </select>
-      </div>
-      <div class="orders-core">
-  
-        <div class="order">
+            </div>
+            <div class="orders-core" *ngFor="let data of business_orders">
+        <div class="order" *ngIf="data.confirmation">
   
           <div class="order-head">
             <div class="order-id">
-              #AB123QW
+                {{data.order_id}}
             </div>
             <div class="order-current-status">
-              <span class="status">Not Confirmed</span>
+              <span class="status">{{data.confirmation}}</span>
             </div>
           </div>
           <div class="order-body">
             <div class="order-details">
-  
+            <div *ngFor="let data1 of data.orders">
+              {{data1}}
+            </div>
             </div>
             <div class="order-action-button">
               <button class="accept-order-btn">Accept Order</button>
@@ -37,7 +39,7 @@
         </div>
   
       </div>
+        </div>
     </div>
-  </div>
 </div>
 <app-main-footer></app-main-footer>

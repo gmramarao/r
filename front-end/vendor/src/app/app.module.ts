@@ -32,6 +32,7 @@ import { InboxComponent } from './inbox/inbox.component';
 import { AddServicesComponent } from './add-services/add-services.component';
 import { BusinessSubHeaderComponent } from './business-sub-header/business-sub-header.component';
 import { ListComponent } from './list/list.component';
+import { ForgotComponent } from './forgot/forgot.component';
 
 const appRoutes: Routes = [
   {
@@ -47,6 +48,10 @@ const appRoutes: Routes = [
   {
       path: 'login',
       component: LoginPageComponent
+  },
+  {
+    path: 'forgot',
+    component: ForgotComponent
   },
   {
       path: 'add-business',
@@ -136,7 +141,8 @@ const appRoutes: Routes = [
     InboxComponent,
     AddServicesComponent,
     BusinessSubHeaderComponent,
-    ListComponent
+    ListComponent,
+    ForgotComponent
   ],
   imports: [
     BrowserModule,

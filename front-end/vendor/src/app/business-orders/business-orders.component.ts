@@ -19,7 +19,8 @@ export class BusinessOrdersComponent implements OnInit {
     business_status;
     vendor_id;
     business_type;
-
+    business_orders: any = [];
+    status = 'all';
   ngOnInit() {
 
     const vendor_obj = JSON.parse(localStorage.getItem('user'));
@@ -40,6 +41,38 @@ export class BusinessOrdersComponent implements OnInit {
           console.log(bus);
         }
       });
+      this.getOrdersById();
+      
+    });
+  }
+
+  getOrdersByStatus(){
+    console.log(this.status);
+    if(this.status === 'all'){
+      this.getOrdersById();
+    } else {
+      this.vendorService.getOrdersByStatus(this.status, this.business_id).subscribe(bus => {
+        if (bus.success) {
+          this.business_orders = bus.msg;
+          console.log(this.business_orders);
+        }else {
+          // something went wrong
+          console.log(bus);
+        }
+      });
+    }
+    
+  }
+
+  getOrdersById(){
+    this.vendorService.getOrdersById(this.business_id).subscribe(bus => {
+      if (bus.success) {
+        this.business_orders = bus.msg;
+        console.log(this.business_orders);
+      }else {
+        // something went wrong
+        console.log(bus);
+      }
     });
   }
 

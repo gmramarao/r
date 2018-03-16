@@ -24,6 +24,9 @@ var mongoose = require('mongoose'),
         last_login_time: {
             type: String,
             required: false
+        },
+        otp:{
+            type: Number
         }
     }),
 Vendor = module.exports = mongoose.model('Vendor', VendorSchema);
