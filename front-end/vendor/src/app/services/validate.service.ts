@@ -17,4 +17,11 @@ export class ValidateService {
             return true;
         }
     }
+    compareInputs(field1, field2){
+        if(field1 === field2){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

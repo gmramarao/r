@@ -152,5 +152,9 @@ export class VendorService {
     getOrdersByStatus(status, list_id) {
       return this.http.get(this.url+'vendor/get-orders-status/' + status +'/'+list_id).map(res => res.json());
     }
+
+    profile_setting(data){
+      return this.http.put(this.url+'vendor/profile-setting', data).map(res => res.json());
+    }
 }
 

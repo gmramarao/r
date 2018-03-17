@@ -665,7 +665,7 @@ router.get('/request-verification/:mobile', function(req, res) {
 
 })
 
-router.put('/verify-Code', function(req, res) {
+router.put('/verify-code', function(req, res) {
     console.log(req.body);
     Vendor.findOne({ mobile: req.body.mobile, otp: req.body.otp }, function(err, doc) {
         if (err) {
@@ -682,30 +682,86 @@ router.put('/verify-Code', function(req, res) {
 })
 
 router.put('/reset-pwd', function(req, res) {
-    Bcrypt.genSalt(10, function(err1, salt) {
-        bcrypt.hash(req.body.pwd, salt, function(err2, hash) {
-            Vendor.update({mobile: req.body.mobile, otp:req.body.otp}, {$set:{password: hash, otp: null}},{multi:true}, function(err3, doc){
-                if(!err3){
-                    console.log(doc);
+    Vendor.pwd_encrypt(req.body.pwd, function(err1, hash){
+        if(!err1){
+            Vendor.update({mobile: req.body.mobile, otp:req.body.otp}, {$set:{password: hash, otp: null}},{multi:true}, function(err2, doc){
+                if(!err2){
                     if(doc.nModified){
                         res.json({ success: true, msg: doc });
                     } else {
                         res.json({ success: false, msg: 'password not updated' });
                     }
-                    
                 } else {
-                    res.json({ success: false, msg: err3 });
+                    res.json({ success: false, msg: err2 });
                 }
             })
-        })
+        } else {
+            res.json({ success: false, msg: err1 });
+        }
     })
 })
 
-Vendor.findOne({ mobile: 8340821073 }, function(err, doc) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log(doc);
-    }
+router.put('/change-pwd', function(req, res){
+    Vendor.getVendorByMobile(req.body.mobile, function(err1, doc1){
+        if(!err1){
+            Vendor.comparePassword(req.body.old_pwd, doc1.password, function(err2, doc2) {
+                console.log(doc2);
+                if(!err2){
+                    if(doc2){
+                        Vendor.pwd_encrypt(req.body.new_pwd, function(err3, encrypt_new_pwd){
+                            if(!err3){
+                                Vendor.update({mobile: req.body.mobile},{$set:{password: encrypt_new_pwd}}, function(err4, doc4){
+                                    if(!err4){
+                                        res.json({ success: true, msg: 'Password changed' });
+                                    } else {
+                                        res.json({ success: false, msg: err4 });
+                                    }
+                                })
+                            } else {
+                                res.json({ success: false, msg: err3 });
+                            }
+                        })
+                    } else {
+                        res.json({ success: false, msg: 'Invalid old password' });
+                    }
+                    
+                } else {
+                    res.json({ success: false, msg: err2 });
+                }
+            })
+        } else {
+            res.json({ success: false, msg: err1 });
+        }
+    })
+    
 })
+
+router.put('/profile-setting', function(req, res){
+    console.log(req.body);
+    Vendor.findOne({mobile: req.body.vendor_mobile, email: req.body.vendor_email}, function(err1, doc1){
+        if(!err1){
+            if(doc1){
+                Vendor.update({mobile: req.body.vendor_mobile, email: req.body.vendor_email},{$set:{address: req.body.vendor_address, name: req.body.vendor_name}},{multi:true}, function(err, doc){
+                    console.log(doc);
+                    if(!err){
+                        if(doc.nModified){
+                            res.json({ success: true, msg: 'updated succesfully' }); 
+                        } else {
+                            res.json({ success: false, msg: 'Profile data not updated'}); 
+                        }
+                    } else {
+                        res.json({ success: false, msg: err });
+                    }
+                })
+            } else {
+                res.json({ success: false, msg: 'Please enter valid mobile number and amail'}); 
+            }
+        } else {
+            res.json({ success: false, msg: err1});
+        }
+        
+    })
+    
+})
+
 module.exports = router;

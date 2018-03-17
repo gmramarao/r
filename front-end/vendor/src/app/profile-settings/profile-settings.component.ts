@@ -52,4 +52,23 @@ export class ProfileSettingsComponent implements OnInit {
     }
   }
 
+  profile_setting(){
+    const data = {
+      vendor_name : this.vendor_name,
+      vendor_mobile: this.vendor_mobile,
+      vendor_email: this.vendor_email,
+      vendor_address: this.vendor_address
+    }
+
+    this.vendorService.profile_setting(data).subscribe(res => {
+      console.log(res);
+      if(res.status){
+        alert('profile updated succesfully');
+      } else {
+        alert(res.msg);
+      }
+    })
+
+  }
+
 }

@@ -26,7 +26,12 @@ var mongoose = require('mongoose'),
             required: false
         },
         otp:{
-            type: Number
+            type: Number,
+            required: false
+        },
+        address:{
+            type: String,
+            required: false
         }
     }),
 Vendor = module.exports = mongoose.model('Vendor', VendorSchema);
@@ -52,3 +57,20 @@ module.exports.getUserById = function(a, b) {
         c(null, e)
     })
 };
+
+module.exports.pwd_encrypt = function(pwd, callback){
+    bcrypt.genSalt(10, function(err1, salt) {
+        if(!err1){
+            bcrypt.hash(pwd, salt, function(err2, hash) {
+                if(!err2){
+                    callback(null, hash);
+                } else {
+                    callback(err2, null);
+                }
+            })
+        } else {
+            callback(err1, null);
+        }
+        
+    })
+}

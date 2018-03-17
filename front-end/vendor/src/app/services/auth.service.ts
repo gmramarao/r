@@ -57,10 +57,13 @@ export class AuthService {
         return this.http.get(this.url+'vendor/request-verification/' + mobile).map(res => res.json());
     }
     verifyCode(data) {
-        return this.http.put(this.url+'vendor/verify-Code', data).map(res => res.json());
+        return this.http.put(this.url+'vendor/verify-code', data).map(res => res.json());
     }
     resetPwd(data){
         return this.http.put(this.url+'vendor/reset-pwd', data).map(res => res.json());
+    }
+    change_password(data){
+        return this.http.put(this.url+'vendor/change-pwd', data).map(res => res.json());
     }
 }
 

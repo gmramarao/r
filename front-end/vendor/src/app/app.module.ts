@@ -35,122 +35,128 @@ import { ListComponent } from './list/list.component';
 import { ForgotComponent } from './forgot/forgot.component';
 
 const appRoutes: Routes = [
-  {
-      path: '',
-      redirectTo: '/home',
-      pathMatch: 'full'
-  },
-  {
-      path: 'home',
-      component: HomeComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'login',
-      component: LoginPageComponent
-  },
-  {
-    path: 'forgot',
-    component: ForgotComponent
-  },
-  {
-      path: 'add-business',
-      component: AddBusinessComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'profile-settings',
-      component: ProfileSettingsComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'change-password',
-      component: ChangePasswordComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'orders',
-      component: AllOrdersComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'inbox',
-      component: InboxComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'notifications',
-      component: NotificationsComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'business-dashboard/:id',
-      component: BusinessDashboardComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'business-settings/:id',
-      component: BusinessSettingsComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'business-notifications/:id',
-      component: BusinessNotificationsComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'business-orders/:id',
-      component: BusinessOrdersComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'add-products/:id',
-      component: AddProductsComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'add-services/:id',
-      component: AddServicesComponent,
-      canActivate: [AuthGuard]
-  },
-  {
-      path: 'list/:id/:list_id',
-      component: ListComponent,
-      canActivate: [AuthGuard]
-  },
+    {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full'
+    },
+    {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'login',
+        component: LoginPageComponent
+    },
+    {
+        path: 'forgot',
+        component: ForgotComponent
+    },
+    {
+        path: 'add-business',
+        component: AddBusinessComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'profile-settings',
+        component: ProfileSettingsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'change-password',
+        component: ChangePasswordComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'orders',
+        component: AllOrdersComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'inbox',
+        component: InboxComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'notifications',
+        component: NotificationsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'business-dashboard/:id',
+        component: BusinessDashboardComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'business-settings/:id',
+        component: BusinessSettingsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'business-notifications/:id',
+        component: BusinessNotificationsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'business-orders/:id',
+        component: BusinessOrdersComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'add-products/:id',
+        component: AddProductsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'add-services/:id',
+        component: AddServicesComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'list/:id/:list_id',
+        component: ListComponent,
+        canActivate: [AuthGuard]
+    },
+
+    {
+        path: 'all-orders',
+        component: AllOrdersComponent,
+        canActivate: [AuthGuard]
+    },
 ];
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    LoginPageComponent,
-    MainHeaderComponent,
-    AddBusinessComponent,
-    MainFooterComponent,
-    ProfileSettingsComponent,
-    ChangePasswordComponent,
-    AllOrdersComponent,
-    NotificationsComponent,
-    BusinessDashboardComponent,
-    BusinessSettingsComponent,
-    BusinessNotificationsComponent,
-    BusinessOrdersComponent,
-    AddProductsComponent,
-    InboxComponent,
-    AddServicesComponent,
-    BusinessSubHeaderComponent,
-    ListComponent,
-    ForgotComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    RouterModule.forRoot(appRoutes)
-  ],
-  providers: [AuthService, ValidateService, AuthGuard, VendorService, DatePipe],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        LoginPageComponent,
+        MainHeaderComponent,
+        AddBusinessComponent,
+        MainFooterComponent,
+        ProfileSettingsComponent,
+        ChangePasswordComponent,
+        AllOrdersComponent,
+        NotificationsComponent,
+        BusinessDashboardComponent,
+        BusinessSettingsComponent,
+        BusinessNotificationsComponent,
+        BusinessOrdersComponent,
+        AddProductsComponent,
+        InboxComponent,
+        AddServicesComponent,
+        BusinessSubHeaderComponent,
+        ListComponent,
+        ForgotComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        RouterModule.forRoot(appRoutes)
+    ],
+    providers: [AuthService, ValidateService, AuthGuard, VendorService, DatePipe],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
