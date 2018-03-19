@@ -56,15 +56,49 @@
               <span class="l-h-title">My Profile</span>
               <div class="m-profile-dd">
                 <ul>
+                  <li routerLink='/my-orders'>
+                    My Orders
+                  </li>
+                  <li routerLink='/my-cash'>
+                    My Cash
+                  </li>
+                  <li routerLink='/wishlist'>
+                    My Wishlist
+                  </li>
+                  <li routerLink='/delivery-address'>
+                    Delivery Address
+                  </li>
+                  <li routerLink='/notifications'>
+                    Notifications <span id="notification-number"><p>0</p></span>
+                  </li>
                   <li routerLink='/settings'>
+                    Profile Settings
+                  </li>
+                  <li routerLink='/privacy-settings'>
+                    Privacy Settings
+                  </li>
+                  <li routerLink='/invite-earn'>
+                    Invite and Earn
+                  </li>
+                  <li routerLink='/settings/my-ratings'>
+                    Ratings & Reviews
+                  </li>
+                  <li routerLink='/settings/feedback'>
+                    Feedback
+                  </li>
+                  <li routerLink='/terms'>
+                    Terms & Conditions
+                  </li>
+                  <li (click)='auth.logout()'>
+                      Logout
+                  </li>
+                  <!-- <li routerLink='/settings'>
                     Settings
                   </li>
                   <li routerLink='/wishlist'>
                     Wishlist
                   </li>
-                  <li routerLink='/notifications'>
-                    Notifications <span id="notification-number"><p>0</p></span>
-                  </li>
+                  
                   <li routerLink='/settings/my-orders'>
                     My Orders
                   </li>
@@ -73,7 +107,7 @@
                   </li>
                   <li (click)='auth.logout()'>
                     Logout
-                  </li>
+                  </li> -->
                 </ul>
               </div>
             </li>

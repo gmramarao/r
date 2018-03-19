@@ -25,6 +25,18 @@ UserSchema = mongoose.Schema({
     last_login_time: {
         type: String,
         required: false
+    },
+    gender: {
+        type: String,
+        required: false
+    },
+    dob: {
+        type: String,
+        required: false
+    },
+    address: {
+        type: String,
+        required: false
     }
 });
 
@@ -56,3 +68,20 @@ module.exports.comparePassword = function(a, b, c) {
         c(null, e);
     });
 };
+
+module.exports.pwd_encrypt = function(pwd, callback){
+    bcrypt.genSalt(10, function(err1, salt) {
+        if(!err1){
+            bcrypt.hash(pwd, salt, function(err2, hash) {
+                if(!err2){
+                    callback(null, hash);
+                } else {
+                    callback(err2, null);
+                }
+            })
+        } else {
+            callback(err1, null);
+        }
+        
+    })
+}

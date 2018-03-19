@@ -177,6 +177,12 @@ export class UserService {
     setVendorRes(data) {
       return this.http.put('http://localhost:3000/user/set-vendorRes', data).map(res => res.json());
     }
+    profileSetting(data){
+      return this.http.put('http://localhost:3000/user/profile-setting', data).map(res => res.json());
+    }
+    changePwd(data){
+      return this.http.put('http://localhost:3000/user/change-pwd', data).map(res => res.json());
+    }
    
 }
 

@@ -713,6 +713,115 @@ router.put('/set-vendorRes', function(req, res){
         }
     })
 })
+
+router.put('/profile-setting', function(req, res){
+    async.waterfall([
+        function(callback){
+            User.findOne({mobile: req.body.mobile, email: req.body.email},callback)
+        },
+        function(text, callback){
+            if(text){
+                User.update({mobile: req.body.mobile, email: req.body.email},{$set:{
+                    dob: req.body.dob, address: req.body.address, gender: req.body.gender,
+                    name: req.body.name
+                }}, {multi: true}, callback)
+            } else {
+                res.json({status: false, msg: 'Please enter valid email and mobile number'});
+            }
+        }
+    ], function(err, doc){
+        if(err){
+            res.json({status: false, msg: err1});
+        } else {
+            res.json({status: true, msg: doc});
+        }
+
+    })
+    // User.findOne({mobile: req.body.mobile, email: req.body.email}, function(err1, doc1){
+    //     if(!err1){
+    //         if(doc1){
+    //             User.update({mobile: req.body.mobile, email: req.body.email},{$set:{
+    //                 dob: req.body.dob, address: req.body.address, gender: req.body.gender,
+    //                 name: req.body.name
+    //             }}, {multi: true}, function(err2, doc2){
+    //                 if(!err2){
+    //                     res.json({status: true, msg: doc2});
+    //                 } else {
+    //                     res.json({status: false, msg: err2});
+    //                 }
+    //             })
+    //         } else {
+    //             res.json({status: false, msg: 'Please enter valid email and mobile number'});
+    //         }
+    //     } else{
+    //         res.json({status: false, msg: err1});
+    //     }
+    // })
+})
+
+router.put('/change-pwd', function(req, res){
+    console.log(req.body);
+    async.waterfall([
+        function(callback){
+            User.findOne({mobile: req.body.mobile}, callback);
+        },
+        function(text, callback){
+            if(text){
+                User.comparePassword(req.body.opwd, text.password, callback);
+            } else {
+                res.json({success: false, msg:'something wrong'});
+            }
+
+        },
+        function(text, callback){
+            if(text){
+                User.pwd_encrypt(req.body.npwd,callback);
+            } else {
+                res.json({success: false, msg:'Invalid old password'});
+            }
+        },
+        function(hash, callback){
+            User.update({mobile: req.body.mobile},{$set:{password:hash}},callback);
+        }
+    ], function(err, doc){
+        if(err){
+            res.json({success: false, msg:err});
+        } else {
+            res.json({success: true, msg:'password changed succesfully'});
+        }
+    })
+    // User.findOne({mobile: req.body.mobile}, function(err1, doc1){
+    //     console.log(doc1);
+    //     if(!err1){
+    //         if(doc1){
+    //             User.comparePassword(req.body.opwd, doc1.password, function(err2, doc2){
+    //                 console.log(doc2);
+    //                 if(doc2){
+    //                     User.pwd_encrypt(req.body.npwd, function(err3, hash){
+    //                         if(!err3){
+    //                             User.update({mobile: req.body.mobile},{$set:{password:hash}}, function(err4, doc4){
+    //                                 if(!err4){
+    //                                     res.json({success: true, msg:"password changed succesfully"});
+    //                                 } else {
+    //                                     res.json({success: false, msg:err4});
+    //                                 }
+    //                             })
+    //                         } else {
+    //                             res.json({success: false, msg:err3});
+    //                         }
+    //                     })
+    //                 } else {
+    //                     res.json({success: false, msg:'Invalid old password'});
+    //                 }
+    //             })
+    //         }
+    //     } else {
+    //         res.json({success: false, msg:'something wrong'});
+    //     }
+    // })
+})
+
+
 // Get user items wishlist
 module.exports = router;
 

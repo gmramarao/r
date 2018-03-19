@@ -41,6 +41,9 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { MyCashComponent } from './my-cash/my-cash.component';
+import { DeliveryAddressComponent } from './delivery-address/delivery-address.component';
+import { InviteEarnComponent } from './invite-earn/invite-earn.component';
 
 
 const appRoutes: Routes = [
@@ -109,6 +112,24 @@ const appRoutes: Routes = [
       path: 'search-result',
       component: SearchResultsComponent
   },
+  {
+      path: 'my-cash',
+      component: MyCashComponent
+  },
+  {
+      path: 'delivery-address',
+      component: DeliveryAddressComponent
+  },
+  {
+    path: 'privacy-settings',
+    component: PrivacyComponent
+  },
+  
+  {
+    path: 'invite-earn',
+    component: InviteEarnComponent
+  },
+
   {
       path: 'settings',
       component: SettingsComponent,
@@ -182,7 +203,10 @@ const appRoutes: Routes = [
     NotificationsComponent,
     SearchResultsComponent,
     SubCategoryComponent,
-    WishlistComponent
+    WishlistComponent,
+    MyCashComponent,
+    DeliveryAddressComponent,
+    InviteEarnComponent
   ],
   imports: [
     BrowserModule,

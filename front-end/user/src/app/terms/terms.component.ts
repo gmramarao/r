@@ -14,7 +14,7 @@ export class TermsComponent implements OnInit {
     // Get terms from dashboard
     this.userService.getTerms().subscribe(terms => {
       if (terms.success) {
-        this.terms = terms.msg[0].data;
+        this.terms = terms.msg.data;
       }else {
         this.terms = 'Something went wrong. Please try again later.';
       }

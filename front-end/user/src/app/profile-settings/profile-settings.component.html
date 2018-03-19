@@ -4,18 +4,36 @@
   </div>
   <div class="set-content-div">
     <label for="name">Name :</label>
-    <input type="text" id="name" class="inputs">
+    <input type="text" id="name" class="inputs" [(ngModel)]="name">
     <label for="email">Email :</label>
-    <input type="text" id="email" class="inputs">
+    <input type="text" id="email" class="inputs" [(ngModel)]="email">
     <label for="mobile">Mobile :</label>
-    <input type="text" id="mobile" class="inputs">
+    <input type="text" id="mobile" class="inputs" [(ngModel)]="mobile">
     <label for="address">Current Address :</label>
-    <textarea id="address"></textarea>
+    <textarea id="address" type="text" class="inputs" [(ngModel)]="address"></textarea>
     <label for="gender">Please select your gender :</label>
-    <label class="radio-label"><input type="radio" name="gender" id="" value="male">Male</label>
-    <label class="radio-label"><input type="radio" name="gender" id="" value="female"> Female</label>
+    <label class="radio-label"><input type="radio" name="gender" id="" value="male"  [(ngModel)]="gender">Male</label>
+    <label class="radio-label"><input type="radio" name="gender" id="" value="female"  [(ngModel)]="gender"> Female</label>
     <label for="dob">Please enter your date of birth :</label>
-    <input type="text" id="dob" class="inputs">
-    <button class="submit-btn">SUBMIT</button>
+    <input type="date" id="dob" class="inputs" [(ngModel)]="dob">
+    <button class="submit-btn" (click)="profile_setting()">SUBMIT</button>
   </div>
 </div>
+<!-- <div class="main-container">
+  <div class="width-control">
+    <div class="settings-form">
+      <h2 class="page-heads">Profile Settings</h2>
+      <label for="name">Name</label>
+      <input type="text" id="name" [(ngModel)]='vendor_name'>
+      <label for="mobile">Mobile</label>
+      <input type="text" id="mobile" [(ngModel)]='vendor_mobile'>
+      <label for="email">Email</label>
+      <input type="text" id="email" [(ngModel)]='vendor_email'>
+      <label for="address">Address</label>
+      <textarea type="text" id="address" [(ngModel)]='vendor_address'></textarea>
+      <button (click)='locateVendor()' class="get-loc-btn">Get Location</button>
+
+      <button class="submit-btn" (click)="profile_setting()">SUBMIT</button>
+    </div>
+  </div>
+</div> -->

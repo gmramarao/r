@@ -23,13 +23,17 @@ const Order = require('../models/order');
 const Rating = require('../models/rating');
 const Request = require('request');
 const Bcrypt = require('bcryptjs')
-router.post('/register', function(req, res) {
+router.post('/register', function (req, res) {
     email = req.body.email,
         mobile = req.body.mobile,
-        Vendor.findOne({ email: email }, function(err1, doc1) {
+        Vendor.findOne({
+            email: email
+        }, function (err1, doc1) {
             if (!err1) {
                 if (!doc1) {
-                    Vendor.findOne({ mobile: mobile }, function(err2, doc2) {
+                    Vendor.findOne({
+                        mobile: mobile
+                    }, function (err2, doc2) {
                         if (!err2) {
                             if (!doc2) {
 
@@ -41,66 +45,84 @@ router.post('/register', function(req, res) {
                                     registered_time: moment().format('MMMM Do YYYY, h:mm:ss a'),
                                     last_login_time: moment().format('MMMM Do YYYY, h:mm:ss a'),
                                 });
-                                Vendor.addVendor(j, function(err3, doc3) {
+                                Vendor.addVendor(j, function (err3, doc3) {
                                     if (err3) {
-                                        res.json({ success: false, msg: err3 });
+                                        res.json({
+                                            success: false,
+                                            msg: err3
+                                        });
                                     } else {
 
-                                        res.json({ success: true, msg: doc3 });
+                                        res.json({
+                                            success: true,
+                                            msg: doc3
+                                        });
                                     }
                                 });
 
                             } else {
-                                res.json({ success: false, msg: 'Mobile Exists' });
+                                res.json({
+                                    success: false,
+                                    msg: 'Mobile Exists'
+                                });
                             }
                         } else {
-                            res.json({ success: false, msg: err2 });
+                            res.json({
+                                success: false,
+                                msg: err2
+                            });
                         }
                     })
 
                 } else {
-                    res.json({ success: false, msg: 'Email exists' });
+                    res.json({
+                        success: false,
+                        msg: 'Email exists'
+                    });
                 }
             } else {
-                res.json({ success: false, msg: err1 });
+                res.json({
+                    success: false,
+                    msg: err1
+                });
             }
         })
-        // Vendor.find({ email: email }, (er, found) => {
-        //     if(er) {
-        //         res.json({ success: false, msg: er });
-        //     }else {
-        //         if(found.length > 0) {
-        //             res.json({ success: false, msg: 'Email exists' });
-        //         }else {
-        //             Vendor.find({ mobile: mobile }, (e, f) => {
-        //                 if(e) {
-        //                     res.json({ success: false, msg: e });
-        //                 }else {
-        //                     if (f.length > 0) {
-        //                         res.json({ success: false, msg: 'Mobile Exists' });
-        //                     }else {
-        //                         if(f.length > 0) {
-        //                             res.json({ success: true, msg: 'Vendor exists' });
-        //                         }else {
-        //                             // res.json({ success: true, msg:  });
-        //                             // Add Vendor
-        //                             var j = new Vendor({
-        //                                 name: a.body.name,
-        //                                 email: a.body.email,
-        //                                 mobile: a.body.mobile,
-        //                                 password: a.body.password,
-        //                                 registered_time: moment().format('MMMM Do YYYY, h:mm:ss a'),
-        //                                 last_login_time: moment().format('MMMM Do YYYY, h:mm:ss a'),
-        //                             });
-        //                             Vendor.addVendor(j, function(k, l) {
-        //                                 if(k) {
-        //                                     b.json({success: false, msg: k});
-        //                                 }else{
-        //                                     // Creat user
-        //                                     // Check if user with same mobile exists
-        //                                     b.json({ success: true, msg: l });
-        //                                 }
-        //                             });
+    // Vendor.find({ email: email }, (er, found) => {
+    //     if(er) {
+    //         res.json({ success: false, msg: er });
+    //     }else {
+    //         if(found.length > 0) {
+    //             res.json({ success: false, msg: 'Email exists' });
+    //         }else {
+    //             Vendor.find({ mobile: mobile }, (e, f) => {
+    //                 if(e) {
+    //                     res.json({ success: false, msg: e });
+    //                 }else {
+    //                     if (f.length > 0) {
+    //                         res.json({ success: false, msg: 'Mobile Exists' });
+    //                     }else {
+    //                         if(f.length > 0) {
+    //                             res.json({ success: true, msg: 'Vendor exists' });
+    //                         }else {
+    //                             // res.json({ success: true, msg:  });
+    //                             // Add Vendor
+    //                             var j = new Vendor({
+    //                                 name: a.body.name,
+    //                                 email: a.body.email,
+    //                                 mobile: a.body.mobile,
+    //                                 password: a.body.password,
+    //                                 registered_time: moment().format('MMMM Do YYYY, h:mm:ss a'),
+    //                                 last_login_time: moment().format('MMMM Do YYYY, h:mm:ss a'),
+    //                             });
+    //                             Vendor.addVendor(j, function(k, l) {
+    //                                 if(k) {
+    //                                     b.json({success: false, msg: k});
+    //                                 }else{
+    //                                     // Creat user
+    //                                     // Check if user with same mobile exists
+    //                                     b.json({ success: true, msg: l });
+    //                                 }
+    //                             });
 
     //                         }
     //                     }
@@ -111,10 +133,10 @@ router.post('/register', function(req, res) {
     // })
 });
 
-router.get('/find-email/:email', function(a, b) {
+router.get('/find-email/:email', function (a, b) {
     e = a.params.email, Vendor.find({
         email: e
-    }, function(d, f) {
+    }, function (d, f) {
         f ? 0 < f.length ? b.json({
             success: !0,
             msg: 'Vendor Found'
@@ -128,10 +150,10 @@ router.get('/find-email/:email', function(a, b) {
     });
 });
 
-router.get('/get-mobile-from-email/:email', function(a, b) {
+router.get('/get-mobile-from-email/:email', function (a, b) {
     e = a.params.email, Vendor.find({
         email: e
-    }, function(d, f) {
+    }, function (d, f) {
         f ? 0 < f.length ? b.json({
             success: !0,
             msg: f[0].mobile
@@ -145,7 +167,7 @@ router.get('/get-mobile-from-email/:email', function(a, b) {
     });
 });
 
-router.get('/find-mobile/:mobile', function(req, res) {
+router.get('/find-mobile/:mobile', function (req, res) {
     // m = a.params.mobile, Vendor.find({
     //     mobile: m
     // }, function(d, f) {
@@ -160,57 +182,87 @@ router.get('/find-mobile/:mobile', function(req, res) {
     //         msg: 'No Vendor found'
     //     });
     // });
-    Vendor.findOne({ mobile: req.params.mobile }, function(err, doc) {
+    Vendor.findOne({
+        mobile: req.params.mobile
+    }, function (err, doc) {
         if (doc) {
-            res.json({ success: true, msg: 'Vendor Found' });
+            res.json({
+                success: true,
+                msg: 'Vendor Found'
+            });
         } else {
-            res.json({ success: false, msg: 'No Vendor found' });
+            res.json({
+                success: false,
+                msg: 'No Vendor found'
+            });
         }
     })
 });
 
 // Get vendor by Id
-router.get('/get-vendor-by-id/:vendor_id', function(req, res) {
+router.get('/get-vendor-by-id/:vendor_id', function (req, res) {
     vendor_id = req.params.vendor_id;
-    Vendor.find({ _id: vendor_id }, (err, vendor) => {
+    Vendor.find({
+        _id: vendor_id
+    }, (err, vendor) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
             if (vendor.length > 0) {
-                res.json({ success: true, msg: vendor });
+                res.json({
+                    success: true,
+                    msg: vendor
+                });
             } else {
-                res.json({ success: false, msg: 'vendor_not_found' });
+                res.json({
+                    success: false,
+                    msg: 'vendor_not_found'
+                });
             }
         }
     });
 });
 
 // Get business by Id
-router.get('/get-business-by-id/:id', function(req, res) {
+router.get('/get-business-by-id/:id', function (req, res) {
     id = req.params.id;
-    Business.find({ _id: id }, (err, business) => {
+    Business.find({
+        _id: id
+    }, (err, business) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
             if (business.length > 0) {
-                res.json({ success: true, msg: business });
+                res.json({
+                    success: true,
+                    msg: business
+                });
             } else {
-                res.json({ success: false, msg: 'business_not_found' });
+                res.json({
+                    success: false,
+                    msg: 'business_not_found'
+                });
             }
         }
     });
 });
 
-router.post('/authenticate', function(a, b) {
+router.post('/authenticate', function (a, b) {
     var d = a.body.mobile,
         f = a.body.password;
 
-    Vendor.getVendorByMobile(d, function(g, h) {
+    Vendor.getVendorByMobile(d, function (g, h) {
         if (g) throw g;
         h || b.json({
             success: !1,
             msg: 'Vendor not found'
-        }), Vendor.comparePassword(f, h.password, function(i, j) {
+        }), Vendor.comparePassword(f, h.password, function (i, j) {
             if (i) throw i;
             if (j) {
                 var k = jwt.sign({
@@ -219,7 +271,11 @@ router.post('/authenticate', function(a, b) {
                     expiresIn: 604800
                 });
                 // Update last login
-                Vendor.findOneAndUpdate({ mobile: d }, { last_login_time: moment().format('MMMM Do YYYY, h:mm:ss a') }, (err, updated) => {
+                Vendor.findOneAndUpdate({
+                    mobile: d
+                }, {
+                    last_login_time: moment().format('MMMM Do YYYY, h:mm:ss a')
+                }, (err, updated) => {
                     if (updated) {
                         b.json({
                             success: !0,
@@ -255,16 +311,27 @@ router.post('/authenticate', function(a, b) {
 });
 
 // Get vendor businesses
-router.get('/get-vendor-businesses/:vendor_id', function(req, res) {
+router.get('/get-vendor-businesses/:vendor_id', function (req, res) {
     ven_id = req.params.vendor_id;
-    Business.find({ vendor_id: ven_id }, (err, busses) => {
+    Business.find({
+        vendor_id: ven_id
+    }, (err, busses) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
             if (busses) {
-                res.json({ success: true, msg: busses });
+                res.json({
+                    success: true,
+                    msg: busses
+                });
             } else {
-                res.json({ success: false, msg: 'No businesses returned' });
+                res.json({
+                    success: false,
+                    msg: 'No businesses returned'
+                });
             }
         }
     });
@@ -274,26 +341,40 @@ router.get('/get-vendor-businesses/:vendor_id', function(req, res) {
 router.get('/get-all-categories', (req, res) => {
     Category.find((err, cats) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: cats });
+            res.json({
+                success: true,
+                msg: cats
+            });
         }
     });
 });
 
 router.get('/get-sub-cats-of-cat/:cat_id', (req, res) => {
     cat_id = req.params.cat_id;
-    SubCat.find({ category_id: cat_id }, (err, subs) => {
+    SubCat.find({
+        category_id: cat_id
+    }, (err, subs) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: subs });
+            res.json({
+                success: true,
+                msg: subs
+            });
         }
     });
 });
 
 // Add business
-router.post('/add-business', function(req, res) {
+router.post('/add-business', function (req, res) {
     business = req.body.business;
     vendor_id = req.body.vendor_id;
     plan = req.body.plan;
@@ -311,9 +392,15 @@ router.post('/add-business', function(req, res) {
     });
     b.save((err, saved) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: saved });
+            res.json({
+                success: true,
+                msg: saved
+            });
         }
     });
 
@@ -323,15 +410,22 @@ router.post('/post-business-status', (req, res) => {
     id = req.body.b_id;
     status = req.body.status;
 
-    BusinessStatus.find({ business_id: id }, (err, b) => {
+    BusinessStatus.find({
+        business_id: id
+    }, (err, b) => {
         if (err) {
             // error occured
         } else {
             if (b.length > 0) {
-                BusinessStatus.remove({ business_id: id }, (er, removed) => {
+                BusinessStatus.remove({
+                    business_id: id
+                }, (er, removed) => {
                     if (er) {
                         // Error
-                        res.json({ success: false, msg: er });
+                        res.json({
+                            success: false,
+                            msg: er
+                        });
                     } else {
                         b_stat = new BusinessStatus({
                             business_id: id,
@@ -341,10 +435,16 @@ router.post('/post-business-status', (req, res) => {
                         b_stat.save((e, saved) => {
                             if (e) {
                                 // error
-                                res.json({ success: false, msg: e });
+                                res.json({
+                                    success: false,
+                                    msg: e
+                                });
                             } else {
                                 // Saved
-                                res.json({ success: true, msg: saved });
+                                res.json({
+                                    success: true,
+                                    msg: saved
+                                });
                             }
                         });
                     }
@@ -358,10 +458,16 @@ router.post('/post-business-status', (req, res) => {
                 b_stat.save((e, saved) => {
                     if (e) {
                         // error
-                        res.json({ success: false, msg: e });
+                        res.json({
+                            success: false,
+                            msg: e
+                        });
                     } else {
                         // Saved
-                        res.json({ success: true, msg: saved });
+                        res.json({
+                            success: true,
+                            msg: saved
+                        });
                     }
                 });
             }
@@ -371,11 +477,19 @@ router.post('/post-business-status', (req, res) => {
 
 router.get('/get-business-status/:id', (req, res) => {
     id = req.params.id;
-    BusinessStatus.find({ business_id: id }, (er, found) => {
+    BusinessStatus.find({
+        business_id: id
+    }, (er, found) => {
         if (er) {
-            res.json({ success: false, msg: er });
+            res.json({
+                success: false,
+                msg: er
+            });
         } else {
-            res.json({ success: true, msg: found });
+            res.json({
+                success: true,
+                msg: found
+            });
         }
     });
 });
@@ -398,9 +512,15 @@ router.post('/post-list', (req, res) => {
 
     list.save((err, saved) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: saved });
+            res.json({
+                success: true,
+                msg: saved
+            });
         }
     })
 });
@@ -430,9 +550,15 @@ router.post('/post-item', (req, res) => {
 
     item.save((err, saved) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: saved });
+            res.json({
+                success: true,
+                msg: saved
+            });
         }
     })
 });
@@ -440,14 +566,25 @@ router.post('/post-item', (req, res) => {
 // Get items from a list
 router.get('/get-items-of-list/:list_id', (req, res) => {
     list_id = req.params.list_id;
-    Item.find({ list_id: list_id }, (err, items) => {
+    Item.find({
+        list_id: list_id
+    }, (err, items) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
             if (items.length === 0) {
-                res.json({ success: false, msg: 'No items found' });
+                res.json({
+                    success: false,
+                    msg: 'No items found'
+                });
             } else {
-                res.json({ success: true, msg: items });
+                res.json({
+                    success: true,
+                    msg: items
+                });
             }
         }
     });
@@ -456,14 +593,25 @@ router.get('/get-items-of-list/:list_id', (req, res) => {
 // Get list details
 router.get('/get-list-details/:list_id', (req, res) => {
     list_id = req.params.list_id;
-    List.find({ _id: list_id }, (err, list) => {
+    List.find({
+        _id: list_id
+    }, (err, list) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
             if (list.length === 0) {
-                res.json({ success: false, msg: 'No items found' });
+                res.json({
+                    success: false,
+                    msg: 'No items found'
+                });
             } else {
-                res.json({ success: true, msg: list });
+                res.json({
+                    success: true,
+                    msg: list
+                });
             }
         }
     });
@@ -472,14 +620,25 @@ router.get('/get-list-details/:list_id', (req, res) => {
 // Get all items from vendor
 router.get('/get-items-of-vendor/:vendor_id', (req, res) => {
     id = req.params.vendor_id;
-    Item.find({ vendor_id: id }, (err, items) => {
+    Item.find({
+        vendor_id: id
+    }, (err, items) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
             if (items.length === 0) {
-                res.json({ success: false, msg: 'No items found' });
+                res.json({
+                    success: false,
+                    msg: 'No items found'
+                });
             } else {
-                res.json({ success: true, msg: items });
+                res.json({
+                    success: true,
+                    msg: items
+                });
             }
         }
     });
@@ -488,14 +647,25 @@ router.get('/get-items-of-vendor/:vendor_id', (req, res) => {
 // Get all items from business
 router.get('/get-items-of-business/:b_id', (req, res) => {
     id = req.params.b_id;
-    Item.find({ business_id: id }, (err, items) => {
+    Item.find({
+        business_id: id
+    }, (err, items) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
             if (items.length === 0) {
-                res.json({ success: false, msg: 'No items found' });
+                res.json({
+                    success: false,
+                    msg: 'No items found'
+                });
             } else {
-                res.json({ success: true, msg: items });
+                res.json({
+                    success: true,
+                    msg: items
+                });
             }
         }
     });
@@ -504,11 +674,19 @@ router.get('/get-items-of-business/:b_id', (req, res) => {
 // Get number of items from business
 router.get('/get-number-of-items-of-business/:b_id', (req, res) => {
     id = req.params.b_id;
-    Item.find({ business_id: id }, (err, items) => {
+    Item.find({
+        business_id: id
+    }, (err, items) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: items.length });
+            res.json({
+                success: true,
+                msg: items.length
+            });
         }
     });
 });
@@ -516,14 +694,25 @@ router.get('/get-number-of-items-of-business/:b_id', (req, res) => {
 // Get all lists of business
 router.get('/get-lists-of-business/:b_id', (req, res) => {
     id = req.params.b_id;
-    List.find({ business_id: id }, (err, items) => {
+    List.find({
+        business_id: id
+    }, (err, items) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
             if (items.length === 0) {
-                res.json({ success: false, msg: 'No List found' });
+                res.json({
+                    success: false,
+                    msg: 'No List found'
+                });
             } else {
-                res.json({ success: true, msg: items });
+                res.json({
+                    success: true,
+                    msg: items
+                });
             }
         }
     });
@@ -533,11 +722,22 @@ router.get('/get-lists-of-business/:b_id', (req, res) => {
 router.post('/edit-list', (req, res) => {
     id = req.body.id;
     edited_name = req.body.name;
-    List.findOneAndUpdate({ _id: id }, { list_name: edited_name, last_updated: moment().format('MMMM Do YYYY, h:mm:ss a') }, (err, updated) => {
+    List.findOneAndUpdate({
+        _id: id
+    }, {
+        list_name: edited_name,
+        last_updated: moment().format('MMMM Do YYYY, h:mm:ss a')
+    }, (err, updated) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: updated });
+            res.json({
+                success: true,
+                msg: updated
+            });
         }
     })
 });
@@ -548,11 +748,19 @@ router.post('/edit-list', (req, res) => {
 // Get total visits of business
 router.get('/get-total-business-visits/:b_id', (req, res) => {
     b_id = req.params.b_id;
-    BusinessVisitCount.find({ business_id: b_id }, (err, bc) => {
+    BusinessVisitCount.find({
+        business_id: b_id
+    }, (err, bc) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: bc });
+            res.json({
+                success: true,
+                msg: bc
+            });
         }
     });
 });
@@ -560,66 +768,117 @@ router.get('/get-total-business-visits/:b_id', (req, res) => {
 // Get total orders of business
 router.get('/get-total-business-orders/:b_id', (req, res) => {
     id = req.params.b_id;
-    BusinessOrder.find({ business_id: id }, (err, business) => {
+    BusinessOrder.find({
+        business_id: id
+    }, (err, business) => {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: business.length });
+            res.json({
+                success: true,
+                msg: business.length
+            });
         }
     });
 });
-router.get('/get-notification/:b_id', function(req, res) {
-    Order.find({ confirmation: 'pending' }, function(err, orders) {
+router.get('/get-notification/:b_id', function (req, res) {
+    Order.find({
+        confirmation: 'pending'
+    }, function (err, orders) {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: orders });
+            res.json({
+                success: true,
+                msg: orders
+            });
         }
     })
 })
-router.put('/confirmation', function(req, res) {
-    Order.update({ _id: req.body.id, confirmation: 'pending' }, { $set: { confirmation: req.body.confirmation } }, function(err, confirmation) {
+router.put('/confirmation', function (req, res) {
+    Order.update({
+        _id: req.body.id,
+        confirmation: 'pending'
+    }, {
+        $set: {
+            confirmation: req.body.confirmation
+        }
+    }, function (err, confirmation) {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: confirmation });
+            res.json({
+                success: true,
+                msg: confirmation
+            });
         }
     })
 })
 
-router.get('/get-orders/:b_id', function(req, res) {
-    Order.find({}, function(err, doc) {
+router.get('/get-orders/:b_id', function (req, res) {
+    Order.find({}, function (err, doc) {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: doc });
+            res.json({
+                success: true,
+                msg: doc
+            });
         }
     })
 })
 
-router.get('/get-orders-status/:status/:b_id', function(req, res) {
-    Order.find({ confirmation: req.params.status }, function(err, doc) {
+router.get('/get-orders-status/:status/:b_id', function (req, res) {
+    Order.find({
+        confirmation: req.params.status
+    }, function (err, doc) {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: doc });
+            res.json({
+                success: true,
+                msg: doc
+            });
         }
     })
 })
-router.post('/rating', function(req, res) {
+router.post('/rating', function (req, res) {
     console.log(req.body);
-    Rating.insertMany(req.body, function(err, doc) {
+    Rating.insertMany(req.body, function (err, doc) {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            res.json({ success: true, msg: doc });
+            res.json({
+                success: true,
+                msg: doc
+            });
         }
     })
 })
 
 
-router.get('/request-verification/:mobile', function(req, res) {
-    Vendor.findOne({ mobile: req.params.mobile }, function(err1, doc1) {
+router.get('/request-verification/:mobile', function (req, res) {
+    Vendor.findOne({
+        mobile: req.params.mobile
+    }, function (err1, doc1) {
         if (!err1) {
             if (doc1) {
                 var otp = Math.floor((Math.random() * 10000) + 1);
@@ -640,128 +899,297 @@ router.get('/request-verification/:mobile', function(req, res) {
                     headers: { 'cache-control': 'no-cache' }
                 };
 
-                Request(options, function(err2, response, body) {
+                
+                Request(options, function (err2, response, body) {
                     if (err2) {
                         console.log(err2);
-                        res.json({ success: false, msg: err2 });
+                        res.json({
+                            success: false,
+                            msg: err2
+                        });
                     } else {
                         console.log(body);
-                        Vendor.update({ mobile: req.params.mobile }, { $set: { otp: otp } }, function(err3, doc3) {
+                        Vendor.update({
+                            mobile: req.params.mobile
+                        }, {
+                            $set: {
+                                otp: otp
+                            }
+                        }, function (err3, doc3) {
                             if (err3) {
-                                res.json({ success: false, msg: err3 });
+                                res.json({
+                                    success: false,
+                                    msg: err3
+                                });
                             } else {
-                                res.json({ success: true, msg: { otp: otp } });
+                                res.json({
+                                    success: true,
+                                    msg: {
+                                        otp: otp
+                                    }
+                                });
                             }
                         })
                     }
                 });
             } else {
-                res.json({ success: false, msg: 'Mobile number Not Registered' });
+                res.json({
+                    success: false,
+                    msg: 'Mobile number Not Registered'
+                });
             }
         } else {
-            res.json({ success: false, msg: err1 });
+            res.json({
+                success: false,
+                msg: err1
+            });
         }
     })
 
 })
 
-router.put('/verify-code', function(req, res) {
+router.put('/verify-code', function (req, res) {
     console.log(req.body);
-    Vendor.findOne({ mobile: req.body.mobile, otp: req.body.otp }, function(err, doc) {
+    Vendor.findOne({
+        mobile: req.body.mobile,
+        otp: req.body.otp
+    }, function (err, doc) {
         if (err) {
-            res.json({ success: false, msg: err });
+            res.json({
+                success: false,
+                msg: err
+            });
         } else {
-            if(doc){
-                res.json({ success: true, msg: 'otp verified' });
+            if (doc) {
+                res.json({
+                    success: true,
+                    msg: 'otp verified'
+                });
             } else {
-                res.json({ success: false, msg: 'Invalid verification code' });
+                res.json({
+                    success: false,
+                    msg: 'Invalid verification code'
+                });
             }
-            
+
         }
     })
 })
 
-router.put('/reset-pwd', function(req, res) {
-    Vendor.pwd_encrypt(req.body.pwd, function(err1, hash){
-        if(!err1){
-            Vendor.update({mobile: req.body.mobile, otp:req.body.otp}, {$set:{password: hash, otp: null}},{multi:true}, function(err2, doc){
-                if(!err2){
-                    if(doc.nModified){
-                        res.json({ success: true, msg: doc });
+router.put('/reset-pwd', function (req, res) {
+    Vendor.pwd_encrypt(req.body.pwd, function (err1, hash) {
+        if (!err1) {
+            Vendor.update({
+                mobile: req.body.mobile,
+                otp: req.body.otp
+            }, {
+                $set: {
+                    password: hash,
+                    otp: null
+                }
+            }, {
+                multi: true
+            }, function (err2, doc) {
+                if (!err2) {
+                    if (doc.nModified) {
+                        res.json({
+                            success: true,
+                            msg: doc
+                        });
                     } else {
-                        res.json({ success: false, msg: 'password not updated' });
+                        res.json({
+                            success: false,
+                            msg: 'password not updated'
+                        });
                     }
                 } else {
-                    res.json({ success: false, msg: err2 });
+                    res.json({
+                        success: false,
+                        msg: err2
+                    });
                 }
             })
         } else {
-            res.json({ success: false, msg: err1 });
+            res.json({
+                success: false,
+                msg: err1
+            });
         }
     })
 })
 
-router.put('/change-pwd', function(req, res){
-    Vendor.getVendorByMobile(req.body.mobile, function(err1, doc1){
-        if(!err1){
-            Vendor.comparePassword(req.body.old_pwd, doc1.password, function(err2, doc2) {
+router.put('/change-pwd', function (req, res) {
+    Vendor.getVendorByMobile(req.body.mobile, function (err1, doc1) {
+        if (!err1) {
+            Vendor.comparePassword(req.body.old_pwd, doc1.password, function (err2, doc2) {
                 console.log(doc2);
-                if(!err2){
-                    if(doc2){
-                        Vendor.pwd_encrypt(req.body.new_pwd, function(err3, encrypt_new_pwd){
-                            if(!err3){
-                                Vendor.update({mobile: req.body.mobile},{$set:{password: encrypt_new_pwd}}, function(err4, doc4){
-                                    if(!err4){
-                                        res.json({ success: true, msg: 'Password changed' });
+                if (!err2) {
+                    if (doc2) {
+                        Vendor.pwd_encrypt(req.body.new_pwd, function (err3, encrypt_new_pwd) {
+                            if (!err3) {
+                                Vendor.update({
+                                    mobile: req.body.mobile
+                                }, {
+                                    $set: {
+                                        password: encrypt_new_pwd
+                                    }
+                                }, function (err4, doc4) {
+                                    if (!err4) {
+                                        res.json({
+                                            success: true,
+                                            msg: 'Password changed'
+                                        });
                                     } else {
-                                        res.json({ success: false, msg: err4 });
+                                        res.json({
+                                            success: false,
+                                            msg: err4
+                                        });
                                     }
                                 })
                             } else {
-                                res.json({ success: false, msg: err3 });
+                                res.json({
+                                    success: false,
+                                    msg: err3
+                                });
                             }
                         })
                     } else {
-                        res.json({ success: false, msg: 'Invalid old password' });
+                        res.json({
+                            success: false,
+                            msg: 'Invalid old password'
+                        });
                     }
-                    
+
                 } else {
-                    res.json({ success: false, msg: err2 });
+                    res.json({
+                        success: false,
+                        msg: err2
+                    });
                 }
             })
         } else {
-            res.json({ success: false, msg: err1 });
+            res.json({
+                success: false,
+                msg: err1
+            });
         }
     })
-    
+
 })
 
-router.put('/profile-setting', function(req, res){
+router.put('/profile-setting', function (req, res) {
     console.log(req.body);
-    Vendor.findOne({mobile: req.body.vendor_mobile, email: req.body.vendor_email}, function(err1, doc1){
-        if(!err1){
-            if(doc1){
-                Vendor.update({mobile: req.body.vendor_mobile, email: req.body.vendor_email},{$set:{address: req.body.vendor_address, name: req.body.vendor_name}},{multi:true}, function(err, doc){
-                    console.log(doc);
-                    if(!err){
-                        if(doc.nModified){
-                            res.json({ success: true, msg: 'updated succesfully' }); 
+    Vendor.findOne({
+        mobile: req.body.vendor_mobile,
+        email: req.body.vendor_email
+    }, function (err1, doc1) {
+        if (!err1) {
+            if (doc1) {
+                Vendor.update({
+                    mobile: req.body.vendor_mobile,
+                    email: req.body.vendor_email
+                }, {
+                    $set: {
+                        address: req.body.vendor_address,
+                        name: req.body.vendor_name
+                    }
+                }, {
+                    multi: true
+                }, function (err, doc) {
+                    if (!err) {
+                        if (doc.nModified) {
+                            res.json({
+                                success: true,
+                                msg: 'updated succesfully'
+                            });
                         } else {
-                            res.json({ success: false, msg: 'Profile data not updated'}); 
+                            res.json({
+                                success: false,
+                                msg: 'Profile data not updated'
+                            });
                         }
                     } else {
-                        res.json({ success: false, msg: err });
+                        res.json({
+                            success: false,
+                            msg: err
+                        });
                     }
                 })
             } else {
-                res.json({ success: false, msg: 'Please enter valid mobile number and amail'}); 
+                res.json({
+                    success: false,
+                    msg: 'Please enter valid mobile number and amail'
+                });
             }
         } else {
-            res.json({ success: false, msg: err1});
+            res.json({
+                success: false,
+                msg: err1
+            });
         }
-        
+
     })
-    
+
 })
+
+
+// var unirest = require("unirest");
+
+// var req = unirest("GET", "http://enterprise.smsgatewaycenter.com/SMSApi/rest/send");
+
+// req.query({
+//   "userId": "reatchall",
+//   "password": "Reatchall2030",
+//   "senderId": "SMSGAT",
+//   "sendMethod": "simpleMsg",
+//   "msgType": "text",
+//   "mobile": "8340821073",
+//   "msg": "This is my first message with SMSGateway.Center",
+//   "duplicateCheck": "true",
+//   "format": "json"
+// });
+
+// req.headers({
+//   "cache-control": "no-cache"
+// });
+
+
+// req.end(function (res) {
+//   if (res.error){
+//       console.log(res.error);
+//   } else {
+//       console.log(res.body);
+//   }
+// });
+
+// var request = require("request");
+
+// var options = {
+//     method: 'POST',
+//     url: 'http://enterprise.smsgatewaycenter.com/SMSApi/rest/send',
+//     headers: {
+//         'cache-control': 'no-cache',
+//         'content-type': 'application/x-www-form-urlencoded'
+//     },
+//     form: {
+//         userId: 'reatchall',
+//         password: 'Reatchall2030',
+//         senderId: 'SMSGAT',
+//         sendMethod: 'simpleMsg',
+//         msgType: 'text',
+//         mobile: '8096305457, 8340821073',
+//         msg: 'Your verification code is ' + 1234,
+//         duplicateCheck: 'true',
+//         format: 'json'
+//     }
+// };
+
+// request(options, function (error, response, body) {
+//     if (error) {
+//         console.log(error);
+//     };
+
+//     console.log(body);
+// });
 
 module.exports = router;
