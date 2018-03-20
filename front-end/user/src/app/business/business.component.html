@@ -190,7 +190,8 @@
                 <h6 class="sub-heads">Upload a jpg or excel or pdf file containing the details of your order</h6>
 
                 <label for="custom-order-file" class="custom-order-label">
-                  <input type="file" name="custom-order-file" id="custom-order-file" hidden (change)='customFileUploaded($event)'>
+                  <input type="file" name="custom-order-file" id="custom-order-file" hidden (change)='fileChangeEvent($event)'>
+                  <!-- <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." /> -->
                   <h6>Click here to upload</h6>
                 </label>
                 <button class="custom-order-submit-btn" (click)='requestCustomOrder()'>Request Order</button>

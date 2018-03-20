@@ -16,7 +16,7 @@ export class BusinessComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, private route: ActivatedRoute, private userService: UserService, private title: Title, private authService: AuthService, private http: Http) { }
-
+  filesToUpload: Array<File> = [];
   business_id;
   business_name;
   custom_order_file;
@@ -138,14 +138,27 @@ export class BusinessComponent implements OnInit {
     this.custom_order_file = event.target.files['0'];
   }
   requestCustomOrder() {
-    const formData = new FormData();
-    formData.append('buyer_id', this.user_id);
-    formData.append('file', this.custom_order_file);
+    // const formData = new FormData();
+    // formData.append('buyer_id', this.user_id);
+    // formData.append('file', this.custom_order_file);
+    // formData.append('business_id', this.business_id);
+    const formData: any = new FormData();
+    const files: Array<File> = this.filesToUpload;
+    formData.append("uploads[]", files[0], files[0]['name'], this.user_id);
     formData.append('business_id', this.business_id);
+    formData.append('user_id', this.user_id);
     this.userService.postCustomOrder(formData).subscribe(res => {
       console.log(res);
+      if(res.status){
+        alert('file uploaded sucesfully');
+      } else {
+        alert('something is wrong');
+      }
     });
 
+  }
+  fileChangeEvent(fileInput: any) {
+    this.filesToUpload = <Array<File>>fileInput.target.files;
   }
   addWishlistClicked() {
     const obj = {

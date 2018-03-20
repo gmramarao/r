@@ -89,7 +89,7 @@ export class UserService {
       const header = new Headers();
       header.append('Content-Type', 'application/json');
       // tslint:disable-next-line:max-line-length
-      return this.http.post('http://localhost:3000/user/post-custom-order', order, { headers: header }).map(res => res.json());
+      return this.http.post('http://localhost:3000/user/post-custom-order', order).map(res => res.json());
     }
     postVisitToBusiness(visit_obj) {
       const header = new Headers();
@@ -182,6 +182,9 @@ export class UserService {
     }
     changePwd(data){
       return this.http.put('http://localhost:3000/user/change-pwd', data).map(res => res.json());
+    }
+    getOrders(id){
+      return this.http.get('http://localhost:3000/user/get-orders/'+id).map(res => res.json());
     }
    
 }

@@ -22,7 +22,9 @@ const multer = require('multer');
 const Order = require('../models/order');
 const Rating = require('../models/rating');
 const Request = require('request');
-const Bcrypt = require('bcryptjs')
+const Bcrypt = require('bcryptjs');
+const async = require('async');
+const Custom_order = require('../models/custom-order');
 router.post('/register', function (req, res) {
     email = req.body.email,
         mobile = req.body.mobile,
@@ -1078,13 +1080,15 @@ router.put('/change-pwd', function (req, res) {
 })
 
 router.put('/profile-setting', function (req, res) {
-    console.log(req.body);
-    Vendor.findOne({
-        mobile: req.body.vendor_mobile,
-        email: req.body.vendor_email
-    }, function (err1, doc1) {
-        if (!err1) {
-            if (doc1) {
+    async.waterfall([
+        function(callback){
+            Vendor.findOne({
+                mobile: req.body.vendor_mobile,
+                email: req.body.vendor_email
+            },callback);
+        },
+        function(text, callback){
+            if(text){
                 Vendor.update({
                     mobile: req.body.vendor_mobile,
                     email: req.body.vendor_email
@@ -1095,101 +1099,139 @@ router.put('/profile-setting', function (req, res) {
                     }
                 }, {
                     multi: true
-                }, function (err, doc) {
-                    if (!err) {
-                        if (doc.nModified) {
-                            res.json({
-                                success: true,
-                                msg: 'updated succesfully'
-                            });
-                        } else {
-                            res.json({
-                                success: false,
-                                msg: 'Profile data not updated'
-                            });
-                        }
-                    } else {
-                        res.json({
-                            success: false,
-                            msg: err
-                        });
-                    }
-                })
+                },callback);
             } else {
                 res.json({
                     success: false,
                     msg: 'Please enter valid mobile number and amail'
                 });
             }
-        } else {
+        }
+    ], function(err, doc){
+        if(err){
             res.json({
                 success: false,
-                msg: err1
+                msg: err
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'updated succesfully'
             });
         }
 
     })
+    // Vendor.findOne({
+    //     mobile: req.body.vendor_mobile,
+    //     email: req.body.vendor_email
+    // }, function (err1, doc1) {
+    //     if (!err1) {
+    //         if (doc1) {
+    //             Vendor.update({
+    //                 mobile: req.body.vendor_mobile,
+    //                 email: req.body.vendor_email
+    //             }, {
+    //                 $set: {
+    //                     address: req.body.vendor_address,
+    //                     name: req.body.vendor_name
+    //                 }
+    //             }, {
+    //                 multi: true
+    //             }, function (err, doc) {
+    //                 if (!err) {
+    //                     if (doc.nModified) {
+    //                         res.json({
+    //                             success: true,
+    //                             msg: 'updated succesfully'
+    //                         });
+    //                     } else {
+    //                         res.json({
+    //                             success: false,
+    //                             msg: 'Profile data not updated'
+    //                         });
+    //                     }
+    //                 } else {
+    //                     res.json({
+    //                         success: false,
+    //                         msg: err
+    //                     });
+    //                 }
+    //             })
+    //         } else {
+    //             res.json({
+    //                 success: false,
+    //                 msg: 'Please enter valid mobile number and amail'
+    //             });
+    //         }
+    //     } else {
+    //         res.json({
+    //             success: false,
+    //             msg: err1
+    //         });
+    //     }
+
+    // })
+
+})
+router.get('/get-present-cash/:id', function(req, res){
+    res.json({status: true, msg:{balance:1000}});
+})
+
+router.get('/get-payment-history/:id', function(req, res){
+    res.json({status: true, msg:{balance:1000}});
+})
+
+router.get('/get-balance-details/:id', function(req, res){
+    res.json({status: true, msg:{balance:10000}});
 
 })
 
+router.get('/get-offers/:id', function(req, res){
+    res.json({status: true, msg:{offers:100}});
 
-// var unirest = require("unirest");
+})
 
-// var req = unirest("GET", "http://enterprise.smsgatewaycenter.com/SMSApi/rest/send");
+router.get('/get-all-products/:id', function(req, res){
+    res.json({status: true, msg:{products:100}});
 
-// req.query({
-//   "userId": "reatchall",
-//   "password": "Reatchall2030",
-//   "senderId": "SMSGAT",
-//   "sendMethod": "simpleMsg",
-//   "msgType": "text",
-//   "mobile": "8340821073",
-//   "msg": "This is my first message with SMSGateway.Center",
-//   "duplicateCheck": "true",
-//   "format": "json"
-// });
+})
 
-// req.headers({
-//   "cache-control": "no-cache"
-// });
+router.get('/get-selected-group-items/:id', function(req, res){
+    res.json({status: true, msg:{items:100}});
 
+})
 
-// req.end(function (res) {
-//   if (res.error){
-//       console.log(res.error);
-//   } else {
-//       console.log(res.body);
-//   }
-// });
+router.get('/get-current-orders/:id', function(req, res){
+    Order.find({}, function(err, doc){
+        if(!err){
+            res.json({status: true, msg:doc});
+        } else {
+            res.json({status: false, msg:err});
+        }
+    })
+    
+})
 
-// var request = require("request");
+router.get('/get-old-orders/:id', function(req, res){
+    Order.find({}, function(err, doc){
+        if(!err){
+            res.json({status: true, msg:doc});
+        } else {
+            res.json({status: false, msg:err});
+        }
+    })
+    
+})
 
-// var options = {
-//     method: 'POST',
-//     url: 'http://enterprise.smsgatewaycenter.com/SMSApi/rest/send',
-//     headers: {
-//         'cache-control': 'no-cache',
-//         'content-type': 'application/x-www-form-urlencoded'
-//     },
-//     form: {
-//         userId: 'reatchall',
-//         password: 'Reatchall2030',
-//         senderId: 'SMSGAT',
-//         sendMethod: 'simpleMsg',
-//         msgType: 'text',
-//         mobile: '8096305457, 8340821073',
-//         msg: 'Your verification code is ' + 1234,
-//         duplicateCheck: 'true',
-//         format: 'json'
-//     }
-// };
-
-// request(options, function (error, response, body) {
-//     if (error) {
-//         console.log(error);
-//     };
-
-//     console.log(body);
-// });
+router.get('/get-custom-orders/:id', function(req, res){
+    Custom_order.find({}, function(err, doc){
+        if(!err){
+            res.json({status: true, msg:doc});
+        } else {
+            res.json({status: false, msg:err});
+        }
+    })
+    
+})
 
 module.exports = router;

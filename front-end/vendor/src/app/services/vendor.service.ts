@@ -156,5 +156,13 @@ export class VendorService {
     profile_setting(data){
       return this.http.put(this.url+'vendor/profile-setting', data).map(res => res.json());
     }
+
+    getPresentCash(id){
+      return this.http.get(this.url+'vendor/get-present-cash/'+id).map(res => res.json());
+    }
+    getPaymentHistory(id){
+      return this.http.get(this.url+'vendor/get-payment-history/'+id).map(res => res.json());
+    }
+    
 }
 

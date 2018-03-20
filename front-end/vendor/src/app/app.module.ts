@@ -33,6 +33,7 @@ import { AddServicesComponent } from './add-services/add-services.component';
 import { BusinessSubHeaderComponent } from './business-sub-header/business-sub-header.component';
 import { ListComponent } from './list/list.component';
 import { ForgotComponent } from './forgot/forgot.component';
+import { MyCashComponent } from './my-cash/my-cash.component';
 
 const appRoutes: Routes = [
     {
@@ -52,6 +53,10 @@ const appRoutes: Routes = [
     {
         path: 'forgot',
         component: ForgotComponent
+    },
+    {
+        path: 'my-cash',
+        component: MyCashComponent
     },
     {
         path: 'add-business',
@@ -148,7 +153,8 @@ const appRoutes: Routes = [
         AddServicesComponent,
         BusinessSubHeaderComponent,
         ListComponent,
-        ForgotComponent
+        ForgotComponent,
+        MyCashComponent
     ],
     imports: [
         BrowserModule,
