@@ -36,7 +36,7 @@ const async = require('async');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const Custom_order = require('../models/custom-order');
-
+const config_fields = require('../config/config.js');
 // Get requests
 // example.com/user/parameter1/parameter2/...
 
@@ -503,13 +503,12 @@ router.get('/get-main-cats', (req, res) => {
 });
 
 var s3 = new aws.S3({
-    accessKeyId: 'AKIAIPBAZVLM3UY5YCJQ',
-    secretAccessKey: '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'
+    accessKeyId: config_fields.accessKeyId,
+    secretAccessKey: config_fields.secretAccessKey
 });
-
 var storage = multerS3({
     s3: s3,
-    bucket: 'sid44/custome',
+    bucket: config_fields.bucket+'/custome',
     metadata: function (req, file, cb) {
 
         cb(null, {

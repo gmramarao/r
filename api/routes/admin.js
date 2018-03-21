@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express'),
     router = express.Router(),
     passport = require('passport'),
@@ -287,7 +288,6 @@ router.post('/add-category', function(req, res) {
 router.post('/delete-category', function(req, res) {
     
     var id = req.body.cat_id;
-    
     Category.deleteOne({_id:id},(err, deleted)=> {
         if(err) {
             res.json({success: false, msg :err});
@@ -303,7 +303,7 @@ router.post('/delete-category', function(req, res) {
 });
 
 router.get('/get-sub-cats-of-cat/:cat_id', (req,res)=>{
-    cat_id = req.params.cat_id;
+    var cat_id = req.params.cat_id;
     SubCat.find({category_id: cat_id}, (err, subs)=>{
         if(err){
             res.json({success: false, msg: err});
@@ -315,7 +315,7 @@ router.get('/get-sub-cats-of-cat/:cat_id', (req,res)=>{
 
 // Pause Business
 router.get('/pause-business/:b_id', (req,res)=>{
-    business_id = req.params.b_id;
+    var business_id = req.params.b_id;
     Business.findByIdAndUpdate({ _id: business_id },{ paused: true }, (err, updated) => {
         if(err) {
             res.json({ success: false, msg: err });
@@ -327,7 +327,7 @@ router.get('/pause-business/:b_id', (req,res)=>{
 
 // Pause vendor
 router.get('/pause-vendor/:v_id', (req,res)=>{
-    vendor_id = req.params.v_id;
+    var vendor_id = req.params.v_id;
     Business.find({ vendor_id: vendor_id },(err, busses) => {
         if(err) {
 
@@ -386,20 +386,20 @@ router.get('/get-all-businesses', (req,res)=>{
 });
 // Add admin
 router.post('/add-admin', (req,res)=>{
-    email = req.body.email;
-    password = req.body.password;
-    vendor_page = req.body.vendors_page;
-    business_page = req.body.business_page;
-    users_page = req.body.users_page;
-    orders_page = req.body.orders_page;
-    main_menu_page = req.body.main_menu_page;
-    add_cats_page = req.body.add_categories_page;
-    add_sub_cats_page = req.body.add_subs_page;
-    edit_cats_page = req.body.edit_cats_page;
-    cms_page = req.body.cms_page;
-    emp_page = req.body.emp_page;
-    delivery_tracking_page = req.body.delivery_tracking_page;
-    add_super_admin_page = req.body.add_super_admin_page;
+    var email = req.body.email;
+    password = req.body.password,
+    vendor_page = req.body.vendors_page,
+    business_page = req.body.business_page,
+    users_page = req.body.users_page,
+    orders_page = req.body.orders_page,
+    main_menu_page = req.body.main_menu_page,
+    add_cats_page = req.body.add_categories_page,
+    add_sub_cats_page = req.body.add_subs_page,
+    edit_cats_page = req.body.edit_cats_page,
+    cms_page = req.body.cms_page,
+    emp_page = req.body.emp_page,
+    delivery_tracking_page = req.body.delivery_tracking_page,
+    add_super_admin_page = req.body.add_super_admin_page,
     add_sub_admin_page = req.body.add_sub_admin_page;
     let admin = new Admin({
         email: email,
@@ -431,7 +431,7 @@ router.post('/add-admin', (req,res)=>{
 
 // Get businesses by type
 router.get('/get-business-by-type/:type', (req,res)=>{
-    type = req.params.type;
+    var type = req.params.type;
     Business.find({ type: type } ,(err,bus) => {
         if(err) {
             res.json({success: false, msg: err});
@@ -442,7 +442,7 @@ router.get('/get-business-by-type/:type', (req,res)=>{
 });
 
 router.get('/get-admin/:id', (req,res)=>{
-    id = req.params.id;
+    var id = req.params.id;
     Admin.find({ _id: id } ,(err,admin) => {
         if(err) {
             res.json({success: false, msg: err});
@@ -454,7 +454,7 @@ router.get('/get-admin/:id', (req,res)=>{
 
 // Get businesses by type
 router.get('/get-business-by-id/:id', (req,res)=>{
-    id = req.params.id;
+    var id = req.params.id;
     Business.find({ _id: id } ,(err,bus) => {
         if(err) {
             res.json({success: false, msg: err});
@@ -483,8 +483,8 @@ router.post('/add-sub-category', function(req, res) {
     });
 });
 router.post('/edit-category', (req,res) => {
-    cat_id = req.body.cat_id;
-    name = req.body.name;
+    var cat_id = req.body.cat_id;
+    var name = req.body.name;
     console.log(cat_id);
 
     Category.findOneAndUpdate({_id: cat_id}, { name: name, updated_date: moment().format('MMMM Do YYYY, h:mm:ss a') }, (err, upd) => {
@@ -510,7 +510,7 @@ router.get('/get-main-cats', (req, res) => {
 
 // Get vendor by sub category
 router.get('/get-vendor-by-sub/:sub_id', (req,res)=>{
-    sub_id = req.params.sub_id;
+    var sub_id = req.params.sub_id;
     Business.find({'business.sub_category' : sub_id }, (err, buses)=>{
         if(err){
             res.json({success: false, msg: err});
@@ -522,7 +522,7 @@ router.get('/get-vendor-by-sub/:sub_id', (req,res)=>{
 
 // Get vendor by id
 router.get('/get-vendor-by-id/:id', (req,res)=>{
-    v_id = req.params.id;
+    var v_id = req.params.id;
     Vendor.find({_id : v_id }, (err, vendor)=>{
         if(err){
             res.json({success: false, msg: err});
@@ -533,7 +533,7 @@ router.get('/get-vendor-by-id/:id', (req,res)=>{
 });
 // Get user by id
 router.get('/get-user-by-id/:id', (req,res)=>{
-    u_id = req.params.id;
+    var u_id = req.params.id;
     User.find({_id : u_id }, (err, user)=>{
         if(err){
             res.json({success: false, msg: err});
@@ -548,7 +548,7 @@ router.get('/get-user-by-id/:id', (req,res)=>{
 });
 // Check if featured Businesses
 router.get('/check-if-featured/:b_id', (req,res) => {
-    b_id = req.params.b_id;
+    var b_id = req.params.b_id;
     FeaturedBusinessForHome.find({ business_id: b_id }, (err, found) => {
         if (err) {
             res.json({ success: false, msg: err });
@@ -559,7 +559,7 @@ router.get('/check-if-featured/:b_id', (req,res) => {
 });
 // Add featured Business
 router.get('/add-featured/:b_id', (req,res) => {
-    b_id = req.params.b_id;
+    var b_id = req.params.b_id;
     let fb = new FeaturedBusinessForHome({
         business_id : b_id,
         added_time: moment().format('MMMM Do YYYY, h:mm:ss a'),
@@ -574,7 +574,7 @@ router.get('/add-featured/:b_id', (req,res) => {
 });
 // Remove featured Business
 router.get('/remove-featured/:b_id', (req,res) => {
-    b_id = req.params.b_id;
+    var b_id = req.params.b_id;
     FeaturedBusinessForHome.remove({ business_id: b_id }, (err, removed) => {
         if (err) {
             res.json({ success: false, msg: err });

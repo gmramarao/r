@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express'),
     router = express.Router(),
     passport = require('passport'),
@@ -10,8 +11,8 @@ var express = require('express'),
     Category = require('../models/category'),
     SubCat = require('../models/sub-category'),
     Business = require('../models/business'),
-    List = require('../models/list');
-Item = require('../models/item');
+    List = require('../models/list'),
+Item = require('../models/item'),
 BusinessStatus = require('../models/business_status'),
     BusinessVisit = require('../models/business-visit'),
     BusinessVisitCount = require('../models/business-visit-count'),
@@ -26,8 +27,8 @@ const Bcrypt = require('bcryptjs');
 const async = require('async');
 const Custom_order = require('../models/custom-order');
 router.post('/register', function (req, res) {
-    email = req.body.email,
-        mobile = req.body.mobile,
+    var email = req.body.email;
+    var mobile = req.body.mobile;
         Vendor.findOne({
             email: email
         }, function (err1, doc1) {
@@ -203,7 +204,7 @@ router.get('/find-mobile/:mobile', function (req, res) {
 
 // Get vendor by Id
 router.get('/get-vendor-by-id/:vendor_id', function (req, res) {
-    vendor_id = req.params.vendor_id;
+    var vendor_id = req.params.vendor_id;
     Vendor.find({
         _id: vendor_id
     }, (err, vendor) => {
@@ -230,7 +231,7 @@ router.get('/get-vendor-by-id/:vendor_id', function (req, res) {
 
 // Get business by Id
 router.get('/get-business-by-id/:id', function (req, res) {
-    id = req.params.id;
+    var id = req.params.id;
     Business.find({
         _id: id
     }, (err, business) => {
@@ -314,7 +315,7 @@ router.post('/authenticate', function (a, b) {
 
 // Get vendor businesses
 router.get('/get-vendor-businesses/:vendor_id', function (req, res) {
-    ven_id = req.params.vendor_id;
+    var ven_id = req.params.vendor_id;
     Business.find({
         vendor_id: ven_id
     }, (err, busses) => {
@@ -357,7 +358,7 @@ router.get('/get-all-categories', (req, res) => {
 });
 
 router.get('/get-sub-cats-of-cat/:cat_id', (req, res) => {
-    cat_id = req.params.cat_id;
+    var cat_id = req.params.cat_id;
     SubCat.find({
         category_id: cat_id
     }, (err, subs) => {
@@ -377,11 +378,11 @@ router.get('/get-sub-cats-of-cat/:cat_id', (req, res) => {
 
 // Add business
 router.post('/add-business', function (req, res) {
-    business = req.body.business;
-    vendor_id = req.body.vendor_id;
-    plan = req.body.plan;
-    type = req.body.type;
-    coords = req.body.coords;
+    var business = req.body.business;
+    var vendor_id = req.body.vendor_id;
+    var plan = req.body.plan;
+    var type = req.body.type;
+    var coords = req.body.coords;
     console.log(type);
     var b = new Business({
         business: business,
@@ -409,8 +410,8 @@ router.post('/add-business', function (req, res) {
 });
 // Post business status
 router.post('/post-business-status', (req, res) => {
-    id = req.body.b_id;
-    status = req.body.status;
+    var id = req.body.b_id;
+    var status = req.body.status;
 
     BusinessStatus.find({
         business_id: id
@@ -478,7 +479,7 @@ router.post('/post-business-status', (req, res) => {
 });
 
 router.get('/get-business-status/:id', (req, res) => {
-    id = req.params.id;
+    var id = req.params.id;
     BusinessStatus.find({
         business_id: id
     }, (er, found) => {
@@ -498,10 +499,10 @@ router.get('/get-business-status/:id', (req, res) => {
 
 // Post list
 router.post('/post-list', (req, res) => {
-    vendor_id = req.body.vendor_id;
-    list_name = req.body.list_name;
-    list_data = req.body.list_data;
-    business_id = req.body.business_id;
+    var vendor_id = req.body.vendor_id;
+    var list_name = req.body.list_name;
+    var list_data = req.body.list_data;
+    var business_id = req.body.business_id;
 
     var list = new List({
         list_name: list_name,
@@ -529,13 +530,13 @@ router.post('/post-list', (req, res) => {
 
 // Post Item
 router.post('/post-item', (req, res) => {
-    vendor_id = req.body.vendor_id;
-    business_id = req.body.business_id;
-    item_data = req.body.item_data;
-    item_name = req.body.item_name;
-    item_price = req.body.item_price;
-    item_quality = req.body.item_quality;
-    list_id = req.body.list_id;
+    var vendor_id = req.body.vendor_id;
+    var business_id = req.body.business_id;
+    var item_data = req.body.item_data;
+    var item_name = req.body.item_name;
+    var item_price = req.body.item_price;
+    var item_quality = req.body.item_quality;
+    var list_id = req.body.list_id;
 
     var item = new Item({
         item_name: item_name,
@@ -567,7 +568,7 @@ router.post('/post-item', (req, res) => {
 
 // Get items from a list
 router.get('/get-items-of-list/:list_id', (req, res) => {
-    list_id = req.params.list_id;
+    var list_id = req.params.list_id;
     Item.find({
         list_id: list_id
     }, (err, items) => {
@@ -594,7 +595,7 @@ router.get('/get-items-of-list/:list_id', (req, res) => {
 
 // Get list details
 router.get('/get-list-details/:list_id', (req, res) => {
-    list_id = req.params.list_id;
+    var list_id = req.params.list_id;
     List.find({
         _id: list_id
     }, (err, list) => {
@@ -621,7 +622,7 @@ router.get('/get-list-details/:list_id', (req, res) => {
 
 // Get all items from vendor
 router.get('/get-items-of-vendor/:vendor_id', (req, res) => {
-    id = req.params.vendor_id;
+    var id = req.params.vendor_id;
     Item.find({
         vendor_id: id
     }, (err, items) => {
@@ -648,7 +649,7 @@ router.get('/get-items-of-vendor/:vendor_id', (req, res) => {
 
 // Get all items from business
 router.get('/get-items-of-business/:b_id', (req, res) => {
-    id = req.params.b_id;
+    var id = req.params.b_id;
     Item.find({
         business_id: id
     }, (err, items) => {
@@ -675,7 +676,7 @@ router.get('/get-items-of-business/:b_id', (req, res) => {
 
 // Get number of items from business
 router.get('/get-number-of-items-of-business/:b_id', (req, res) => {
-    id = req.params.b_id;
+    var id = req.params.b_id;
     Item.find({
         business_id: id
     }, (err, items) => {
@@ -695,7 +696,7 @@ router.get('/get-number-of-items-of-business/:b_id', (req, res) => {
 
 // Get all lists of business
 router.get('/get-lists-of-business/:b_id', (req, res) => {
-    id = req.params.b_id;
+    var id = req.params.b_id;
     List.find({
         business_id: id
     }, (err, items) => {
@@ -722,8 +723,8 @@ router.get('/get-lists-of-business/:b_id', (req, res) => {
 
 //  Edit list
 router.post('/edit-list', (req, res) => {
-    id = req.body.id;
-    edited_name = req.body.name;
+    var id = req.body.id;
+    var edited_name = req.body.name;
     List.findOneAndUpdate({
         _id: id
     }, {
@@ -749,7 +750,7 @@ router.post('/edit-list', (req, res) => {
 
 // Get total visits of business
 router.get('/get-total-business-visits/:b_id', (req, res) => {
-    b_id = req.params.b_id;
+    var b_id = req.params.b_id;
     BusinessVisitCount.find({
         business_id: b_id
     }, (err, bc) => {
@@ -769,7 +770,7 @@ router.get('/get-total-business-visits/:b_id', (req, res) => {
 
 // Get total orders of business
 router.get('/get-total-business-orders/:b_id', (req, res) => {
-    id = req.params.b_id;
+    var id = req.params.b_id;
     BusinessOrder.find({
         business_id: id
     }, (err, business) => {
@@ -860,7 +861,6 @@ router.get('/get-orders-status/:status/:b_id', function (req, res) {
     })
 })
 router.post('/rating', function (req, res) {
-    console.log(req.body);
     Rating.insertMany(req.body, function (err, doc) {
         if (err) {
             res.json({
@@ -951,7 +951,6 @@ router.get('/request-verification/:mobile', function (req, res) {
 })
 
 router.put('/verify-code', function (req, res) {
-    console.log(req.body);
     Vendor.findOne({
         mobile: req.body.mobile,
         otp: req.body.otp
@@ -979,8 +978,11 @@ router.put('/verify-code', function (req, res) {
 })
 
 router.put('/reset-pwd', function (req, res) {
-    Vendor.pwd_encrypt(req.body.pwd, function (err1, hash) {
-        if (!err1) {
+    async.waterfall([
+        function(callback){
+            Vendor.pwd_encrypt(req.body.pwd, callback);
+        },
+        function(hash, callback){
             Vendor.update({
                 mobile: req.body.mobile,
                 otp: req.body.otp
@@ -991,92 +993,73 @@ router.put('/reset-pwd', function (req, res) {
                 }
             }, {
                 multi: true
-            }, function (err2, doc) {
-                if (!err2) {
-                    if (doc.nModified) {
-                        res.json({
-                            success: true,
-                            msg: doc
-                        });
-                    } else {
-                        res.json({
-                            success: false,
-                            msg: 'password not updated'
-                        });
-                    }
-                } else {
-                    res.json({
-                        success: false,
-                        msg: err2
-                    });
-                }
-            })
+            },callback);
+        }
+    ], function(err, doc){
+        if (!err) {
+            if (doc.nModified) {
+                res.json({
+                    success: true,
+                    msg: doc
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'password not updated'
+                });
+            }
         } else {
             res.json({
                 success: false,
-                msg: err1
+                msg: err
             });
         }
+
     })
+    
 })
 
 router.put('/change-pwd', function (req, res) {
-    Vendor.getVendorByMobile(req.body.mobile, function (err1, doc1) {
-        if (!err1) {
-            Vendor.comparePassword(req.body.old_pwd, doc1.password, function (err2, doc2) {
-                console.log(doc2);
-                if (!err2) {
-                    if (doc2) {
-                        Vendor.pwd_encrypt(req.body.new_pwd, function (err3, encrypt_new_pwd) {
-                            if (!err3) {
-                                Vendor.update({
-                                    mobile: req.body.mobile
-                                }, {
-                                    $set: {
-                                        password: encrypt_new_pwd
-                                    }
-                                }, function (err4, doc4) {
-                                    if (!err4) {
-                                        res.json({
-                                            success: true,
-                                            msg: 'Password changed'
-                                        });
-                                    } else {
-                                        res.json({
-                                            success: false,
-                                            msg: err4
-                                        });
-                                    }
-                                })
-                            } else {
-                                res.json({
-                                    success: false,
-                                    msg: err3
-                                });
-                            }
-                        })
-                    } else {
-                        res.json({
-                            success: false,
-                            msg: 'Invalid old password'
-                        });
-                    }
-
-                } else {
-                    res.json({
-                        success: false,
-                        msg: err2
-                    });
+    async.waterfall([
+        function(callback){
+            Vendor.getVendorByMobile(req.body.mobile, callback);
+        },
+        function(text, callback){
+            Vendor.comparePassword(req.body.old_pwd, text.password, callback);
+        },
+        function(text, callback){
+            if(text){
+                Vendor.pwd_encrypt(req.body.new_pwd, callback);
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Invalid old password'
+                });
+            }
+        },
+        function(encrypt_new_pwd, callback){
+            Vendor.update({
+                mobile: req.body.mobile
+            }, {
+                $set: {
+                    password: encrypt_new_pwd
                 }
-            })
-        } else {
+            }, callback);
+        }
+    ], function(err, doc){
+        if(err){
             res.json({
                 success: false,
-                msg: err1
+                msg: err
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'Password changed'
             });
         }
-    })
 
+    })
 })
 
 router.put('/profile-setting', function (req, res) {
@@ -1121,56 +1104,6 @@ router.put('/profile-setting', function (req, res) {
         }
 
     })
-    // Vendor.findOne({
-    //     mobile: req.body.vendor_mobile,
-    //     email: req.body.vendor_email
-    // }, function (err1, doc1) {
-    //     if (!err1) {
-    //         if (doc1) {
-    //             Vendor.update({
-    //                 mobile: req.body.vendor_mobile,
-    //                 email: req.body.vendor_email
-    //             }, {
-    //                 $set: {
-    //                     address: req.body.vendor_address,
-    //                     name: req.body.vendor_name
-    //                 }
-    //             }, {
-    //                 multi: true
-    //             }, function (err, doc) {
-    //                 if (!err) {
-    //                     if (doc.nModified) {
-    //                         res.json({
-    //                             success: true,
-    //                             msg: 'updated succesfully'
-    //                         });
-    //                     } else {
-    //                         res.json({
-    //                             success: false,
-    //                             msg: 'Profile data not updated'
-    //                         });
-    //                     }
-    //                 } else {
-    //                     res.json({
-    //                         success: false,
-    //                         msg: err
-    //                     });
-    //                 }
-    //             })
-    //         } else {
-    //             res.json({
-    //                 success: false,
-    //                 msg: 'Please enter valid mobile number and amail'
-    //             });
-    //         }
-    //     } else {
-    //         res.json({
-    //             success: false,
-    //             msg: err1
-    //         });
-    //     }
-
-    // })
 
 })
 router.get('/get-present-cash/:id', function(req, res){

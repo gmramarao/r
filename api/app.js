@@ -1,3 +1,4 @@
+'use strict';
 const express=require('express');
 const compression = require('compression')
 const forceDomain = require('forcedomain');
@@ -15,7 +16,7 @@ app.use(morgan('dev'));
 //   protocol: 'https'
 // }));
 
-port = 3000;
+const port = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -46,7 +47,7 @@ mongoose.connection.on('connected',function(){
 });
 
 mongoose.connection.on('error',function(a){
-  a&&console.log('Error' + a);
+  console.log('Error' + a);
 });
 app.get('*',function(a,b){
   b.sendFile(path.join(__dirname + '/public/index.html'))
