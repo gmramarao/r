@@ -1,9 +1,61 @@
 <app-main-header></app-main-header>
+<!-- <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Fill out your name</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="thirdCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper> -->
 <div class="main-container">
   <div class="width-control">
     <h2>Add Busniess</h2>
     <div class="business-form">
-  
+
+      <div class="business-steps step-one">
       <label>Business Type</label>
       <div class="type-select-div">
         <div class="t-s">
@@ -17,22 +69,32 @@
           </label>
         </div>
       </div>
-  
+
       <label for="b-name">Name of the Business</label>
       <input type="text" id="b-name" [(ngModel)]='busniess_name'>
-  
-      <label for="contact-number">Contact name</label>
-      <input type="text" id="contact-number" [(ngModel)]='contact_name'>
-      <label for="contact-number">Contact number</label>
-      <input type="text" id="contact-number" [(ngModel)]='contact_number'>
-  
-      <label for="contact-address">Address</label>
-      <textarea name="" id="contact-address" [(ngModel)]='address'></textarea>
-      <button (click)='locateVendor()' class="locate-btn">Get current location</button>
-  
-      <label for="email">Email</label>
-      <input type="text" id="email" [(ngModel)]='email'>
-  
+
+      <label for="b-r-name">Registered Name</label>
+      <input type="text" id="b-r-name" [(ngModel)]='business_registered_name'>
+
+      <label for="select-category">Select Category</label>
+      <select name="select-category" id="select-category" (change)='catSelected($event.target.value)'>
+        <option value="null"></option>
+        <option value="{{ cat._id }}" *ngFor='let cat of all_cats'> {{ cat.name }} </option>
+      </select>
+
+      <label for="sub-category">Select Sub Category</label>
+      <!-- Div of subcats -->
+      <div class="sub-cats-div">
+        <span *ngFor='let sub of sub_cats' class="sub-name-btn">
+          <label>
+              {{ sub.name }}
+              <input type="checkbox" [value]="sub._id" (change)="subCheckChanged($event)" hidden>
+          </label>          
+        </span>
+      </div>
+
+      <label for="about">About Business</label>
+      <textarea id="about"  type="text" [(ngModel)]="about_business"></textarea>
       <label for="payment-modes">Available modes of payment :</label>
   
       <div class="pay-select-div">
@@ -52,609 +114,87 @@
           <input type="checkbox" name="pay-modes" id="p-other" value="other" [(ngModel)]='payment_type_other'> Other
         </label>
       </div>
-  
-      <label for="select-category">Select Category</label>
-      <select name="select-category" id="select-category" (change)='catSelected($event.target.value)'>
-        <option value="null"></option>
-        <option value="{{ cat._id }}" *ngFor='let cat of all_cats'> {{ cat.name }} </option>
-      </select>
-      <label for="sub-category">Select Sub Category</label>
-      <select name="sub-category" id="sub-category" (change)='subCatSelected($event.target.value)'>
-        <option value="null"></option>
-        <option value="{{ sub._id }}" *ngFor='let sub of sub_cats'>{{ sub.name }}</option>
-      </select>
-      <!-- <label for="s-b-plan">Select Business Plan</label>
-      <div class="b-plans-core">
-  
-        <div class="b-plan" id="free-b-plan">
-          <h5 class="b-plan-head">FREE</h5>
-          <ul>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-times-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-times-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-          </ul>
-          <div class="choose-div">
-            <label class="b-label" id="free-b-label" (click)='bLabelSelect("free")'>
-              <input type="radio" name="plan" id="" value ='free' [(ngModel)]='plan' hidden checked> Select
-            </label>
-          </div>
-        </div>
-  
-        <div class="b-plan" id="silver-b-plan">
-          <h5 class="b-plan-head">SILVER</h5>
-          <ul>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-times-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-times-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-          </ul>
-          <div class="choose-div">
-              <label class="b-label" id="silver-b-label" (click)='bLabelSelect("silver")'>
-                <input type="radio" name="plan" id="" value ='silver' [(ngModel)]='plan' hidden> Select
-              </label>
-            </div>
-        </div>
-  
-        <div class="b-plan" id="gold-b-plan">
-          <h5 class="b-plan-head">GOLD</h5>
-          <ul>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-times-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-          </ul>
-          <div class="choose-div">
-              <label class="b-label" id="gold-b-label" (click)='bLabelSelect("gold")'>
-                <input type="radio" name="plan" value ='gold' [(ngModel)]='plan' hidden> Select
-              </label>
-            </div>
-        </div>
-        <div class="b-plan" id="pl-b-plan">
-          <h5 class="b-plan-head">PLATINUM</h5>
-          <ul>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-            <li>
-              <span class="b-p-ico"><i class="fas fa-check-circle"></i></span> &nbsp; Vendor dashboard
-            </li>
-          </ul>
-          <div class="choose-div">
-            <label class="b-label" id="pl-b-label" (click)='bLabelSelect("platinum")'>
-              <input type="radio" name="plan" id="" value ='platinum' [(ngModel)]='plan' hidden> Select
-            </label>
-          </div>
-        </div>
-  
-      </div> -->
-      <div class="timings-div">
-        <label>
-          Choose busniess opening timings
+      <label for="contact-address">Address</label>
+      <textarea name="" id="contact-address" [(ngModel)]='address'></textarea>
+      <button (click)='locateVendor()' class="locate-btn">Get current location</button>
+
+      <button class="next-btn" (click)='nextClicked("two")'>Next</button>
+
+      </div>
+      <div class="business-steps step-two">
+        <label for="contact-number">Contact name</label>
+        <input type="text" id="contact-name" [(ngModel)]='contact_name'>
+        <label for="contact-number">Contact number</label>
+        <input type="text" id="contact-number" [(ngModel)]='contact_number'>
+        <input type="text" [(ngModel)]='contact_number_two' id="contact_number_two">
+        <input type="text" [(ngModel)]='contact_number_three' id="contact_number_three">
+        <input type="text" [(ngModel)]='contact_number_four' id="contact_number_four">
+        <button (click)="addContactNumberClicked()" class="add-contact-number-btn">Add Contact Number</button>
+
+        
+      <label for="whatsapp-number">Whatsapp Number</label>
+      <input type="text" [(ngModel)]='whatsapp_number'>
+
+      <label for="office-number">Office / Landline Number</label>
+      <input type="text" [(ngModel)]='office_number'>
+
+      <label for="email">Email</label>
+      <input type="text" id="email" [(ngModel)]='email'>
+
+      <label for="about-contact">About Contact</label>
+      <textarea name="about-contact" id="about-contact" [(ngModel)]='about_contact'></textarea>
+
+      <button class="next-btn" (click)='nextClicked("three")'>Next</button>
+
+      </div>
+      <div class="business-steps step-three">
+        
+        <label for="gstin">GSTIN</label>
+        <label for="gst-check">
+            <input type="checkbox" name="" id="gst-check"> &nbsp; I don't have this
+        </label> 
+        <input type="text" [(ngModel)]='gstin'>
+
+        <label for="tan">TAN</label>
+        <label for="tan-check">
+            <input type="checkbox" name="" id="tan-check"> &nbsp; I don't have this
+        </label> 
+        <input type="text" [(ngModel)]='tan'>
+
+        <label for="tan">CIN</label>
+        <label for="cin-check">
+            <input type="checkbox" name="" id="cin-check"> &nbsp; I don't have this
+        </label> 
+        <input type="text" [(ngModel)]='cin'>
+
+        <label for="other-trade-per">
+          <input type="file" id="other-trade-per" hidden>
+          Click here to upload other types of trading permissions
         </label>
-        <table class="table table-striped">
-          <tr>
-            <th>
-              Day
-            </th>
-            <th>
-              Status
-            </th>
-            <th>
-              From Time
-            </th>
-            <th>
-              To Time
-            </th>
-          </tr>
-          <tr>
-            <td>
-              Monday
-            </td>
-            <td>
-              <input type="checkbox" name="timings" id="" [(ngModel)]='monday_check'>
-            </td>
-            <td>
-              <select name="" id="monday_open_select" (change)='opentimeSelected($event.target.value, "monday")'>
-                <option value="12am">12:00 AM</option>
-                <option value="1am">01:00 AM</option>
-                <option value="2am">02:00 AM</option>
-                <option value="3am">03:00 AM</option>
-                <option value="4am">04:00 AM</option>
-                <option value="5am">05:00 AM</option>
-                <option value="6am">06:00 AM</option>
-                <option value="7am">07:00 AM</option>
-                <option value="8am">08:00 AM</option>
-                <option value="9am">09:00 AM</option>
-                <option value="10am">10:00 AM</option>
-                <option value="11am">11:00 AM</option>
-                <option value="12pm">12:00 PM</option>
-                <option value="1pm">01:00 PM</option>
-                <option value="2pm">02:00 PM</option>
-                <option value="3pm">03:00 PM</option>
-                <option value="4pm">04:00 PM</option>
-                <option value="5pm">05:00 PM</option>
-                <option value="6pm">06:00 PM</option>
-                <option value="7pm">07:00 PM</option>
-                <option value="8pm">08:00 PM</option>
-                <option value="9pm">09:00 PM</option>
-                <option value="10pm">10:00 PM</option>
-                <option value="11pm">11:00 PM</option>
-              </select>
-              <!-- <input type="text" placeholder="E.g: 9:00 AM" [(ngModel)]='monday_opening'> -->
-            </td>
-            <td>
-              <!-- <input type="text" placeholder='E.g: 6:00 PM' [(ngModel)]='monday_closing'> -->
-              <select name="" id="monday_close_select" (change)='closetimeSelected($event.target.value, "monday")'>
-                  <option value="12am">12:00 AM</option>
-                  <option value="1am">01:00 AM</option>
-                  <option value="2am">02:00 AM</option>
-                  <option value="3am">03:00 AM</option>
-                  <option value="4am">04:00 AM</option>
-                  <option value="5am">05:00 AM</option>
-                  <option value="6am">06:00 AM</option>
-                  <option value="7am">07:00 AM</option>
-                  <option value="8am">08:00 AM</option>
-                  <option value="9am">09:00 AM</option>
-                  <option value="10am">10:00 AM</option>
-                  <option value="11am">11:00 AM</option>
-                  <option value="12pm">12:00 PM</option>
-                  <option value="1pm">01:00 PM</option>
-                  <option value="2pm">02:00 PM</option>
-                  <option value="3pm">03:00 PM</option>
-                  <option value="4pm">04:00 PM</option>
-                  <option value="5pm">05:00 PM</option>
-                  <option value="6pm">06:00 PM</option>
-                  <option value="7pm">07:00 PM</option>
-                  <option value="8pm">08:00 PM</option>
-                  <option value="9pm">09:00 PM</option>
-                  <option value="10pm">10:00 PM</option>
-                  <option value="11pm">11:00 PM</option>
-                </select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Tuesday
-            </td>
-            <td>
-              <input type="checkbox" name="timings" id="" [(ngModel)]='tuesday_check'>
-            </td>
-            <td>
-                <select name="" id="tuesday_open_select" (change)='opentimeSelected($event.target.value, "tuesday")'>
-                  <option value="12am">12:00 AM</option>
-                  <option value="1am">01:00 AM</option>
-                  <option value="2am">02:00 AM</option>
-                  <option value="3am">03:00 AM</option>
-                  <option value="4am">04:00 AM</option>
-                  <option value="5am">05:00 AM</option>
-                  <option value="6am">06:00 AM</option>
-                  <option value="7am">07:00 AM</option>
-                  <option value="8am">08:00 AM</option>
-                  <option value="9am">09:00 AM</option>
-                  <option value="10am">10:00 AM</option>
-                  <option value="11am">11:00 AM</option>
-                  <option value="12pm">12:00 PM</option>
-                  <option value="1pm">01:00 PM</option>
-                  <option value="2pm">02:00 PM</option>
-                  <option value="3pm">03:00 PM</option>
-                  <option value="4pm">04:00 PM</option>
-                  <option value="5pm">05:00 PM</option>
-                  <option value="6pm">06:00 PM</option>
-                  <option value="7pm">07:00 PM</option>
-                  <option value="8pm">08:00 PM</option>
-                  <option value="9pm">09:00 PM</option>
-                  <option value="10pm">10:00 PM</option>
-                  <option value="11pm">11:00 PM</option>
-                </select>
-                <!-- <input type="text" placeholder="E.g: 9:00 AM" [(ngModel)]='monday_opening'> -->
-              </td>
-              <td>
-                <!-- <input type="text" placeholder='E.g: 6:00 PM' [(ngModel)]='monday_closing'> -->
-                <select name="" id="tuesday_close_select" (change)='closetimeSelected($event.target.value, "tuesday")'>
-                    <option value="12am">12:00 AM</option>
-                    <option value="1am">01:00 AM</option>
-                    <option value="2am">02:00 AM</option>
-                    <option value="3am">03:00 AM</option>
-                    <option value="4am">04:00 AM</option>
-                    <option value="5am">05:00 AM</option>
-                    <option value="6am">06:00 AM</option>
-                    <option value="7am">07:00 AM</option>
-                    <option value="8am">08:00 AM</option>
-                    <option value="9am">09:00 AM</option>
-                    <option value="10am">10:00 AM</option>
-                    <option value="11am">11:00 AM</option>
-                    <option value="12pm">12:00 PM</option>
-                    <option value="1pm">01:00 PM</option>
-                    <option value="2pm">02:00 PM</option>
-                    <option value="3pm">03:00 PM</option>
-                    <option value="4pm">04:00 PM</option>
-                    <option value="5pm">05:00 PM</option>
-                    <option value="6pm">06:00 PM</option>
-                    <option value="7pm">07:00 PM</option>
-                    <option value="8pm">08:00 PM</option>
-                    <option value="9pm">09:00 PM</option>
-                    <option value="10pm">10:00 PM</option>
-                    <option value="11pm">11:00 PM</option>
-                  </select>
-              </td>
-          </tr>
-          <tr>
-            <td>
-              Wednesday
-            </td>
-            <td>
-              <input type="checkbox" name="timings" id="" [(ngModel)]='wednesday_check'>
-            </td>
-            <td>
-                <select name="" id="wednesday_open_select" (change)='opentimeSelected($event.target.value, "wednesday")'>
-                  <option value="12am">12:00 AM</option>
-                  <option value="1am">01:00 AM</option>
-                  <option value="2am">02:00 AM</option>
-                  <option value="3am">03:00 AM</option>
-                  <option value="4am">04:00 AM</option>
-                  <option value="5am">05:00 AM</option>
-                  <option value="6am">06:00 AM</option>
-                  <option value="7am">07:00 AM</option>
-                  <option value="8am">08:00 AM</option>
-                  <option value="9am">09:00 AM</option>
-                  <option value="10am">10:00 AM</option>
-                  <option value="11am">11:00 AM</option>
-                  <option value="12pm">12:00 PM</option>
-                  <option value="1pm">01:00 PM</option>
-                  <option value="2pm">02:00 PM</option>
-                  <option value="3pm">03:00 PM</option>
-                  <option value="4pm">04:00 PM</option>
-                  <option value="5pm">05:00 PM</option>
-                  <option value="6pm">06:00 PM</option>
-                  <option value="7pm">07:00 PM</option>
-                  <option value="8pm">08:00 PM</option>
-                  <option value="9pm">09:00 PM</option>
-                  <option value="10pm">10:00 PM</option>
-                  <option value="11pm">11:00 PM</option>
-                </select>
-                <!-- <input type="text" placeholder="E.g: 9:00 AM" [(ngModel)]='monday_opening'> -->
-              </td>
-              <td>
-                <!-- <input type="text" placeholder='E.g: 6:00 PM' [(ngModel)]='monday_closing'> -->
-                <select name="" id="wednesday_close_select" (change)='closetimeSelected($event.target.value, "wednesday")'>
-                    <option value="12am">12:00 AM</option>
-                    <option value="1am">01:00 AM</option>
-                    <option value="2am">02:00 AM</option>
-                    <option value="3am">03:00 AM</option>
-                    <option value="4am">04:00 AM</option>
-                    <option value="5am">05:00 AM</option>
-                    <option value="6am">06:00 AM</option>
-                    <option value="7am">07:00 AM</option>
-                    <option value="8am">08:00 AM</option>
-                    <option value="9am">09:00 AM</option>
-                    <option value="10am">10:00 AM</option>
-                    <option value="11am">11:00 AM</option>
-                    <option value="12pm">12:00 PM</option>
-                    <option value="1pm">01:00 PM</option>
-                    <option value="2pm">02:00 PM</option>
-                    <option value="3pm">03:00 PM</option>
-                    <option value="4pm">04:00 PM</option>
-                    <option value="5pm">05:00 PM</option>
-                    <option value="6pm">06:00 PM</option>
-                    <option value="7pm">07:00 PM</option>
-                    <option value="8pm">08:00 PM</option>
-                    <option value="9pm">09:00 PM</option>
-                    <option value="10pm">10:00 PM</option>
-                    <option value="11pm">11:00 PM</option>
-                  </select>
-              </td>
-          </tr>
-          <tr>
-            <td>
-              Thursday
-            </td>
-            <td>
-              <input type="checkbox" name="timings" id="" [(ngModel)]='thursday_check'>
-            </td>
-            <td>
-                <select name="" id="thursday_open_select" (change)='opentimeSelected($event.target.value, "thursday")'>
-                  <option value="12am">12:00 AM</option>
-                  <option value="1am">01:00 AM</option>
-                  <option value="2am">02:00 AM</option>
-                  <option value="3am">03:00 AM</option>
-                  <option value="4am">04:00 AM</option>
-                  <option value="5am">05:00 AM</option>
-                  <option value="6am">06:00 AM</option>
-                  <option value="7am">07:00 AM</option>
-                  <option value="8am">08:00 AM</option>
-                  <option value="9am">09:00 AM</option>
-                  <option value="10am">10:00 AM</option>
-                  <option value="11am">11:00 AM</option>
-                  <option value="12pm">12:00 PM</option>
-                  <option value="1pm">01:00 PM</option>
-                  <option value="2pm">02:00 PM</option>
-                  <option value="3pm">03:00 PM</option>
-                  <option value="4pm">04:00 PM</option>
-                  <option value="5pm">05:00 PM</option>
-                  <option value="6pm">06:00 PM</option>
-                  <option value="7pm">07:00 PM</option>
-                  <option value="8pm">08:00 PM</option>
-                  <option value="9pm">09:00 PM</option>
-                  <option value="10pm">10:00 PM</option>
-                  <option value="11pm">11:00 PM</option>
-                </select>
-                <!-- <input type="text" placeholder="E.g: 9:00 AM" [(ngModel)]='monday_opening'> -->
-              </td>
-              <td>
-                <!-- <input type="text" placeholder='E.g: 6:00 PM' [(ngModel)]='monday_closing'> -->
-                <select name="" id="thursday_close_select" (change)='closetimeSelected($event.target.value, "thursday")'>
-                    <option value="12am">12:00 AM</option>
-                    <option value="1am">01:00 AM</option>
-                    <option value="2am">02:00 AM</option>
-                    <option value="3am">03:00 AM</option>
-                    <option value="4am">04:00 AM</option>
-                    <option value="5am">05:00 AM</option>
-                    <option value="6am">06:00 AM</option>
-                    <option value="7am">07:00 AM</option>
-                    <option value="8am">08:00 AM</option>
-                    <option value="9am">09:00 AM</option>
-                    <option value="10am">10:00 AM</option>
-                    <option value="11am">11:00 AM</option>
-                    <option value="12pm">12:00 PM</option>
-                    <option value="1pm">01:00 PM</option>
-                    <option value="2pm">02:00 PM</option>
-                    <option value="3pm">03:00 PM</option>
-                    <option value="4pm">04:00 PM</option>
-                    <option value="5pm">05:00 PM</option>
-                    <option value="6pm">06:00 PM</option>
-                    <option value="7pm">07:00 PM</option>
-                    <option value="8pm">08:00 PM</option>
-                    <option value="9pm">09:00 PM</option>
-                    <option value="10pm">10:00 PM</option>
-                    <option value="11pm">11:00 PM</option>
-                  </select>
-              </td>
-          </tr>
-          <tr>
-            <td>
-              Friday
-            </td>
-            <td>
-              <input type="checkbox" name="timings" id="" [(ngModel)]='friday_check'>
-            </td>
-            <td>
-                <select name="" id="friday_open_select" (change)='opentimeSelected($event.target.value, "friday")'>
-                  <option value="12am">12:00 AM</option>
-                  <option value="1am">01:00 AM</option>
-                  <option value="2am">02:00 AM</option>
-                  <option value="3am">03:00 AM</option>
-                  <option value="4am">04:00 AM</option>
-                  <option value="5am">05:00 AM</option>
-                  <option value="6am">06:00 AM</option>
-                  <option value="7am">07:00 AM</option>
-                  <option value="8am">08:00 AM</option>
-                  <option value="9am">09:00 AM</option>
-                  <option value="10am">10:00 AM</option>
-                  <option value="11am">11:00 AM</option>
-                  <option value="12pm">12:00 PM</option>
-                  <option value="1pm">01:00 PM</option>
-                  <option value="2pm">02:00 PM</option>
-                  <option value="3pm">03:00 PM</option>
-                  <option value="4pm">04:00 PM</option>
-                  <option value="5pm">05:00 PM</option>
-                  <option value="6pm">06:00 PM</option>
-                  <option value="7pm">07:00 PM</option>
-                  <option value="8pm">08:00 PM</option>
-                  <option value="9pm">09:00 PM</option>
-                  <option value="10pm">10:00 PM</option>
-                  <option value="11pm">11:00 PM</option>
-                </select>
-                <!-- <input type="text" placeholder="E.g: 9:00 AM" [(ngModel)]='monday_opening'> -->
-              </td>
-              <td>
-                <!-- <input type="text" placeholder='E.g: 6:00 PM' [(ngModel)]='monday_closing'> -->
-                <select name="" id="friday_close_select" (change)='closetimeSelected($event.target.value, "friday")'>
-                    <option value="12am">12:00 AM</option>
-                    <option value="1am">01:00 AM</option>
-                    <option value="2am">02:00 AM</option>
-                    <option value="3am">03:00 AM</option>
-                    <option value="4am">04:00 AM</option>
-                    <option value="5am">05:00 AM</option>
-                    <option value="6am">06:00 AM</option>
-                    <option value="7am">07:00 AM</option>
-                    <option value="8am">08:00 AM</option>
-                    <option value="9am">09:00 AM</option>
-                    <option value="10am">10:00 AM</option>
-                    <option value="11am">11:00 AM</option>
-                    <option value="12pm">12:00 PM</option>
-                    <option value="1pm">01:00 PM</option>
-                    <option value="2pm">02:00 PM</option>
-                    <option value="3pm">03:00 PM</option>
-                    <option value="4pm">04:00 PM</option>
-                    <option value="5pm">05:00 PM</option>
-                    <option value="6pm">06:00 PM</option>
-                    <option value="7pm">07:00 PM</option>
-                    <option value="8pm">08:00 PM</option>
-                    <option value="9pm">09:00 PM</option>
-                    <option value="10pm">10:00 PM</option>
-                    <option value="11pm">11:00 PM</option>
-                  </select>
-              </td>
-          </tr>
-          <tr>
-            <td>
-              Saturday
-            </td>
-            <td>
-              <input type="checkbox" name="timings" id="" [(ngModel)]='saturday_check'>
-            </td>
-            <td>
-                <select name="" id="saturday_open_select" (change)='opentimeSelected($event.target.value, "saturday")'>
-                  <option value="12am">12:00 AM</option>
-                  <option value="1am">01:00 AM</option>
-                  <option value="2am">02:00 AM</option>
-                  <option value="3am">03:00 AM</option>
-                  <option value="4am">04:00 AM</option>
-                  <option value="5am">05:00 AM</option>
-                  <option value="6am">06:00 AM</option>
-                  <option value="7am">07:00 AM</option>
-                  <option value="8am">08:00 AM</option>
-                  <option value="9am">09:00 AM</option>
-                  <option value="10am">10:00 AM</option>
-                  <option value="11am">11:00 AM</option>
-                  <option value="12pm">12:00 PM</option>
-                  <option value="1pm">01:00 PM</option>
-                  <option value="2pm">02:00 PM</option>
-                  <option value="3pm">03:00 PM</option>
-                  <option value="4pm">04:00 PM</option>
-                  <option value="5pm">05:00 PM</option>
-                  <option value="6pm">06:00 PM</option>
-                  <option value="7pm">07:00 PM</option>
-                  <option value="8pm">08:00 PM</option>
-                  <option value="9pm">09:00 PM</option>
-                  <option value="10pm">10:00 PM</option>
-                  <option value="11pm">11:00 PM</option>
-                </select>
-                <!-- <input type="text" placeholder="E.g: 9:00 AM" [(ngModel)]='monday_opening'> -->
-              </td>
-              <td>
-                <!-- <input type="text" placeholder='E.g: 6:00 PM' [(ngModel)]='monday_closing'> -->
-                <select name="" id="saturday_close_select" (change)='closetimeSelected($event.target.value, "saturday")'>
-                    <option value="12am">12:00 AM</option>
-                    <option value="1am">01:00 AM</option>
-                    <option value="2am">02:00 AM</option>
-                    <option value="3am">03:00 AM</option>
-                    <option value="4am">04:00 AM</option>
-                    <option value="5am">05:00 AM</option>
-                    <option value="6am">06:00 AM</option>
-                    <option value="7am">07:00 AM</option>
-                    <option value="8am">08:00 AM</option>
-                    <option value="9am">09:00 AM</option>
-                    <option value="10am">10:00 AM</option>
-                    <option value="11am">11:00 AM</option>
-                    <option value="12pm">12:00 PM</option>
-                    <option value="1pm">01:00 PM</option>
-                    <option value="2pm">02:00 PM</option>
-                    <option value="3pm">03:00 PM</option>
-                    <option value="4pm">04:00 PM</option>
-                    <option value="5pm">05:00 PM</option>
-                    <option value="6pm">06:00 PM</option>
-                    <option value="7pm">07:00 PM</option>
-                    <option value="8pm">08:00 PM</option>
-                    <option value="9pm">09:00 PM</option>
-                    <option value="10pm">10:00 PM</option>
-                    <option value="11pm">11:00 PM</option>
-                  </select>
-              </td>
-          </tr>
-          <tr>
-            <td>
-              Sunday
-            </td>
-            <td>
-              <input type="checkbox" name="timings" id="" [(ngModel)]='sunday_check'>
-            </td>
-            <td>
-                <select name="" id="sunday_open_select" (change)='opentimeSelected($event.target.value, "sunday")'>
-                  <option value="12am">12:00 AM</option>
-                  <option value="1am">01:00 AM</option>
-                  <option value="2am">02:00 AM</option>
-                  <option value="3am">03:00 AM</option>
-                  <option value="4am">04:00 AM</option>
-                  <option value="5am">05:00 AM</option>
-                  <option value="6am">06:00 AM</option>
-                  <option value="7am">07:00 AM</option>
-                  <option value="8am">08:00 AM</option>
-                  <option value="9am">09:00 AM</option>
-                  <option value="10am">10:00 AM</option>
-                  <option value="11am">11:00 AM</option>
-                  <option value="12pm">12:00 PM</option>
-                  <option value="1pm">01:00 PM</option>
-                  <option value="2pm">02:00 PM</option>
-                  <option value="3pm">03:00 PM</option>
-                  <option value="4pm">04:00 PM</option>
-                  <option value="5pm">05:00 PM</option>
-                  <option value="6pm">06:00 PM</option>
-                  <option value="7pm">07:00 PM</option>
-                  <option value="8pm">08:00 PM</option>
-                  <option value="9pm">09:00 PM</option>
-                  <option value="10pm">10:00 PM</option>
-                  <option value="11pm">11:00 PM</option>
-                </select>
-                <!-- <input type="text" placeholder="E.g: 9:00 AM" [(ngModel)]='monday_opening'> -->
-              </td>
-              <td>
-                <!-- <input type="text" placeholder='E.g: 6:00 PM' [(ngModel)]='monday_closing'> -->
-                <select name="" id="sunday_close_select" (change)='closetimeSelected($event.target.value, "sunday")'>
-                    <option value="12am">12:00 AM</option>
-                    <option value="1am">01:00 AM</option>
-                    <option value="2am">02:00 AM</option>
-                    <option value="3am">03:00 AM</option>
-                    <option value="4am">04:00 AM</option>
-                    <option value="5am">05:00 AM</option>
-                    <option value="6am">06:00 AM</option>
-                    <option value="7am">07:00 AM</option>
-                    <option value="8am">08:00 AM</option>
-                    <option value="9am">09:00 AM</option>
-                    <option value="10am">10:00 AM</option>
-                    <option value="11am">11:00 AM</option>
-                    <option value="12pm">12:00 PM</option>
-                    <option value="1pm">01:00 PM</option>
-                    <option value="2pm">02:00 PM</option>
-                    <option value="3pm">03:00 PM</option>
-                    <option value="4pm">04:00 PM</option>
-                    <option value="5pm">05:00 PM</option>
-                    <option value="6pm">06:00 PM</option>
-                    <option value="7pm">07:00 PM</option>
-                    <option value="8pm">08:00 PM</option>
-                    <option value="9pm">09:00 PM</option>
-                    <option value="10pm">10:00 PM</option>
-                    <option value="11pm">11:00 PM</option>
-                  </select>
-              </td>
-          </tr>
-        </table>
+        <button class="next-btn" (click)='nextClicked("four")'>Next</button>
       </div>
 
-      <button class="submit" (click)='createBusinessClicked()'>Create Busniess</button>
+      <div class="business-steps step-four">
+        <label for="my-web">Business Website</label>
+        <input type="text" [(ngModel)]='b_website' id="my-web">
+
+        <label for="fb-link">Facebook Link</label>
+        <input type="text" [(ngModel)]='fb_link' id="fb-link">
+
+        <label for="twt-link">Twitter Link</label>
+        <input type="text" [(ngModel)]='twitter_link' id="twt-link">
+
+        <label for="yt-link">Youtube Link</label>      
+        <input type="text" [(ngModel)]='yt_link' id="yt-link">
+
+        <label for="li-link">Linkedin Link</label>      
+        <input type="text" [(ngModel)]='li_link' id="li-link">
+
+        <label for="insta-link">Instagram Link</label>      
+        <input type="text" [(ngModel)]='insta_link' id="insta-link">
+
+        <button class="submit" (click)='createBusinessClicked()'>Create Busniess</button>
+      </div>
   
       
     </div>

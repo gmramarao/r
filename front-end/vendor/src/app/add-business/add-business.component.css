@@ -18,16 +18,7 @@ h2{
   font-size: 140%;
   font-weight: 700;
 }
-.business-form {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  width: 100%;
-  height: auto;
-  max-height: auto; 
-}
+
 label{
   font-size: 90%;
   font-weight: 500;
@@ -214,4 +205,92 @@ th{
 }
 td{
   font-size: 90%;
+}
+#contact_number_two,#contact_number_three, #contact_number_four{
+  margin-top: 10px;
+  display: none;
+}
+.add-contact-number-btn{
+  border: 1px solid #666;
+  background-color: #ccc;
+  color: #333;
+  font-size: 90%;
+  cursor: pointer;
+  height: 40px;
+  width: 300px;
+  margin-top: 20px;
+  border-radius: 5px;
+  font-weight: 500;
+  outline: none;
+}
+.sub-cats-div{
+  position: relative;
+  display: block;
+  width: 80%;
+  /* border: 1px solid rgba(0,0,0,.2);  */
+}
+.sub-name-btn{
+  display: inline-block;
+  margin-right: 20px;
+  margin-top: 20px;
+  overflow: hidden;
+  background-color: #dfe6e9;
+  border-radius: 4px;
+  color: #666;
+  font-size: 80%;
+  box-shadow: 0 0 4px 0.1px rgba(0,0,0,.2);
+  cursor: pointer;
+}
+.sub-name-btn label{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px;
+  margin: 0;
+  cursor: pointer;
+}
+.selected-sub{
+  background-color: #f00;
+  color: #fff;
+}
+.business-steps{
+  position: absolute;
+  display: block;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  display: none;
+  height: 100%;
+  overflow: hidden;
+}
+.business-form {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  height: 1200px;
+  max-height: auto; 
+}
+.step-one{
+  display: flex;
+  flex-direction: column;
+}
+.next-btn{
+  height: 40px;
+  width: 100%;
+  margin-top: 20px;
+  background-color: #d35400;
+  color: #fff;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+}
+.next-btn:hover{
+  box-shadow: 0 5px 10px 1px rgba(0,0,0,.2);
+  background-color: #c0392b;
 }

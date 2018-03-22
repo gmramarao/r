@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { VendorService } from '../services/vendor.service';
 import { ValidateService } from '../services/validate.service';
-
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 const moment = require('moment');
 declare var $: any;
 
@@ -12,44 +12,67 @@ declare var $: any;
   styleUrls: ['./add-business.component.css']
 })
 export class AddBusinessComponent implements OnInit {
-
-  constructor(private vendorService: VendorService, private validate: ValidateService, private router: Router) { }
+  isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
+  constructor(private vendorService: VendorService, private validate: ValidateService, private router: Router, private _formBuilder: FormBuilder) { }
   vendor_id;
   business_type;
   busniess_name;
+  business_registered_name;
   contact_name;
   contact_number;
+  contact_number_two;
+  contact_number_three;
+  contact_number_four;
+  whatsapp_number;
+  office_number;
+  aadhar_number;
   address;
   email;
   payment_type_paytm;
   payment_type_cards;
   payment_type_cash;
   payment_type_other;
-
+  payment_type_online;
+  contact_num_count = 0;
+  plan;
   all_cats;
   sub_cats;
 
+  tan;
+  gstin;
+  cin;
+  about_business;
+  about_us;
+  my_web;
+  fb_link;
   selected_cat;
   selected_sub;
 
   location;
   lat;
   long;
+  selected_sub_items = [];
 
-  plan; // Free, gold, silver, platinum
-  monday_check; tuesday_check; wednesday_check; thursday_check; friday_check; saturday_check; sunday_check;
-
-  // tslint:disable-next-line:max-line-length
-  monday_opening = null; monday_closing = null; tuesday_opening = null; tuesday_closing = null; wednesday_opening = null; wednesday_closing = null;
-  // tslint:disable-next-line:max-line-length
-  thursday_opening = null; thursday_closing = null; friday_opening = null; friday_closing = null; saturday_opening = null; saturday_closing = null; sunday_opening = null; sunday_closing = null;
   ngOnInit() {
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+    this.thirdFormGroup = this._formBuilder.group({
+      thirdCtrl: ['', Validators.required]
+    });
     // Select free plan by default
     this.bLabelSelect('free');
     // Get vendor from localhost
     this.vendorService.getCategories().subscribe(cats => {
       if (cats.success) {
         this.all_cats = cats.msg;
+        console.log(this.all_cats);
       }else {
         alert('Cats not brought. View Console');
         console.log(cats);
@@ -58,6 +81,11 @@ export class AddBusinessComponent implements OnInit {
     // Get vendor from localhost
     const vendor_obj = JSON.parse(localStorage.getItem('user'));
     this.vendor_id = vendor_obj.id;
+
+    $('input').keyup(function(){
+      $(this).css({ 'border-color': 'rgba(0,0,0,.4)' });
+    })
+
   }
   createBusinessClicked() {
     const busniess_object = {
@@ -66,54 +94,67 @@ export class AddBusinessComponent implements OnInit {
       contact_number : this.contact_number,
       address : this.address,
       email : this.email,
+      business_registered_name: this.business_registered_name,
+      contact_name: this.contact_name,
+      whatsapp_number: this.whatsapp_number,
+      office_number: this.office_number,
+      aadhar_number: this.aadhar_number,
+      gstin: this.gstin,
+      tan: this.tan,
+      cin: this.cin,
+      about_business: this.about_business,
+      about_us: this.about_us,
+      my_web: this.my_web,
+      fb_link: this.fb_link,
       payments : {
         paytm : this.payment_type_paytm,
         cash : this.payment_type_cash,
         cards : this.payment_type_cards,
-        other : this.payment_type_other
+        other : this.payment_type_other,
+        online: this.payment_type_online
       },
       category : this.selected_cat,
       sub_category : this.selected_sub,
       plan: this.plan,
-      days : {
-        monday: this.monday_check,
-        tuesday : this.tuesday_check,
-        wednesday : this.wednesday_check,
-        thursday : this.thursday_check,
-        friday : this.friday_check,
-        saturday : this.saturday_check,
-        sunday : this.sunday_check
-      },
-      timings : {
-        monday : {
-          opening : this.monday_opening,
-          closing: this.monday_closing
-        },
-        tuesday : {
-          opening : this.tuesday_opening,
-          closing : this.tuesday_closing
-        },
-        wednesday : {
-          opening : this.wednesday_opening,
-          closing : this.wednesday_closing
-        },
-        thursday : {
-          opening: this.thursday_opening,
-          closing : this.thursday_closing
-        },
-        friday : {
-          opening : this.friday_opening,
-          closing : this.friday_closing
-        },
-        saturday : {
-          opening: this.saturday_opening,
-          closing : this.saturday_closing
-        },
-        sunday : {
-          opening : this.sunday_opening,
-          closing : this.sunday_closing
-        }
-      }
+      // days : {
+      //   monday: this.monday_check,
+      //   tuesday : this.tuesday_check,
+      //   wednesday : this.wednesday_check,
+      //   thursday : this.thursday_check,
+      //   friday : this.friday_check,
+      //   saturday : this.saturday_check,
+      //   sunday : this.sunday_check
+      // },
+      // timings : {
+      //   monday : {
+      //     opening : this.monday_opening,
+      //     closing: this.monday_closing
+      //   },
+      //   tuesday : {
+      //     opening : this.tuesday_opening,
+      //     closing : this.tuesday_closing
+      //   },
+      //   wednesday : {
+      //     opening : this.wednesday_opening,
+      //     closing : this.wednesday_closing
+      //   },
+      //   thursday : {
+      //     opening: this.thursday_opening,
+      //     closing : this.thursday_closing
+      //   },
+      //   friday : {
+      //     opening : this.friday_opening,
+      //     closing : this.friday_closing
+      //   },
+      //   saturday : {
+      //     opening: this.saturday_opening,
+      //     closing : this.saturday_closing
+      //   },
+      //   sunday : {
+      //     opening : this.sunday_opening,
+      //     closing : this.sunday_closing
+      //   }
+      // }
     };
     const pobj = {
       business: busniess_object,
@@ -144,6 +185,8 @@ export class AddBusinessComponent implements OnInit {
     });
   }
   catSelected(cat_id) {
+    this.selected_sub_items = [];
+    console.log(this.selected_sub_items);
     this.selected_sub = null;
     this.selected_cat = cat_id;
     this.vendorService.getSubCategoriesOfCat(this.selected_cat).subscribe(subs => {
@@ -154,398 +197,395 @@ export class AddBusinessComponent implements OnInit {
       }
     });
   }
-  subCatSelected(sub_cat_id) {
-    this.selected_sub = sub_cat_id;
-  }
   opentimeSelected(value, day) {
-    switch (day) {
-      case 'monday':
-        this.monday_opening = value;
-        if (this.tuesday_opening === null) {
-          this.tuesday_opening = value;
-          $('#tuesday_open_select').val(value);
-        }
-        if (this.wednesday_opening === null) {
-          this.wednesday_opening = value;
-          $('#wednesday_open_select').val(value);
-        }
-        if (this.thursday_opening === null) {
-          this.thursday_opening = value;
-          $('#thursday_open_select').val(value);
-        }
-        if (this.friday_opening === null) {
-          this.friday_opening = value;
-          $('#friday_open_select').val(value);
-        }
-        if (this.saturday_opening === null) {
-          this.saturday_opening = value;
-          $('#saturday_open_select').val(value);
-        }
-        if (this.sunday_opening === null) {
-          this.sunday_opening = value;
-          $('#sunday_open_select').val(value);
-        }
-        break;
-      case 'tuesday':
-        this.tuesday_opening = value;
-        if (this.monday_opening === null) {
-          this.monday_opening = value;
-          $('#monday_open_select').val(value);
-        }
-        if (this.wednesday_opening === null) {
-          this.wednesday_opening = value;
-          $('#wednesday_open_select').val(value);
-        }
-        if (this.thursday_opening === null) {
-          this.thursday_opening = value;
-          $('#thursday_open_select').val(value);
-        }
-        if (this.friday_opening === null) {
-          this.friday_opening = value;
-          $('#friday_open_select').val(value);
-        }
-        if (this.saturday_opening === null) {
-          this.saturday_opening = value;
-          $('#saturday_open_select').val(value);
-        }
-        if (this.sunday_opening === null) {
-          this.sunday_opening = value;
-          $('#sunday_open_select').val(value);
-        }
-        break;
-      case 'wednesday':
-        this.wednesday_opening = value;
-        if (this.tuesday_opening === null) {
-          this.tuesday_opening = value;
-          $('#tuesday_open_select').val(value);
-        }
-        if (this.monday_opening === null) {
-          this.monday_opening = value;
-          $('#monday_open_select').val(value);
-        }
-        if (this.thursday_opening === null) {
-          this.thursday_opening = value;
-          $('#thursday_open_select').val(value);
-        }
-        if (this.friday_opening === null) {
-          this.friday_opening = value;
-          $('#friday_open_select').val(value);
-        }
-        if (this.saturday_opening === null) {
-          this.saturday_opening = value;
-          $('#saturday_open_select').val(value);
-        }
-        if (this.sunday_opening === null) {
-          this.sunday_opening = value;
-          $('#sunday_open_select').val(value);
-        }
-        break;
-      case 'thursday':
-        this.thursday_opening = value;
-        if (this.tuesday_opening === null) {
-          this.tuesday_opening = value;
-          $('#tuesday_open_select').val(value);
-        }
-        if (this.wednesday_opening === null) {
-          this.wednesday_opening = value;
-          $('#wednesday_open_select').val(value);
-        }
-        if (this.monday_opening === null) {
-          this.monday_opening = value;
-          $('#monday_open_select').val(value);
-        }
-        if (this.friday_opening === null) {
-          this.friday_opening = value;
-          $('#friday_open_select').val(value);
-        }
-        if (this.saturday_opening === null) {
-          this.saturday_opening = value;
-          $('#saturday_open_select').val(value);
-        }
-        if (this.sunday_opening === null) {
-          this.sunday_opening = value;
-          $('#sunday_open_select').val(value);
-        }
-        break;
-      case 'friday':
-        this.friday_opening = value;
-        if (this.tuesday_opening === null) {
-          this.tuesday_opening = value;
-          $('#tuesday_open_select').val(value);
-        }
-        if (this.wednesday_opening === null) {
-          this.wednesday_opening = value;
-          $('#wednesday_open_select').val(value);
-        }
-        if (this.thursday_opening === null) {
-          this.thursday_opening = value;
-          $('#thursday_open_select').val(value);
-        }
-        if (this.monday_opening === null) {
-          this.monday_opening = value;
-          $('#monday_open_select').val(value);
-        }
-        if (this.saturday_opening === null) {
-          this.saturday_opening = value;
-          $('#saturday_open_select').val(value);
-        }
-        if (this.sunday_opening === null) {
-          this.sunday_opening = value;
-          $('#sunday_open_select').val(value);
-        }
-        break;
-      case 'saturday':
-        this.saturday_opening = value;
-        if (this.tuesday_opening === null) {
-          this.tuesday_opening = value;
-          $('#tuesday_open_select').val(value);
-        }
-        if (this.wednesday_opening === null) {
-          this.wednesday_opening = value;
-          $('#wednesday_open_select').val(value);
-        }
-        if (this.thursday_opening === null) {
-          this.thursday_opening = value;
-          $('#thursday_open_select').val(value);
-        }
-        if (this.friday_opening === null) {
-          this.friday_opening = value;
-          $('#friday_open_select').val(value);
-        }
-        if (this.monday_opening === null) {
-          this.monday_opening = value;
-          $('#monday_open_select').val(value);
-        }
-        if (this.sunday_opening === null) {
-          this.sunday_opening = value;
-          $('#sunday_open_select').val(value);
-        }
-        break;
-      case 'sunday':
-        this.sunday_opening = value;
-        if (this.tuesday_opening === null) {
-          this.tuesday_opening = value;
-          $('#tuesday_open_select').val(value);
-        }
-        if (this.wednesday_opening === null) {
-          this.wednesday_opening = value;
-          $('#wednesday_open_select').val(value);
-        }
-        if (this.thursday_opening === null) {
-          this.thursday_opening = value;
-          $('#thursday_open_select').val(value);
-        }
-        if (this.friday_opening === null) {
-          this.friday_opening = value;
-          $('#friday_open_select').val(value);
-        }
-        if (this.saturday_opening === null) {
-          this.saturday_opening = value;
-          $('#saturday_open_select').val(value);
-        }
-        if (this.monday_opening === null) {
-          this.monday_opening = value;
-          $('#monday_open_select').val(value);
-        }
-        break;
-      default:
-        break;
-    }
+    // switch (day) {
+    //   case 'monday':
+    //     this.monday_opening = value;
+    //     if (this.tuesday_opening === null) {
+    //       this.tuesday_opening = value;
+    //       $('#tuesday_open_select').val(value);
+    //     }
+    //     if (this.wednesday_opening === null) {
+    //       this.wednesday_opening = value;
+    //       $('#wednesday_open_select').val(value);
+    //     }
+    //     if (this.thursday_opening === null) {
+    //       this.thursday_opening = value;
+    //       $('#thursday_open_select').val(value);
+    //     }
+    //     if (this.friday_opening === null) {
+    //       this.friday_opening = value;
+    //       $('#friday_open_select').val(value);
+    //     }
+    //     if (this.saturday_opening === null) {
+    //       this.saturday_opening = value;
+    //       $('#saturday_open_select').val(value);
+    //     }
+    //     if (this.sunday_opening === null) {
+    //       this.sunday_opening = value;
+    //       $('#sunday_open_select').val(value);
+    //     }
+    //     break;
+    //   case 'tuesday':
+    //     this.tuesday_opening = value;
+    //     if (this.monday_opening === null) {
+    //       this.monday_opening = value;
+    //       $('#monday_open_select').val(value);
+    //     }
+    //     if (this.wednesday_opening === null) {
+    //       this.wednesday_opening = value;
+    //       $('#wednesday_open_select').val(value);
+    //     }
+    //     if (this.thursday_opening === null) {
+    //       this.thursday_opening = value;
+    //       $('#thursday_open_select').val(value);
+    //     }
+    //     if (this.friday_opening === null) {
+    //       this.friday_opening = value;
+    //       $('#friday_open_select').val(value);
+    //     }
+    //     if (this.saturday_opening === null) {
+    //       this.saturday_opening = value;
+    //       $('#saturday_open_select').val(value);
+    //     }
+    //     if (this.sunday_opening === null) {
+    //       this.sunday_opening = value;
+    //       $('#sunday_open_select').val(value);
+    //     }
+    //     break;
+    //   case 'wednesday':
+    //     this.wednesday_opening = value;
+    //     if (this.tuesday_opening === null) {
+    //       this.tuesday_opening = value;
+    //       $('#tuesday_open_select').val(value);
+    //     }
+    //     if (this.monday_opening === null) {
+    //       this.monday_opening = value;
+    //       $('#monday_open_select').val(value);
+    //     }
+    //     if (this.thursday_opening === null) {
+    //       this.thursday_opening = value;
+    //       $('#thursday_open_select').val(value);
+    //     }
+    //     if (this.friday_opening === null) {
+    //       this.friday_opening = value;
+    //       $('#friday_open_select').val(value);
+    //     }
+    //     if (this.saturday_opening === null) {
+    //       this.saturday_opening = value;
+    //       $('#saturday_open_select').val(value);
+    //     }
+    //     if (this.sunday_opening === null) {
+    //       this.sunday_opening = value;
+    //       $('#sunday_open_select').val(value);
+    //     }
+    //     break;
+    //   case 'thursday':
+    //     this.thursday_opening = value;
+    //     if (this.tuesday_opening === null) {
+    //       this.tuesday_opening = value;
+    //       $('#tuesday_open_select').val(value);
+    //     }
+    //     if (this.wednesday_opening === null) {
+    //       this.wednesday_opening = value;
+    //       $('#wednesday_open_select').val(value);
+    //     }
+    //     if (this.monday_opening === null) {
+    //       this.monday_opening = value;
+    //       $('#monday_open_select').val(value);
+    //     }
+    //     if (this.friday_opening === null) {
+    //       this.friday_opening = value;
+    //       $('#friday_open_select').val(value);
+    //     }
+    //     if (this.saturday_opening === null) {
+    //       this.saturday_opening = value;
+    //       $('#saturday_open_select').val(value);
+    //     }
+    //     if (this.sunday_opening === null) {
+    //       this.sunday_opening = value;
+    //       $('#sunday_open_select').val(value);
+    //     }
+    //     break;
+    //   case 'friday':
+    //     this.friday_opening = value;
+    //     if (this.tuesday_opening === null) {
+    //       this.tuesday_opening = value;
+    //       $('#tuesday_open_select').val(value);
+    //     }
+    //     if (this.wednesday_opening === null) {
+    //       this.wednesday_opening = value;
+    //       $('#wednesday_open_select').val(value);
+    //     }
+    //     if (this.thursday_opening === null) {
+    //       this.thursday_opening = value;
+    //       $('#thursday_open_select').val(value);
+    //     }
+    //     if (this.monday_opening === null) {
+    //       this.monday_opening = value;
+    //       $('#monday_open_select').val(value);
+    //     }
+    //     if (this.saturday_opening === null) {
+    //       this.saturday_opening = value;
+    //       $('#saturday_open_select').val(value);
+    //     }
+    //     if (this.sunday_opening === null) {
+    //       this.sunday_opening = value;
+    //       $('#sunday_open_select').val(value);
+    //     }
+    //     break;
+    //   case 'saturday':
+    //     this.saturday_opening = value;
+    //     if (this.tuesday_opening === null) {
+    //       this.tuesday_opening = value;
+    //       $('#tuesday_open_select').val(value);
+    //     }
+    //     if (this.wednesday_opening === null) {
+    //       this.wednesday_opening = value;
+    //       $('#wednesday_open_select').val(value);
+    //     }
+    //     if (this.thursday_opening === null) {
+    //       this.thursday_opening = value;
+    //       $('#thursday_open_select').val(value);
+    //     }
+    //     if (this.friday_opening === null) {
+    //       this.friday_opening = value;
+    //       $('#friday_open_select').val(value);
+    //     }
+    //     if (this.monday_opening === null) {
+    //       this.monday_opening = value;
+    //       $('#monday_open_select').val(value);
+    //     }
+    //     if (this.sunday_opening === null) {
+    //       this.sunday_opening = value;
+    //       $('#sunday_open_select').val(value);
+    //     }
+    //     break;
+    //   case 'sunday':
+    //     this.sunday_opening = value;
+    //     if (this.tuesday_opening === null) {
+    //       this.tuesday_opening = value;
+    //       $('#tuesday_open_select').val(value);
+    //     }
+    //     if (this.wednesday_opening === null) {
+    //       this.wednesday_opening = value;
+    //       $('#wednesday_open_select').val(value);
+    //     }
+    //     if (this.thursday_opening === null) {
+    //       this.thursday_opening = value;
+    //       $('#thursday_open_select').val(value);
+    //     }
+    //     if (this.friday_opening === null) {
+    //       this.friday_opening = value;
+    //       $('#friday_open_select').val(value);
+    //     }
+    //     if (this.saturday_opening === null) {
+    //       this.saturday_opening = value;
+    //       $('#saturday_open_select').val(value);
+    //     }
+    //     if (this.monday_opening === null) {
+    //       this.monday_opening = value;
+    //       $('#monday_open_select').val(value);
+    //     }
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
   closetimeSelected(value, day) {
-    switch (day) {
-      case 'monday':
-        this.monday_closing = value;
-        if (this.tuesday_closing === null) {
-          this.tuesday_closing = value;
-          $('#tuesday_close_select').val(value);
-        }
-        if (this.wednesday_closing === null) {
-          this.wednesday_closing = value;
-          $('#wednesday_close_select').val(value);
-        }
-        if (this.thursday_closing === null) {
-          this.thursday_closing = value;
-          $('#thursday_close_select').val(value);
-        }
-        if (this.friday_closing === null) {
-          this.friday_closing = value;
-          $('#friday_close_select').val(value);
-        }
-        if (this.saturday_closing === null) {
-          this.saturday_closing = value;
-          $('#saturday_close_select').val(value);
-        }
-        if (this.sunday_closing === null) {
-          this.sunday_closing = value;
-          $('#sunday_close_select').val(value);
-        }
-        break;
-      case 'tuesday':
-        this.tuesday_closing = value;
-        if (this.monday_closing === null) {
-          this.monday_closing = value;
-          $('#monday_close_select').val(value);
-        }
-        if (this.wednesday_closing === null) {
-          this.wednesday_closing = value;
-          $('#wednesday_close_select').val(value);
-        }
-        if (this.thursday_closing === null) {
-          this.thursday_closing = value;
-          $('#thursday_close_select').val(value);
-        }
-        if (this.friday_closing === null) {
-          this.friday_closing = value;
-          $('#friday_close_select').val(value);
-        }
-        if (this.saturday_closing === null) {
-          this.saturday_closing = value;
-          $('#saturday_close_select').val(value);
-        }
-        if (this.sunday_closing === null) {
-          this.sunday_closing = value;
-          $('#sunday_close_select').val(value);
-        }
-        break;
-      case 'wednesday':
-        this.wednesday_closing = value;
-        if (this.tuesday_closing === null) {
-          this.tuesday_closing = value;
-          $('#tuesday_close_select').val(value);
-        }
-        if (this.monday_closing === null) {
-          this.monday_closing = value;
-          $('#monday_close_select').val(value);
-        }
-        if (this.thursday_closing === null) {
-          this.thursday_closing = value;
-          $('#thursday_close_select').val(value);
-        }
-        if (this.friday_closing === null) {
-          this.friday_closing = value;
-          $('#friday_close_select').val(value);
-        }
-        if (this.saturday_closing === null) {
-          this.saturday_closing = value;
-          $('#saturday_close_select').val(value);
-        }
-        if (this.sunday_closing === null) {
-          this.sunday_closing = value;
-          $('#sunday_close_select').val(value);
-        }
-        break;
-      case 'thursday':
-        this.thursday_closing = value;
-        if (this.tuesday_closing === null) {
-          this.tuesday_closing = value;
-          $('#tuesday_close_select').val(value);
-        }
-        if (this.wednesday_closing === null) {
-          this.wednesday_closing = value;
-          $('#wednesday_close_select').val(value);
-        }
-        if (this.monday_closing === null) {
-          this.monday_closing = value;
-          $('#monday_close_select').val(value);
-        }
-        if (this.friday_closing === null) {
-          this.friday_closing = value;
-          $('#friday_close_select').val(value);
-        }
-        if (this.saturday_closing === null) {
-          this.saturday_closing = value;
-          $('#saturday_close_select').val(value);
-        }
-        if (this.sunday_closing === null) {
-          this.sunday_closing = value;
-          $('#sunday_close_select').val(value);
-        }
-        break;
-      case 'friday':
-        this.friday_closing = value;
-        if (this.tuesday_closing === null) {
-          this.tuesday_closing = value;
-          $('#tuesday_close_select').val(value);
-        }
-        if (this.wednesday_closing === null) {
-          this.wednesday_closing = value;
-          $('#wednesday_close_select').val(value);
-        }
-        if (this.thursday_closing === null) {
-          this.thursday_closing = value;
-          $('#thursday_close_select').val(value);
-        }
-        if (this.monday_closing === null) {
-          this.monday_closing = value;
-          $('#monday_close_select').val(value);
-        }
-        if (this.saturday_closing === null) {
-          this.saturday_closing = value;
-          $('#saturday_close_select').val(value);
-        }
-        if (this.sunday_closing === null) {
-          this.sunday_closing = value;
-          $('#sunday_close_select').val(value);
-        }
-        break;
-      case 'saturday':
-        this.saturday_closing = value;
-        if (this.tuesday_closing === null) {
-          this.tuesday_closing = value;
-          $('#tuesday_close_select').val(value);
-        }
-        if (this.wednesday_closing === null) {
-          this.wednesday_closing = value;
-          $('#wednesday_close_select').val(value);
-        }
-        if (this.thursday_closing === null) {
-          this.thursday_closing = value;
-          $('#thursday_close_select').val(value);
-        }
-        if (this.friday_closing === null) {
-          this.friday_closing = value;
-          $('#friday_close_select').val(value);
-        }
-        if (this.monday_closing === null) {
-          this.monday_closing = value;
-          $('#monday_close_select').val(value);
-        }
-        if (this.sunday_closing === null) {
-          this.sunday_closing = value;
-          $('#sunday_close_select').val(value);
-        }
-        break;
-      case 'sunday':
-        this.sunday_closing = value;
-        if (this.tuesday_closing === null) {
-          this.tuesday_closing = value;
-          $('#tuesday_close_select').val(value);
-        }
-        if (this.wednesday_closing === null) {
-          this.wednesday_closing = value;
-          $('#wednesday_close_select').val(value);
-        }
-        if (this.thursday_closing === null) {
-          this.thursday_closing = value;
-          $('#thursday_close_select').val(value);
-        }
-        if (this.friday_closing === null) {
-          this.friday_closing = value;
-          $('#friday_close_select').val(value);
-        }
-        if (this.saturday_closing === null) {
-          this.saturday_closing = value;
-          $('#saturday_close_select').val(value);
-        }
-        if (this.monday_closing === null) {
-          this.monday_closing = value;
-          $('#monday_close_select').val(value);
-        }
-        break;
-      default:
-        break;
-    }
+    // switch (day) {
+    //   case 'monday':
+    //     this.monday_closing = value;
+    //     if (this.tuesday_closing === null) {
+    //       this.tuesday_closing = value;
+    //       $('#tuesday_close_select').val(value);
+    //     }
+    //     if (this.wednesday_closing === null) {
+    //       this.wednesday_closing = value;
+    //       $('#wednesday_close_select').val(value);
+    //     }
+    //     if (this.thursday_closing === null) {
+    //       this.thursday_closing = value;
+    //       $('#thursday_close_select').val(value);
+    //     }
+    //     if (this.friday_closing === null) {
+    //       this.friday_closing = value;
+    //       $('#friday_close_select').val(value);
+    //     }
+    //     if (this.saturday_closing === null) {
+    //       this.saturday_closing = value;
+    //       $('#saturday_close_select').val(value);
+    //     }
+    //     if (this.sunday_closing === null) {
+    //       this.sunday_closing = value;
+    //       $('#sunday_close_select').val(value);
+    //     }
+    //     break;
+    //   case 'tuesday':
+    //     this.tuesday_closing = value;
+    //     if (this.monday_closing === null) {
+    //       this.monday_closing = value;
+    //       $('#monday_close_select').val(value);
+    //     }
+    //     if (this.wednesday_closing === null) {
+    //       this.wednesday_closing = value;
+    //       $('#wednesday_close_select').val(value);
+    //     }
+    //     if (this.thursday_closing === null) {
+    //       this.thursday_closing = value;
+    //       $('#thursday_close_select').val(value);
+    //     }
+    //     if (this.friday_closing === null) {
+    //       this.friday_closing = value;
+    //       $('#friday_close_select').val(value);
+    //     }
+    //     if (this.saturday_closing === null) {
+    //       this.saturday_closing = value;
+    //       $('#saturday_close_select').val(value);
+    //     }
+    //     if (this.sunday_closing === null) {
+    //       this.sunday_closing = value;
+    //       $('#sunday_close_select').val(value);
+    //     }
+    //     break;
+    //   case 'wednesday':
+    //     this.wednesday_closing = value;
+    //     if (this.tuesday_closing === null) {
+    //       this.tuesday_closing = value;
+    //       $('#tuesday_close_select').val(value);
+    //     }
+    //     if (this.monday_closing === null) {
+    //       this.monday_closing = value;
+    //       $('#monday_close_select').val(value);
+    //     }
+    //     if (this.thursday_closing === null) {
+    //       this.thursday_closing = value;
+    //       $('#thursday_close_select').val(value);
+    //     }
+    //     if (this.friday_closing === null) {
+    //       this.friday_closing = value;
+    //       $('#friday_close_select').val(value);
+    //     }
+    //     if (this.saturday_closing === null) {
+    //       this.saturday_closing = value;
+    //       $('#saturday_close_select').val(value);
+    //     }
+    //     if (this.sunday_closing === null) {
+    //       this.sunday_closing = value;
+    //       $('#sunday_close_select').val(value);
+    //     }
+    //     break;
+    //   case 'thursday':
+    //     this.thursday_closing = value;
+    //     if (this.tuesday_closing === null) {
+    //       this.tuesday_closing = value;
+    //       $('#tuesday_close_select').val(value);
+    //     }
+    //     if (this.wednesday_closing === null) {
+    //       this.wednesday_closing = value;
+    //       $('#wednesday_close_select').val(value);
+    //     }
+    //     if (this.monday_closing === null) {
+    //       this.monday_closing = value;
+    //       $('#monday_close_select').val(value);
+    //     }
+    //     if (this.friday_closing === null) {
+    //       this.friday_closing = value;
+    //       $('#friday_close_select').val(value);
+    //     }
+    //     if (this.saturday_closing === null) {
+    //       this.saturday_closing = value;
+    //       $('#saturday_close_select').val(value);
+    //     }
+    //     if (this.sunday_closing === null) {
+    //       this.sunday_closing = value;
+    //       $('#sunday_close_select').val(value);
+    //     }
+    //     break;
+    //   case 'friday':
+    //     this.friday_closing = value;
+    //     if (this.tuesday_closing === null) {
+    //       this.tuesday_closing = value;
+    //       $('#tuesday_close_select').val(value);
+    //     }
+    //     if (this.wednesday_closing === null) {
+    //       this.wednesday_closing = value;
+    //       $('#wednesday_close_select').val(value);
+    //     }
+    //     if (this.thursday_closing === null) {
+    //       this.thursday_closing = value;
+    //       $('#thursday_close_select').val(value);
+    //     }
+    //     if (this.monday_closing === null) {
+    //       this.monday_closing = value;
+    //       $('#monday_close_select').val(value);
+    //     }
+    //     if (this.saturday_closing === null) {
+    //       this.saturday_closing = value;
+    //       $('#saturday_close_select').val(value);
+    //     }
+    //     if (this.sunday_closing === null) {
+    //       this.sunday_closing = value;
+    //       $('#sunday_close_select').val(value);
+    //     }
+    //     break;
+    //   case 'saturday':
+    //     this.saturday_closing = value;
+    //     if (this.tuesday_closing === null) {
+    //       this.tuesday_closing = value;
+    //       $('#tuesday_close_select').val(value);
+    //     }
+    //     if (this.wednesday_closing === null) {
+    //       this.wednesday_closing = value;
+    //       $('#wednesday_close_select').val(value);
+    //     }
+    //     if (this.thursday_closing === null) {
+    //       this.thursday_closing = value;
+    //       $('#thursday_close_select').val(value);
+    //     }
+    //     if (this.friday_closing === null) {
+    //       this.friday_closing = value;
+    //       $('#friday_close_select').val(value);
+    //     }
+    //     if (this.monday_closing === null) {
+    //       this.monday_closing = value;
+    //       $('#monday_close_select').val(value);
+    //     }
+    //     if (this.sunday_closing === null) {
+    //       this.sunday_closing = value;
+    //       $('#sunday_close_select').val(value);
+    //     }
+    //     break;
+    //   case 'sunday':
+    //     this.sunday_closing = value;
+    //     if (this.tuesday_closing === null) {
+    //       this.tuesday_closing = value;
+    //       $('#tuesday_close_select').val(value);
+    //     }
+    //     if (this.wednesday_closing === null) {
+    //       this.wednesday_closing = value;
+    //       $('#wednesday_close_select').val(value);
+    //     }
+    //     if (this.thursday_closing === null) {
+    //       this.thursday_closing = value;
+    //       $('#thursday_close_select').val(value);
+    //     }
+    //     if (this.friday_closing === null) {
+    //       this.friday_closing = value;
+    //       $('#friday_close_select').val(value);
+    //     }
+    //     if (this.saturday_closing === null) {
+    //       this.saturday_closing = value;
+    //       $('#saturday_close_select').val(value);
+    //     }
+    //     if (this.monday_closing === null) {
+    //       this.monday_closing = value;
+    //       $('#monday_close_select').val(value);
+    //     }
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
   bLabelSelect(plan) {
     switch (plan) {
@@ -635,6 +675,102 @@ export class AddBusinessComponent implements OnInit {
           });
         }
       });
+    }
+  }
+  addContactNumberClicked(){
+    switch (this.contact_num_count) {
+      case 0:
+        if(this.validate.validateInput(this.contact_number)) {
+          if(this.validate.validateMobile(this.contact_number)) {
+            // Show contact num two
+            $('#contact_number_two').show();
+            this.contact_num_count++;
+          }else {
+            $('#contact-number').css({ 'border': '1px solid #f00' });
+          }
+        }else{
+            $('#contact-number').css({ 'border': '1px solid #f00' });
+        }
+        break;
+      case 1:
+        if(this.validate.validateInput(this.contact_number_two)) {
+          if(this.validate.validateMobile(this.contact_number_two)) {
+            // Show contact num three
+            $('#contact_number_three').show();
+            this.contact_num_count++;
+          }else {
+            $('#contact_number_two').css({ 'border': '1px solid #f00' });
+          }
+        }else{
+            $('#contact_number_two').css({ 'border': '1px solid #f00' });
+        }
+        this.contact_num_count++;
+        break;
+      case 2:
+        if(this.validate.validateInput(this.contact_number_two)) {
+          if(this.validate.validateMobile(this.contact_number_two)) {
+            // Show contact num four
+            $('#contact_number_four').show();
+            this.contact_num_count++;
+          }else {
+            $('#contact_number_three').css({ 'border': '1px solid #f00' });
+          }
+        }else{
+            $('#contact_number_three').css({ 'border': '1px solid #f00' });
+        }
+        break;
+    
+      default:
+        break;
+    }
+  }
+  subCheckChanged(event) {
+    var target = event.target;
+    switch (event.target.checked) {
+      case true:
+        // Add the id to array
+        this.selected_sub_items.push(event.target.value);
+        // console.log(this.selected_sub_items);
+        $(target).parent().parent().addClass('selected-sub');
+        break;
+        case false:
+        // this.selected_sub_items.push(event.target.value);
+        this.selected_sub_items.forEach(element => {
+          if (element === event.target.value) {
+              this.selected_sub_items.splice(this.selected_sub_items.indexOf(event.target.value),1);
+              $(target).parent().parent().removeClass('selected-sub');
+          }
+        });
+        // console.log(this.selected_sub_items);
+        break;
+    
+      default:
+        break;
+    }
+  }
+  nextClicked(step){
+    switch (step) {
+      case "two":
+        // Goto step two
+        $('.business-steps').hide();
+        $('.step-two').show();
+        var bodytop = $('body, html').offset().top;
+        $('body, html').animate({ scrollTop: bodytop  }, 500);
+        break;
+      case "three":
+        // Goto step two
+        $('.business-steps').hide();
+        $('.step-three').show();
+        $('body, html').animate({ scrollTop: bodytop  }, 500);
+        break;
+      case "four":
+        // Goto step two
+        $('.business-steps').hide();
+        $('.step-four').show();
+        break;
+    
+      default:
+        break;
     }
   }
 }

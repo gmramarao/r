@@ -51,20 +51,18 @@ router.post('/register', function(a, b) {
 });
 
 router.get('/find-email/:email', function(a, b) {
-    e = a.params.email, Admin.find({
-        email: e
-    }, function(d, f) {
-        f ? 0 < f.length ? b.json({
-            success: !0,
-            msg: 'Admin Found'
-        }) : b.json({
-            success: !1,
-            msg: 'No Admin found'
-        }) : b.json({
-            success: !1,
-            msg: 'No Admin found'
-        });
-    });
+    Admin.findOne({email: a.params.email}, function(err, doc){
+        if(err){
+            b.json({status: false, msg:'No Admin found'});
+        } else {
+            if(!doc){
+                b.json({status: false, msg:'No Admin found'});
+            } else {
+                b.json({status: true, msg:'Admin Found'});
+            }
+        }
+    })
+    
 }); 
 
 router.post('/authenticate', function(a, b) {

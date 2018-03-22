@@ -66,13 +66,13 @@ router.post('/register', function (a, b) {
         mobile: mobile
     }, (err, found) => {
         if (err) {
-            res.json({
+            b.json({
                 success: false,
                 msg: err
             });
         } else {
             if (found.length > 0) {
-                res.json({
+                b.json({
                     success: false,
                     msg: 'Mobile already exists'
                 });

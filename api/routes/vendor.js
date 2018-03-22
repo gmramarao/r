@@ -383,7 +383,7 @@ router.post('/add-business', function (req, res) {
     var plan = req.body.plan;
     var type = req.body.type;
     var coords = req.body.coords;
-    console.log(type);
+    console.log(req.body);
     var b = new Business({
         business: business,
         vendor_id: vendor_id,
@@ -1167,4 +1167,8 @@ router.get('/get-custom-orders/:id', function(req, res){
     
 })
 
+
+Category.find({name: null}, function(err, doc){
+    console.log(doc);
+})
 module.exports = router;
