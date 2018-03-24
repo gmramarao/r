@@ -2,16 +2,22 @@
 <!-- <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Fill out your name</ng-template>
+      <ng-template matStepLabel>Fill out your Details</ng-template>
+      <div>
       <mat-form-field>
         <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
       </mat-form-field>
+      </div>
+      
       <mat-form-field>
         <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
       </mat-form-field>
+    
+    
       <mat-form-field>
         <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
       </mat-form-field>
+    
       <div>
         <button mat-button matStepperNext>Next</button>
       </div>
@@ -125,10 +131,13 @@
         <label for="contact-number">Contact name</label>
         <input type="text" id="contact-name" [(ngModel)]='contact_name'>
         <label for="contact-number">Contact number</label>
-        <input type="text" id="contact-number" [(ngModel)]='contact_number'>
-        <input type="text" [(ngModel)]='contact_number_two' id="contact_number_two">
+        <div *ngFor="let num of contact_numbers">
+          <input type="text" id="contact-number" [(ngModel)]='num.number'>
+        </div>
+        
+        <!-- <input type="text" [(ngModel)]='contact_number_two' id="contact_number_two">
         <input type="text" [(ngModel)]='contact_number_three' id="contact_number_three">
-        <input type="text" [(ngModel)]='contact_number_four' id="contact_number_four">
+        <input type="text" [(ngModel)]='contact_number_four' id="contact_number_four"> -->
         <button (click)="addContactNumberClicked()" class="add-contact-number-btn">Add Contact Number</button>
 
         
@@ -143,6 +152,7 @@
 
       <label for="about-contact">About Contact</label>
       <textarea name="about-contact" id="about-contact" [(ngModel)]='about_contact'></textarea>
+      <button class="next-btn" (click)='nextClicked("one")'>back</button>
 
       <button class="next-btn" (click)='nextClicked("three")'>Next</button>
 
@@ -151,19 +161,19 @@
         
         <label for="gstin">GSTIN</label>
         <label for="gst-check">
-            <input type="checkbox" name="" id="gst-check"> &nbsp; I don't have this
+            <input type="checkbox" name="" id="gst-check"  [(ngModel)]="gstin_flag"> &nbsp; I don't have this
         </label> 
         <input type="text" [(ngModel)]='gstin'>
 
         <label for="tan">TAN</label>
         <label for="tan-check">
-            <input type="checkbox" name="" id="tan-check"> &nbsp; I don't have this
+            <input type="checkbox" name="" id="tan-check"  [(ngModel)]="tan_flag"> &nbsp; I don't have this
         </label> 
         <input type="text" [(ngModel)]='tan'>
 
         <label for="tan">CIN</label>
         <label for="cin-check">
-            <input type="checkbox" name="" id="cin-check"> &nbsp; I don't have this
+            <input type="checkbox" name="" id="cin-check" [(ngModel)]="cin_flag"> &nbsp; I don't have this
         </label> 
         <input type="text" [(ngModel)]='cin'>
 
@@ -171,6 +181,7 @@
           <input type="file" id="other-trade-per" hidden>
           Click here to upload other types of trading permissions
         </label>
+        <button class="next-btn" (click)='nextClicked("two")'>back</button>
         <button class="next-btn" (click)='nextClicked("four")'>Next</button>
       </div>
 
@@ -192,7 +203,7 @@
 
         <label for="insta-link">Instagram Link</label>      
         <input type="text" [(ngModel)]='insta_link' id="insta-link">
-
+        <button class="next-btn" (click)='nextClicked("three")'>back</button>
         <button class="submit" (click)='createBusinessClicked()'>Create Busniess</button>
       </div>
   

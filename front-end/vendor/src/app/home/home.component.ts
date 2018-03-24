@@ -47,19 +47,20 @@ export class HomeComponent implements OnInit {
       if (bus.success) {
         // add businesses
         this.vendor_businesses = bus.msg;
+        console.log(this.vendor_businesses);
         this.vendor_businesses.forEach(element => {
           // element.business.days.forEach(day => {
           //   console.log(day);
           // });
-          // console.log(element.business.days['monday']);
+          console.log(element.business.days['monday']);
           // Check of object exists
-          // this.vendorService.getBusinessStatus(element._id).subscribe(stat => {
-          //   console.log(stat);
-          //   if (stat.success) {
-          //     // alert(stat.msg[0]);
-          //     element.status = stat.msg[0].status;
-          //   }
-          // });
+          this.vendorService.getBusinessStatus(element._id).subscribe(stat => {
+            console.log(stat);
+            if (stat.success) {
+              // alert(stat.msg[0]);
+              element.status = stat.msg[0].status;
+            }
+          });
           if (element.business.days[this.today]) {
             // Today shop is open
             // Check for time
@@ -85,6 +86,7 @@ export class HomeComponent implements OnInit {
           }
         });
         this.business_number = this.vendor_businesses.length;
+        console.log(this.vendor_businesses);
       }else {
         this.business_number = 0;
       }
@@ -95,41 +97,41 @@ export class HomeComponent implements OnInit {
   statClicked(b_id, status, target) {
    switch (status) {
      case 'open':
-      //  $(target).addClass('selected-stat');
-      //   //  Set business status open
-      //   const obj = {
-      //     b_id: b_id,
-      //     status: status
-      //   };
-      //   this.vendorService.postBusinessStatus(obj).subscribe(posted => {
-      //     if (posted.success) {
-      //       // Posted successfully
-      //       // this.vendorService
-      //       this.postVendorBusinesses();
-      //       return true;
-      //     } else {
-      //       // Something went wrong
-      //       return false;
-      //     }
-      //   });
+       $(target).addClass('selected-stat');
+        //  Set business status open
+        const obj = {
+          b_id: b_id,
+          status: status
+        };
+        this.vendorService.postBusinessStatus(obj).subscribe(posted => {
+          if (posted.success) {
+            // Posted successfully
+            // this.vendorService
+            this.postVendorBusinesses();
+            return true;
+          } else {
+            // Something went wrong
+            return false;
+          }
+        });
 
        break;
        case 'close':
-        // $(target).addClass('selected-stat');
-        // const cobj = {
-        //   b_id: b_id,
-        //   status: status
-        // };
-        // this.vendorService.postBusinessStatus(cobj).subscribe(posted => {
-        //   if (posted.success) {
-        //     // Posted successfully
-        //     this.postVendorBusinesses();
-        //     return true;
-        //   } else {
-        //     // Something went wrong
-        //     return false;
-        //   }
-        // });
+        $(target).addClass('selected-stat');
+        const cobj = {
+          b_id: b_id,
+          status: status
+        };
+        this.vendorService.postBusinessStatus(cobj).subscribe(posted => {
+          if (posted.success) {
+            // Posted successfully
+            this.postVendorBusinesses();
+            return true;
+          } else {
+            // Something went wrong
+            return false;
+          }
+        });
        break;
      default:
        break;

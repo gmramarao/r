@@ -1,0 +1,67 @@
+<h2 class="page-heads">Orders</h2>
+
+<div class="order-tab-container">
+  <div class="order-head">
+    <ul>
+      <li (click)='changeTab("current")' class="tabs tab-current selected">
+        Current Orders
+      </li>
+      <li (click)='changeTab("rejected")' class="tabs tab-rejected">
+        Rejected Orders
+      </li>
+      <li (click)='changeTab("cancelled")' class="tabs tab-cancelled">
+        Cancelled Orders
+      </li>
+    </ul>
+  </div>
+  <div class="order-core">
+    <div class="current-core order-cores">
+      <div class="current-order-core">
+        
+        <div class="order">
+          <div class="order-top">
+            <div class="order-num">
+              <h6>
+                #1234ZA12
+              </h6>
+            </div>
+            <div class="order-status-div">
+              <span class="order-status">
+                <h6>Confirmed by you</h6>
+              </span>
+            </div>
+          </div>
+          <div class="order-body">
+            <div class="order-items">
+              <ul>
+                <li>
+                  <div class="item-name-div">
+                    Item name
+                  </div>
+                  <div class="item-price-div">
+                    Price
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="total-price-div">
+              <div class="total-left">
+
+              </div>
+              <div class="total-right">
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="rejected-core order-cores">
+      Rejected order
+    </div>
+    <div class="cancelled-core order-cores">
+      Cancelled order
+    </div>
+  </div>
+</div>

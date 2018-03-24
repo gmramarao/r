@@ -23,11 +23,10 @@ export class LoginComponent implements OnInit {
   }
 
   logAdmin() {
-    alert('helllooooooooooooo');
     if (this.validate.validateInput(this.lEmail) && this.validate.validateInput(this.lPwd)) {
       this.auth.authenticateEmail(this.lEmail).subscribe(status => {
         console.log(status);
-        if (status.success) {
+        if (status.status) {
            const admin = {
              email: this.lEmail,
              password: this.lPwd
@@ -42,7 +41,6 @@ export class LoginComponent implements OnInit {
             }
           });
         }else {
-          console.log('vcccccccccccccgh');
           alert('email not registered');
         }
       });

@@ -40,14 +40,22 @@ export class AddBusinessComponent implements OnInit {
   plan;
   all_cats;
   sub_cats;
-
+  about_contact;
+  gstin_flag;
+  tan_flag;
+  cin_flag;
   tan;
   gstin;
   cin;
   about_business;
   about_us;
+  b_website;
   my_web;
   fb_link;
+  twitter_link;
+  yt_link;
+  li_link;
+  insta_link;
   selected_cat;
   selected_sub;
 
@@ -55,7 +63,7 @@ export class AddBusinessComponent implements OnInit {
   lat;
   long;
   selected_sub_items = [];
-
+  contact_numbers : any = [{number:''}];
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
@@ -96,16 +104,26 @@ export class AddBusinessComponent implements OnInit {
       email : this.email,
       business_registered_name: this.business_registered_name,
       contact_name: this.contact_name,
+      contact_numbers: this.contact_numbers,
       whatsapp_number: this.whatsapp_number,
       office_number: this.office_number,
       aadhar_number: this.aadhar_number,
+      gstin_flag: this.gstin_flag,
+      tan_flag: this.gstin_flag,
+      cin_flag: this.gstin_flag,
       gstin: this.gstin,
       tan: this.tan,
       cin: this.cin,
+      about_contact: this.about_contact,
       about_business: this.about_business,
       about_us: this.about_us,
       my_web: this.my_web,
+      b_website: this.b_website,
       fb_link: this.fb_link,
+      twitter_link: this.twitter_link,
+      yt_link: this.yt_link,
+      li_link: this.li_link,
+      insta_link: this.insta_link,
       payments : {
         paytm : this.payment_type_paytm,
         cash : this.payment_type_cash,
@@ -114,7 +132,7 @@ export class AddBusinessComponent implements OnInit {
         online: this.payment_type_online
       },
       category : this.selected_cat,
-      sub_category : this.selected_sub,
+      sub_category : this.selected_sub_items,
       plan: this.plan,
       // days : {
       //   monday: this.monday_check,
@@ -678,53 +696,55 @@ export class AddBusinessComponent implements OnInit {
     }
   }
   addContactNumberClicked(){
-    switch (this.contact_num_count) {
-      case 0:
-        if(this.validate.validateInput(this.contact_number)) {
-          if(this.validate.validateMobile(this.contact_number)) {
-            // Show contact num two
-            $('#contact_number_two').show();
-            this.contact_num_count++;
-          }else {
-            $('#contact-number').css({ 'border': '1px solid #f00' });
-          }
-        }else{
-            $('#contact-number').css({ 'border': '1px solid #f00' });
-        }
-        break;
-      case 1:
-        if(this.validate.validateInput(this.contact_number_two)) {
-          if(this.validate.validateMobile(this.contact_number_two)) {
-            // Show contact num three
-            $('#contact_number_three').show();
-            this.contact_num_count++;
-          }else {
-            $('#contact_number_two').css({ 'border': '1px solid #f00' });
-          }
-        }else{
-            $('#contact_number_two').css({ 'border': '1px solid #f00' });
-        }
-        this.contact_num_count++;
-        break;
-      case 2:
-        if(this.validate.validateInput(this.contact_number_two)) {
-          if(this.validate.validateMobile(this.contact_number_two)) {
-            // Show contact num four
-            $('#contact_number_four').show();
-            this.contact_num_count++;
-          }else {
-            $('#contact_number_three').css({ 'border': '1px solid #f00' });
-          }
-        }else{
-            $('#contact_number_three').css({ 'border': '1px solid #f00' });
-        }
-        break;
+    this.contact_numbers.push({number:''});
+    // switch (this.contact_num_count) {
+    //   case 0:
+    //     if(this.validate.validateInput(this.contact_number)) {
+    //       if(this.validate.validateMobile(this.contact_number)) {
+    //         // Show contact num two
+    //         $('#contact_number_two').show();
+    //         this.contact_num_count++;
+    //       }else {
+    //         $('#contact-number').css({ 'border': '1px solid #f00' });
+    //       }
+    //     }else{
+    //         $('#contact-number').css({ 'border': '1px solid #f00' });
+    //     }
+    //     break;
+    //   case 1:
+    //     if(this.validate.validateInput(this.contact_number_two)) {
+    //       if(this.validate.validateMobile(this.contact_number_two)) {
+    //         // Show contact num three
+    //         $('#contact_number_three').show();
+    //         this.contact_num_count++;
+    //       }else {
+    //         $('#contact_number_two').css({ 'border': '1px solid #f00' });
+    //       }
+    //     }else{
+    //         $('#contact_number_two').css({ 'border': '1px solid #f00' });
+    //     }
+    //     this.contact_num_count++;
+    //     break;
+    //   case 2:
+    //     if(this.validate.validateInput(this.contact_number_two)) {
+    //       if(this.validate.validateMobile(this.contact_number_two)) {
+    //         // Show contact num four
+    //         $('#contact_number_four').show();
+    //         this.contact_num_count++;
+    //       }else {
+    //         $('#contact_number_three').css({ 'border': '1px solid #f00' });
+    //       }
+    //     }else{
+    //         $('#contact_number_three').css({ 'border': '1px solid #f00' });
+    //     }
+    //     break;
     
-      default:
-        break;
-    }
+    //   default:
+    //     break;
+    // }
   }
   subCheckChanged(event) {
+    console.log(this.selected_sub_items);
     var target = event.target;
     switch (event.target.checked) {
       case true:
@@ -750,6 +770,13 @@ export class AddBusinessComponent implements OnInit {
   }
   nextClicked(step){
     switch (step) {
+      case "one":
+        // Goto step two
+        $('.business-steps').hide();
+        $('.step-one').show();
+        var bodytop = $('body, html').offset().top;
+        $('body, html').animate({ scrollTop: bodytop  }, 500);
+        break;
       case "two":
         // Goto step two
         $('.business-steps').hide();

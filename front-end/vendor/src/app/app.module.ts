@@ -55,18 +55,40 @@ import { ProfileSettingsComponent } from './profile-settings/profile-settings.co
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AllOrdersComponent } from './all-orders/all-orders.component';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { BusinessDashboardComponent } from './business-dashboard/business-dashboard.component';
-import { BusinessSettingsComponent } from './business-settings/business-settings.component';
-import { BusinessNotificationsComponent } from './business-notifications/business-notifications.component';
 import { BusinessOrdersComponent } from './business-orders/business-orders.component';
 import { AddProductsComponent } from './add-products/add-products.component';
-import { InboxComponent } from './inbox/inbox.component';
 import { AddServicesComponent } from './add-services/add-services.component';
 import { BusinessSubHeaderComponent } from './business-sub-header/business-sub-header.component';
 import { ListComponent } from './list/list.component';
 import { ForgotComponent } from './forgot/forgot.component';
 import { MyCashComponent } from './my-cash/my-cash.component';
 
+import { BusinessDashboardComponent } from './business-dashboard/business-dashboard.component';
+import { InboxComponent } from './inbox/inbox.component';
+import { TermsComponent } from './terms/terms.component';
+import { PrivacySettingsComponent } from './privacy-settings/privacy-settings.component';
+import { BusinessDashboardCoreComponent } from './business-dashboard-core/business-dashboard-core.component';
+import { OrdersComponent } from './orders/orders.component';
+import { VisitorAnalysisComponent } from './visitor-analysis/visitor-analysis.component';
+import { CashComponent } from './cash/cash.component';
+import { BusinessNotificationsComponent } from './business-notifications/business-notifications.component';
+import { OfferZoneComponent } from './offer-zone/offer-zone.component';
+import { BusinessAnalysisComponent } from './business-analysis/business-analysis.component';
+import { CmsComponent } from './cms/cms.component';
+import { BusinessProfileComponent } from './business-profile/business-profile.component';
+import { BusinessSettingsComponent } from './business-settings/business-settings.component';
+import { PlanComponent } from './plan/plan.component';
+import { TimingsComponent } from './timings/timings.component';
+import { HomeDeliveryComponent } from './home-delivery/home-delivery.component';
+import { MyPromotionsComponent } from './my-promotions/my-promotions.component';
+import { BankDetailsComponent } from './bank-details/bank-details.component';
+import { MyDocumentsComponent } from './my-documents/my-documents.component';
+import { AadharComponent } from './aadhar/aadhar.component';
+import { SocialMediaComponent } from './social-media/social-media.component';
+import { AdsComponent } from './ads/ads.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { HelpComponent } from './help/help.component';
+import { BusinessPrivacySettingsComponent } from './business-privacy-settings/business-privacy-settings.component';
 const appRoutes: Routes = [
     {
         path: '',
@@ -81,14 +103,6 @@ const appRoutes: Routes = [
     {
         path: 'login',
         component: LoginPageComponent
-    },
-    {
-        path: 'forgot',
-        component: ForgotComponent
-    },
-    {
-        path: 'my-cash',
-        component: MyCashComponent
     },
     {
         path: 'add-business',
@@ -106,7 +120,7 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: 'orders',
+        path: 'all-orders',
         component: AllOrdersComponent,
         canActivate: [AuthGuard]
     },
@@ -121,47 +135,117 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: 'business-dashboard/:id',
+        path: 'business/:id',
         component: BusinessDashboardComponent,
+        canActivate: [AuthGuard],
+        children: [
+          {
+              path: '',
+              redirectTo: 'dashboard',
+              pathMatch: 'full'
+          },
+          {
+              path: 'dashboard',
+              component: BusinessDashboardCoreComponent
+          },
+          {
+              path: 'orders',
+              component: OrdersComponent
+          },
+          {
+              path: 'visitor-analysis',
+              component: VisitorAnalysisComponent
+          },
+          {
+              path: 'cash',
+              component: CashComponent
+          },
+          {
+              path: 'notifications',
+              component: BusinessNotificationsComponent
+          },
+          {
+              path: 'offer-zone',
+              component: OfferZoneComponent
+          },
+          {
+              path: 'business-analysis',
+              component: BusinessAnalysisComponent
+          },
+          {
+              path: 'cms',
+              component: CmsComponent
+          },
+          {
+              path: 'business-profile',
+              component: BusinessProfileComponent
+          },
+          {
+              path: 'business-settings',
+              component: BusinessSettingsComponent
+          },
+          {
+              path: 'privacy-settings',
+              component: BusinessPrivacySettingsComponent
+          },
+          {
+              path: 'plan',
+              component: PlanComponent
+          },
+          {
+              path: 'timings',
+              component: TimingsComponent
+          },
+          {
+              path: 'home-delivery',
+              component: HomeDeliveryComponent
+          },
+          {
+              path: 'my-promotions',
+              component: MyPromotionsComponent
+          },
+          {
+              path: 'bank-details',
+              component: BankDetailsComponent
+          },
+          {
+              path: 'my-documents',
+              component: MyDocumentsComponent
+          },
+          {
+              path: 'aadhar',
+              component: AadharComponent
+          },
+          {
+              path: 'social-media',
+              component: SocialMediaComponent
+          },
+          {
+              path: 'ads',
+              component: AdsComponent
+          },
+          {
+              path: 'feedback',
+              component: FeedbackComponent
+          },
+          {
+              path: 'help',
+              component: HelpComponent
+          },
+        ]
+    },
+    {
+        path: 'privacy-settings',
+        component: PrivacySettingsComponent,
         canActivate: [AuthGuard]
     },
     {
-        path: 'business-settings/:id',
-        component: BusinessSettingsComponent,
+        path: 'terms',
+        component: TermsComponent,
         canActivate: [AuthGuard]
     },
-    {
-        path: 'business-notifications/:id',
-        component: BusinessNotificationsComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'business-orders/:id',
-        component: BusinessOrdersComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'add-products/:id',
-        component: AddProductsComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'add-services/:id',
-        component: AddServicesComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'list/:id/:list_id',
-        component: ListComponent,
-        canActivate: [AuthGuard]
-    },
-
-    {
-        path: 'all-orders',
-        component: AllOrdersComponent,
-        canActivate: [AuthGuard]
-    },
-];
+  ];
+  
 
 
 @NgModule({
@@ -186,7 +270,31 @@ const appRoutes: Routes = [
         BusinessSubHeaderComponent,
         ListComponent,
         ForgotComponent,
-        MyCashComponent
+        MyCashComponent,
+        BusinessDashboardCoreComponent,
+        OrdersComponent,
+        VisitorAnalysisComponent,
+        CashComponent,
+        BusinessNotificationsComponent,
+        OfferZoneComponent,
+        BusinessAnalysisComponent,
+        CmsComponent,
+        BusinessProfileComponent,
+        BusinessSettingsComponent,
+        PlanComponent,
+        TimingsComponent,
+        HomeDeliveryComponent,
+        MyPromotionsComponent,
+        BankDetailsComponent,
+        MyDocumentsComponent,
+        AadharComponent,
+        SocialMediaComponent,
+        AdsComponent,
+        FeedbackComponent,
+        HelpComponent,
+        BusinessPrivacySettingsComponent,
+        PrivacySettingsComponent,
+        TermsComponent
     ],
     imports: [
         BrowserModule,
@@ -232,3 +340,4 @@ const appRoutes: Routes = [
     bootstrap: [AppComponent]
 })
 export class AppModule { }
+

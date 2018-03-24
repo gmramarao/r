@@ -1,0 +1,22 @@
+.form{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 30px auto;
+}
+.form textarea{
+  height: 150px;
+  width: 400px;
+  outline: none;
+  resize: none;
+  margin-bottom: 30px;
+  padding: 10px;
+}
+.form label{
+  width: 400px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 110%;
+}

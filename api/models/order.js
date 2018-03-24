@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 ItemSchema = mongoose.Schema({
-    user_id: {
+    b_id: {
         type: String,
         required: true
     },

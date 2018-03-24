@@ -1,31 +1,117 @@
-<app-main-header></app-main-header>
-<div class="main-container">
-  <app-business-sub-header></app-business-sub-header>
-  <div class="dashboard-container">
-    <h2 class="page-heads">
-      Business Dashboard
-    </h2>
-    <div class="dash-core">
-
-      <div class="dash">
-        <!-- Total user visits -->
-        <h4>{{ total_business_visits }}</h4>
-        <h5>Total Visits</h5>
-      </div>
-
-      <div class="dash middle-dash">
-        <!-- Total orders -->
-        <h4>{{ total_business_orders }}</h4>
-        <h5>Total Orders</h5>
-      </div>
-
-      <div class="dash">
-        <!-- Total Products -->
-        <h4>{{ total_business_products }}</h4>
-        <h5>Total Products in store</h5>
-      </div>
-
-    </div>
+<header class="main-header">
+  <div class="logo" routerLink='/home'>
+    <h1>Reatchall</h1>
   </div>
+  <h3 class="bname">
+    Welcome to {{ business_name }}
+  </h3>
+  <nav class="main-nav">
+    <ul>
+      <li *ngIf='auth.loggedIn()' class="settings-trig">
+        SETTINGS
+        <div class="s-dd">
+          <ul>
+            <li routerLink='/profile-settings'>
+              Profile
+            </li>
+            <li routerLink='/notifications'>
+              Notifications
+            </li>
+            <li routerLink='/change-password'>
+              Change Password
+            </li>
+            <li routerLink='privacy-settings'>
+              Privacy Settings
+            </li>
+            <li routerLink='terms'>
+              Terms and Conditions
+            </li>
+            <li (click)='logout()'>
+              Logout
+            </li>
+          </ul>
+        </div>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+<div class="main-container">
+<div class="left-index">
+  <ul>
+    <li routerLink='dashboard'>
+      Dashboard Home 
+    </li>
+    <li routerLink='visitor-analysis'>
+      Visitor's Analysis
+    </li>
+    <li routerLink='orders'>
+      Orders
+    </li>
+    <li routerLink='cash'>
+      Cash
+    </li>
+    <li routerLink='notifications'>
+      Notifications
+    </li>
+    <li routerLink='offer-zone'>
+      Offer Zone
+    </li>
+    <li routerLink='business-analysis'>
+      Business Analysis
+    </li>
+    <li routerLink='cms'>
+      CMS Management
+    </li>
+    <li routerLink='business-profile'>
+      Business Profile
+    </li>
+    <li routerLink='business-settings'>
+      Business Settings
+    </li>
+    <li routerLink='privacy-settings'>
+      Privacy Settings
+    </li>
+    <li routerLink='plan'>
+      Business Plans
+    </li>
+    <li routerLink='timings'>
+      Business Timings
+    </li>
+    <li routerLink='home-delivery'>
+      Home Delivery Options
+    </li>
+    <li routerLink='my-promotions'>
+      My Promotions
+    </li>
+    <li routerLink='bank-details'>
+      Bank Details
+    </li>
+    <li routerLink='my-documents'>
+      My Documents
+    </li>
+    <li routerLink='aadhar'>
+      Update Aadhar
+    </li>
+    <li routerLink='social-media'>
+      My Website and Social Media
+    </li>
+    <li routerLink='ads'>
+      Advertisements
+    </li>
+    <li routerLink='feedback'>
+      Feedback
+    </li>
+    <li routerLink='help'>
+      Help / Contact Us
+    </li>
+  </ul>
+</div>
+<div class="right-content">
+  <router-outlet>
+
+  </router-outlet>
+</div>
 </div>
 <app-main-footer></app-main-footer>

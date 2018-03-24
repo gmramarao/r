@@ -9,6 +9,7 @@ export class VendorService {
     authToken: any;
     user: any;
     url = 'http://localhost:3000/';
+    b_id;
     constructor(private http: Http) { }
 
     // Vendor Location
@@ -146,8 +147,8 @@ export class VendorService {
     confirmation(data){
       return this.http.put(this.url+'vendor/confirmation/', data).map(res => res.json());
     }
-    getOrdersById(list_id) {
-      return this.http.get(this.url+'vendor/get-orders/' + list_id).map(res => res.json());
+    getOrdersById(b_id) {
+      return this.http.get(this.url+'vendor/get-orders/' + b_id).map(res => res.json());
     }
     getOrdersByStatus(status, list_id) {
       return this.http.get(this.url+'vendor/get-orders-status/' + status +'/'+list_id).map(res => res.json());
@@ -163,6 +164,21 @@ export class VendorService {
     getPaymentHistory(id){
       return this.http.get(this.url+'vendor/get-payment-history/'+id).map(res => res.json());
     }
-    
+    changeBusinesStatus(data){
+      return this.http.put(this.url+'vendor/change-business-status', data).map(res => res.json());
+    }
+    setb_id(b_id){
+      this.b_id = b_id;
+    }
+    getb_id(){
+      return this.b_id;
+    }
+
+    getBusinesses(b_id) {
+      return this.http.get(this.url+'vendor/get-businesses/' + b_id).map(res => res.json());
+    }
+    getVisitorAnalysis(b_id){
+      return this.http.get(this.url+'vendor/get-visitor/analysis/'+ b_id).map(res => res.json());
+    }
 }
 

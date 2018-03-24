@@ -14,6 +14,7 @@ var express = require('express'),
     List = require('../models/list'),
 Item = require('../models/item'),
 BusinessStatus = require('../models/business_status'),
+BusinessStatusLogs = require('../models/business_status_logs.js'),
     BusinessVisit = require('../models/business-visit'),
     BusinessVisitCount = require('../models/business-visit-count'),
     BusinessOrder = require('../models/business-order');
@@ -342,7 +343,7 @@ router.get('/get-vendor-businesses/:vendor_id', function (req, res) {
 
 // Get All Categories
 router.get('/get-all-categories', (req, res) => {
-    Category.find((err, cats) => {
+    Category.find({}, (err, cats) => {
         if (err) {
             res.json({
                 success: false,
@@ -390,6 +391,7 @@ router.post('/add-business', function (req, res) {
         plan: plan,
         type: type,
         coords: coords,
+        active: true,
         created_date: moment().format('MMMM Do YYYY, h:mm:ss a'),
         last_updated: moment().format('MMMM Do YYYY, h:mm:ss a')
     });
@@ -412,6 +414,7 @@ router.post('/add-business', function (req, res) {
 router.post('/post-business-status', (req, res) => {
     var id = req.body.b_id;
     var status = req.body.status;
+    var b_stat;
 
     BusinessStatus.find({
         business_id: id
@@ -828,7 +831,7 @@ router.put('/confirmation', function (req, res) {
 })
 
 router.get('/get-orders/:b_id', function (req, res) {
-    Order.find({}, function (err, doc) {
+    Order.find({b_id:req.params.b_id}, function (err, doc) {
         if (err) {
             res.json({
                 success: false,
@@ -1107,39 +1110,39 @@ router.put('/profile-setting', function (req, res) {
 
 })
 router.get('/get-present-cash/:id', function(req, res){
-    res.json({status: true, msg:{balance:1000}});
+    res.json({success: true, msg:{balance:1000}});
 })
 
 router.get('/get-payment-history/:id', function(req, res){
-    res.json({status: true, msg:{balance:1000}});
+    res.json({success: true, msg:{balance:1000}});
 })
 
 router.get('/get-balance-details/:id', function(req, res){
-    res.json({status: true, msg:{balance:10000}});
+    res.json({success: true, msg:{balance:10000}});
 
 })
 
 router.get('/get-offers/:id', function(req, res){
-    res.json({status: true, msg:{offers:100}});
+    res.json({success: true, msg:{offers:100}});
 
 })
 
 router.get('/get-all-products/:id', function(req, res){
-    res.json({status: true, msg:{products:100}});
+    res.json({success: true, msg:{products:100}});
 
 })
 
 router.get('/get-selected-group-items/:id', function(req, res){
-    res.json({status: true, msg:{items:100}});
+    res.json({success: true, msg:{items:100}});
 
 })
 
 router.get('/get-current-orders/:id', function(req, res){
     Order.find({}, function(err, doc){
         if(!err){
-            res.json({status: true, msg:doc});
+            res.json({success: true, msg:doc});
         } else {
-            res.json({status: false, msg:err});
+            res.json({success: false, msg:err});
         }
     })
     
@@ -1148,9 +1151,9 @@ router.get('/get-current-orders/:id', function(req, res){
 router.get('/get-old-orders/:id', function(req, res){
     Order.find({}, function(err, doc){
         if(!err){
-            res.json({status: true, msg:doc});
+            res.json({success: true, msg:doc});
         } else {
-            res.json({status: false, msg:err});
+            res.json({success: false, msg:err});
         }
     })
     
@@ -1159,16 +1162,149 @@ router.get('/get-old-orders/:id', function(req, res){
 router.get('/get-custom-orders/:id', function(req, res){
     Custom_order.find({}, function(err, doc){
         if(!err){
-            res.json({status: true, msg:doc});
+            res.json({success: true, msg:doc});
         } else {
-            res.json({status: false, msg:err});
+            res.json({success: false, msg:err});
+        }
+    })
+    
+})
+
+router.get('/get-businesses/:b_id', function (req, res) {
+    var b_id = req.params.b_id;
+    status_change(req.params.b_id, function(err1, doc1){
+        if(!err1){
+            async.parallel([
+                function(callback){
+                    BusinessStatus.findOne({business_id: b_id}, callback);
+                }, 
+                function(callback){
+                    Business.findOne({_id: b_id}, callback);
+                }
+            ], function(err, doc){
+                if (err) {
+                    res.json({
+                        success: false,
+                        msg: err
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        msg: doc
+                    });
+                } 
+            })
+        } else {
+            res.json({
+                success: false,
+                msg: err1
+            });
+        }
+        
+    })
+    
+    
+
+})
+    
+    //     Business.findOne({
+    //     _id: b_id
+    //     }, (err, busses) => {
+    //     if (err) {
+    //         res.json({
+    //             success: false,
+    //             msg: err
+    //         });
+    //     } else {
+    //         if (busses) {
+    //             res.json({
+    //                 success: true,
+    //                 msg: busses
+    //             });
+    //         } else {
+    //             res.json({
+    //                 success: false,
+    //                 msg: 'No businesses returned'
+    //             });
+    //         }
+    //     }
+    // });
+          
+    
+
+router.put('/change-business-status', function(req, res){
+    console.log(req.body);
+    async.waterfall([
+        function(callback){
+            BusinessStatus.findOne({business_id:req.body.business_id}, callback);
+        },
+        function(text, callback){
+            if(text){
+                delete text._id;
+                BusinessStatusLogs.insertMany(text, function(err, doc){
+                    if(err){
+                        callback(err, null);
+                    } else {
+                        BusinessStatus.remove({business_id:req.body.business_id}, callback);
+                    }
+                });
+            } else {
+                 callback(null, true);
+            }
+        },
+        function(text, callback){
+            BusinessStatus.insertMany(req.body, callback);
+        }
+    ], function(err, doc){
+        if(err){
+            res.json({success: false, msg: err});
+        } else {
+            res.json({success: true, msg:doc});
         }
     })
     
 })
 
 
-Category.find({name: null}, function(err, doc){
-    console.log(doc);
+
+function status_change(b_id, callback){
+
+    BusinessStatus.findOne({updated_date:{ $lte: moment().format('MMMM Do YYYY, h:mm:ss a')}, business_id:b_id}, function(err1, doc1){
+        if(err1){
+            callback(err1, null);
+        } else {
+            if(doc1){
+                delete doc1._id;
+                BusinessStatusLogs.insertMany(doc1, function(err2, doc2){
+                    if(!err2){
+                        BusinessStatus.remove({updated_date:{ $lte: moment().format('MMMM Do YYYY, h:mm:ss a')}, business_id:b_id}, function(err3, doc){
+                            if(!err3){
+                                callback(null, true);
+                            } else {
+                                callback(err3, null);
+                            }
+                        })
+                    } else {
+                        callback(err2, null);
+                    }
+                })
+            } else {
+                callback(null, true);
+            }
+        }
+    })
+    
+
+}
+
+router.get('/get-visitor/analysis/:b_id', function(req, res){
+    res.json({success: true, msg:{
+        vistors_today: 10,
+        visitors_past_30: 25,
+        overall_visitors: 45
+    }});
 })
+
+
+
 module.exports = router;

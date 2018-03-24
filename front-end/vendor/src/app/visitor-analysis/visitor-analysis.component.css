@@ -1,0 +1,34 @@
+.views-core{
+    position: relative;
+    display: flex;
+    width: 80%;
+    margin: 30px auto;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.views{
+    height: 200px;
+    width: 200px;
+    margin: 30px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.today-views{
+    background-color: #e74c3c;
+}
+.thirty-views{
+    background-color: #27ae60;
+}
+.overall-views{
+    background-color: #c0392b;
+}
+.views h5{
+    font-size: 400%;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
