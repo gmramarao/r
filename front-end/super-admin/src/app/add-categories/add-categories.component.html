@@ -1,5 +1,11 @@
 <h2 class="page-heads">Add Category</h2>
 <div class="width-control">
+    <label for="c-name">Category Section</label>
+    <select name="select-category" id="select-category" [(ngModel)]="section">
+        <option value="product">Product</option>
+        <option value="service">Service</option>
+        <option value="individual">Individual</option>
+      </select>
   <label for="c-name">Category Name</label>
   <input type="text" id="c-name" placeholder="Category name" [(ngModel)]='catName'>
   <button class="submit" (click)='addCategoryClicked()'>Add</button>

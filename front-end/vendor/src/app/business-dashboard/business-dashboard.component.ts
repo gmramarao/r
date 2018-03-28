@@ -132,7 +132,7 @@ export class BusinessDashboardComponent implements OnInit {
           this.title.setTitle(this.business_name + ' - Dashboard');
           this.vendorService.getTotalBusinessVisits(this.business_id).subscribe(v => {
             if (v.success) {
-              this.total_business_visits = v.msg[0].number_of_visits;
+              this.total_business_visits =  v.msg[0] ? v.msg[0].number_of_visits: 0;
             } else {
               console.log(v);
             }

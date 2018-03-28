@@ -1,70 +1,53 @@
 .main-container{
   position: relative;
-  display: block;
   min-height: 100vh;
-  max-height: auto;
   height: auto;
-  width: 100%;
-}
-.business-header{
-  position: relative;
+  max-height: auto;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  height: 50px;
-  width: 100%;
-  border-bottom: 1px solid #888;
 }
-.business-header nav{
-  width: 90%;
-  height: 100%;
-}
-.business-header ul{
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-}
-.business-header ul li{
-  /* margin: 0 10px; */
-  border-right: 1px solid #999;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  outline: none;
-  width: 140px;
-}
-.notif-core {
+.width-control {
   position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  width: 80%;
   flex-direction: column;
-  height: auto;
+  height: 100%;
 }
-.notif {
+
+.db{
+  z-index: 20;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .5);
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+}
+.wb{
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
-  /* border: 1px solid #888; */
-  background-color: #eaeaea;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, .2);
-  height: 60px;
-  width: 100%;
+  flex-direction: column;
+  height: 500px;
+  width: 500px;
+  background-color: #E5EFF1;
   border-radius: 4px;
 }
-.notif p{
-  position: relative;
+.wb img{
+  height: 300px;
+  width: auto;
+}
+.wb h5{
   display: block;
-  margin: 0 20px;
-  text-align: left;
+  margin: 30px auto;
+  font-weight: 500;
+  font-size: 140%;
+  text-align: center;
+  width: 80%;
 }

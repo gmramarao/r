@@ -1,4 +1,4 @@
-<app-main-header></app-main-header>
+<!-- <app-main-header></app-main-header>
 <div class="main-container">
 <app-business-sub-header></app-business-sub-header>
   <div class="dashboard-container">
@@ -13,5 +13,28 @@
       </div>
     </div>
   </div>
+</div>
+<app-main-footer></app-main-footer> -->
+
+<app-main-header></app-main-header>
+<div class="main-container">
+  <div class="width-control">
+    <h2 class="page-heads">
+      Notifications
+    </h2>
+  </div>
+</div>
+<div class="db" *ngIf="orders.length">
+  <div class="wb">
+    <ul *ngFor="let item of orders">
+      <li>
+        Order Id : {{item.order_id}}
+      </li>
+    </ul>
+    <h5>Wating for Your conformation</h5>
+    <button (click)="confirmation('accepted')">Accept</button>
+    <button (click)="confirmation('cancled')">Cancle</button>
+  </div>
+  
 </div>
 <app-main-footer></app-main-footer>

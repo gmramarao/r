@@ -13,18 +13,13 @@ declare var $:any;
 })
 export class OrdersComponent implements OnInit {
   b_id;
+  orders;
   constructor(private auth: AuthService, private vendorService: VendorService, private router: Router) { }
 
   ngOnInit() {
     this.b_id = this.vendorService.getb_id();
-    this.vendorService.getOrdersById(this.b_id).subscribe((res)=>{
-      console.log(res);
-      if(res.success){
-
-      } else {
-
-      }
-    })
+    console.log(this.b_id);
+    this.getAllorders();
 
   }
 
@@ -52,5 +47,27 @@ export class OrdersComponent implements OnInit {
         break;
     }
   }
+
+  getOrders(status){
+    this.vendorService.getOrdersByStatus(status, this.b_id).subscribe((res)=>{
+      if(res.success){
+        this.orders = res.msg;
+        console.log(res);
+      } else {
+
+      }
+    })
+  }
+  getAllorders(){
+    this.vendorService.getOrdersById(this.b_id).subscribe((res)=>{
+      console.log(res);
+      if(res.success){
+        this.orders = res.msg;
+      } else {
+
+      }
+    })
+  }
+  
 
 }

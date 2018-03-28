@@ -52,16 +52,15 @@ export class HomeComponent implements OnInit {
           // element.business.days.forEach(day => {
           //   console.log(day);
           // });
-          console.log(element.business.days['monday']);
           // Check of object exists
           this.vendorService.getBusinessStatus(element._id).subscribe(stat => {
             console.log(stat);
             if (stat.success) {
               // alert(stat.msg[0]);
-              element.status = stat.msg[0].status;
+              element.status = stat.msg[0] ?  stat.msg[0].status: '';
             }
           });
-          if (element.business.days[this.today]) {
+          if (element.business.days && element.business.days[this.today]) {
             // Today shop is open
             // Check for time
             const opening_time = element.business.timings[this.today].opening;
@@ -70,16 +69,18 @@ export class HomeComponent implements OnInit {
             const close = moment(closing_time, 'h:mma');
             const cur_time = moment(new Date());
             let status;
+            console.log(cur_time.isAfter(open));
+            console.log(cur_time.isBefore(close));
             if (cur_time.isAfter(open)) {
               if (cur_time.isBefore(close)) {
-                status = 'open';
+                element.status = 'open';
               } else {
-                status = 'close';
+                element.status = 'close';
               }
             } else {
-              status = 'close';
+              element.status = 'close';
             }
-            element.status = status;
+            console.log(element.status);
           }else {
             // closed
             element.status = 'close';

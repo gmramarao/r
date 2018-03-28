@@ -240,10 +240,11 @@ export class BusinessComponent implements OnInit {
     if(list_id.length){
       this.ord_cnfr = true;
       const data = {
-        user_id: this.user_id,
+        b_id: this.business_id,
         orders: list_id,
         id:id
       };
+      console.log(data);
       this.userService.postOrder(data).subscribe( res => {
         console.log(res);
         if(res.success === true) {

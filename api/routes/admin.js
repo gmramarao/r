@@ -271,7 +271,8 @@ router.post('/add-category', function(req, res) {
     
     var name = req.body.name;
     var time = req.body.time;
-    var cat = new Category({name: name,created_date: time});
+    var section = req.body.section;
+    var cat = new Category({name: name,created_date: time, section: section});
     // Add Category t Schema
     cat.save((er, saved)=>{
         if(er){

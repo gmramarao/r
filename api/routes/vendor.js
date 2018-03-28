@@ -848,7 +848,7 @@ router.get('/get-orders/:b_id', function (req, res) {
 
 router.get('/get-orders-status/:status/:b_id', function (req, res) {
     Order.find({
-        confirmation: req.params.status
+        confirmation: req.params.status, b_id: req.params.b_id
     }, function (err, doc) {
         if (err) {
             res.json({
@@ -1305,6 +1305,28 @@ router.get('/get-visitor/analysis/:b_id', function(req, res){
     }});
 })
 
+router.put('/change-business-settings', function(req, res){
+    Business.update({_id: req.body.id}, {$set:{'business.name': req.body.name, 'business.contact_number': req.body.contact_number, 'business.address': req.body.address }}, {multi: true}, function(err, doc){
+        if(err){
+            res.json({ success: false, msg : err});
+        } else {
+            res.json({success: true, msg: doc});
+        }
+    })
+})
 
 
+router.get('/get-categorieson-onsection/:section', function(req, res){
+    Category.find({section: req.params.section}, function(err, doc){
+        if(err){
+            res.json({success: false, msg: err});
+        } else {
+            res.json({success: true, msg: doc});
+        }
+    })
+})
+
+// Business.remove({_id: '5a8a6355a75ae92b3c7ed842'}, function(err, doc){
+//     console.log(doc);
+// })
 module.exports = router;

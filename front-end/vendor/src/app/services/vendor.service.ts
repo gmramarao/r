@@ -150,8 +150,8 @@ export class VendorService {
     getOrdersById(b_id) {
       return this.http.get(this.url+'vendor/get-orders/' + b_id).map(res => res.json());
     }
-    getOrdersByStatus(status, list_id) {
-      return this.http.get(this.url+'vendor/get-orders-status/' + status +'/'+list_id).map(res => res.json());
+    getOrdersByStatus(status, b_id) {
+      return this.http.get(this.url+'vendor/get-orders-status/' + status +'/'+b_id).map(res => res.json());
     }
 
     profile_setting(data){
@@ -179,6 +179,12 @@ export class VendorService {
     }
     getVisitorAnalysis(b_id){
       return this.http.get(this.url+'vendor/get-visitor/analysis/'+ b_id).map(res => res.json());
+    }
+    business_status_change(data){
+      return this.http.put(this.url+'vendor/change-business-settings', data).map(res => res.json());
+    }
+    getCategoriesonSection(section){
+      return this.http.get(this.url+'vendor/get-categorieson-onsection/'+ section).map(res => res.json());
     }
 }
 

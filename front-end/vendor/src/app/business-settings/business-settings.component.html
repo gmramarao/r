@@ -1,4 +1,4 @@
-<app-main-header></app-main-header>
+<!-- <app-main-header></app-main-header> -->
 <div class="main-container">
 <app-business-sub-header></app-business-sub-header>
   <div class="settings-container">
@@ -6,16 +6,16 @@
       <h2 class="page-heads">Settings</h2>
       <div class="settings-core">
         <label for="b-name">Business Name</label>
-        <input type="text" id="b-name" [(ngModel)]='busniess_name'>
+        <input type="text" id="b-name" [(ngModel)]='business_name'>
 
         <label for="b-num">Contact Number</label>
-        <input type="text" id="b-num" [(ngModel)]='busniess_number'>
+        <input type="text" id="b-num" [(ngModel)]='business_number'>
 
         <label for="b-num">Location</label>
-        <textarea name="" id="" [(ngModel)]='b_location'></textarea>
+        <textarea name="" id="" [(ngModel)]='business_location'></textarea>
         <button (click)='getLocation()' class="get-loc">Get Current Location</button>
 
-        <button class="submit-btn">SUBMIT</button>
+        <button class="submit-btn" (click)="business_settings()">SUBMIT</button>
       </div>
     </div>
   </div>

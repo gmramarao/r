@@ -65,12 +65,12 @@
       <label>Business Type</label>
       <div class="type-select-div">
         <div class="t-s">
-          <label for="p-based" class="type-select" id="product-select" (click)="typeSelected('product')">
+          <label for="p-based" class="type-select" id="product-select" (click)="typeSelected('product');getcategoriesonSection('product')">
             <input type="radio" name="b-type" id="p-based" value="product" hidden> Product Based
           </label>
         </div>
         <div class="t-s">
-          <label for="s-based" class="type-select" id="service-select" (click)="typeSelected('service')">
+          <label for="s-based" class="type-select" id="service-select" (click)="typeSelected('service');getcategoriesonSection('service')">
               <input type="radio" name="b-type" id="s-based" value="service" hidden> Service Based
           </label>
         </div>

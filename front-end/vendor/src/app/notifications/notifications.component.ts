@@ -18,7 +18,6 @@ export class NotificationsComponent implements OnInit {
     });
     setInterval(()=> {
       this.vendorService.getNotification('123').subscribe(order => {
-        console.log(order);
         if (order.success) {
           this.orders = order.msg;
         }

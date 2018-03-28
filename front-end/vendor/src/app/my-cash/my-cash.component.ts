@@ -12,6 +12,7 @@ export class MyCashComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(this.authService.getUserFromLocal());
+    console.log(this.user);
     this.vendorService.getPresentCash(this.user.id).subscribe((res)=>{
       if(res.status){
         console.log(res.msg);

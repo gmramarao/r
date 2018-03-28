@@ -14,7 +14,7 @@ export class AddCategoriesComponent implements OnInit {
 
   catName;
   all_cats;
-
+  section;
   ngOnInit() {
     this.displayCats();
   }
@@ -31,8 +31,10 @@ export class AddCategoriesComponent implements OnInit {
     if (this.catName !== undefined && this.catName !== null && this.catName !== '') {
       const obj = {
         name : this.catName,
-        time: cur_time
+        time: cur_time,
+        section: this.section
       };
+      console.log(obj);
       this.adminService.AddCategory(obj).subscribe(res => {
         if (res.success) {
           this.displayCats();

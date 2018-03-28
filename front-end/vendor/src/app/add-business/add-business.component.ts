@@ -800,4 +800,17 @@ export class AddBusinessComponent implements OnInit {
         break;
     }
   }
+
+
+  getcategoriesonSection(section){
+    this.vendorService.getCategoriesonSection(section).subscribe(cats => {
+      if (cats.success) {
+        this.all_cats = cats.msg;
+        console.log(this.all_cats);
+      }else {
+        alert('Cats not brought. View Console');
+        console.log(cats);
+      }
+    });
+  }
 }

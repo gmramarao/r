@@ -1010,7 +1010,7 @@ router.post('/post-order', function (req, res) {
     console.log(req.body);
     var order_id = shortid.generate();
     Order.insertMany({
-        user_id: req.body.user_id,
+        b_id: req.body.b_id,
         order_id: order_id,
         orders: req.body.orders,
         confirmation: 'pending'

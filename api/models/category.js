@@ -17,6 +17,10 @@ CategorySchema = mongoose.Schema({
     updated_date: {
       type: String,
       required: false
+    }, 
+    section: {
+      type: String,
+      required: true
     }
 });
 
