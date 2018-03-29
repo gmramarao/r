@@ -22,7 +22,8 @@ export class HomeComponent implements OnInit {
   all_businesses = [];
   featured_businesses = [];
   today;
-
+  section: any = 'product';
+  categorie: any = [];
   ngOnInit() {
 
     const date = new Date();
@@ -46,6 +47,9 @@ export class HomeComponent implements OnInit {
         // alert('nope main cats');
       }
     });
+
+    this.getCategories('product');
+    
 
     // Get featured businesses
     this.userService.getFeaturedBusinesses().subscribe(buses => {
@@ -125,6 +129,21 @@ export class HomeComponent implements OnInit {
       $('.cat-tab-core').hide();
       $('.individuals-tab').show();
     });
+  }
+
+  getCategories(section){
+    this.userService.getCategories(section).subscribe((res)=>{
+      if(res.success){
+        console.log(res);
+        this.categorie = res.msg;
+      } else {
+
+      }
+    })
+  }
+
+  state_change(state){
+    console.log(state);
   }
 
 }

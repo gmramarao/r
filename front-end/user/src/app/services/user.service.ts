@@ -122,7 +122,7 @@ export class UserService {
       const header = new Headers();
       header.append('Content-Type', 'application/json');
       // tslint:disable-next-line:max-line-length
-      return this.http.post('http://localhost:3000/user/add-business-to-wishlist', obj, { headers: header }).map(res => res.json());
+      return this.http.post('http://localhost:3000/user/add-business-to-wishlist', obj).map(res => res.json());
     }
     // Remove from wishlist
     removeBusinessInWishlist(obj) {
@@ -133,8 +133,7 @@ export class UserService {
     }
     // Get Business wishlist
     getUserBusinessWishlist(user_id) {
-      // return this.http.get('http://localhost:3000/user/get-user-business-wishlist/' + user_id).map(res => res.json());
-      // return this.http.get('http://localhost:3000/user/get-user-business-wishlist/' + user_id).map(res => res.json());
+      console.log(user_id);
       return this.http.get('http://localhost:3000/user/get-user-business-wishlist/' + user_id).map(res => res.json());
     }
     // Get item wishlist
@@ -185,6 +184,18 @@ export class UserService {
     }
     getOrders(id){
       return this.http.get('http://localhost:3000/user/get-orders/'+id).map(res => res.json());
+    }
+
+    getCategories(section){
+      return this.http.get('http://localhost:3000/user/get-categories/'+section).map(res => res.json());
+    }
+
+    getSubCategorie(categorie_id) {
+      return this.http.get('http://localhost:3000/user/get-sub-categories/'+categorie_id).map(res => res.json());
+    }
+
+    getBusinessBySubCategorie(sub_id){
+      return this.http.get('http://localhost:3000/user/get-business-subcategorie/'+sub_id).map(res => res.json());
     }
    
 }

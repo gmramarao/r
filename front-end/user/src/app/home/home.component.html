@@ -9,23 +9,23 @@
 
     <div class="cat-tabs">
       <div class="cat-tabs-top">
-        <div class="cat-tab-title cat-tab-products selected-cat-tab">PRODUCTS</div>
-        <div class="cat-tab-title cat-tab-services">SERVICES</div>
-        <div class="cat-tab-title cat-tab-individuals">INDIVIDUALS</div>
+        <div class="cat-tab-title cat-tab-products selected-cat-tab" (click)="getCategories('product')">PRODUCTS</div>
+        <div class="cat-tab-title cat-tab-services"  (click)="getCategories('service')">SERVICES</div>
+        <div class="cat-tab-title cat-tab-individuals"  (click)="getCategories('individual')">INDIVIDUALS</div>
       </div>
       <div class="cat-tabs-core">
         <div class="cat-tab-core products-tab">
             <div class="cat-row">
-
-                <div class="cat" [routerLink]="['/category', 'fashion']">
-                  <div class="cat-ico">
+                <!-- [routerLink]="['/category', 'fashion']" -->
+                <div class="cat"  *ngFor="let cat of categorie" [routerLink]="['/category', cat._id]" (click)="state_change(cat.name)">
+                  <div class="cat-ico" >
                       <i class="fas fa-anchor"></i>
                   </div>
                   <div class="cat-title">
-                    Fashion
+                    {{cat.name}}
                   </div>
                 </div>
-                <div class="cat">
+                <!-- <div class="cat">
                   <div class="cat-ico">
                       <i class="fas fa-anchor"></i>
                   </div>
@@ -164,22 +164,22 @@
                   <div class="cat-title">
                     Title
                   </div>
-                </div>
+                </div> -->
           
               </div>
         </div>
         <div class="cat-tab-core services-tab">
             <div class="cat-row">
 
-                <div class="cat">
-                  <div class="cat-ico">
+                <div class="cat"  *ngFor="let cat of categorie" [routerLink]="['/category', cat._id]" (click)="state_change(cat.name)">
+                  <div class="cat-ico" >
                       <i class="fas fa-anchor"></i>
                   </div>
                   <div class="cat-title">
-                    Fashion
+                    {{cat.name}}
                   </div>
                 </div>
-                <div class="cat">
+                <!-- <div class="cat">
                   <div class="cat-ico">
                       <i class="fas fa-anchor"></i>
                   </div>
@@ -243,9 +243,9 @@
                     Real Estate
                   </div>
                 </div>
-          
+           -->
               </div>
-              <div class="cat-row">
+              <!-- <div class="cat-row">
           
                 <div class="cat">
                   <div class="cat-ico">
@@ -321,7 +321,7 @@
                 </div>
           
               </div>
-        </div>
+        </div> -->
         <div class="cat-tab-core individuals-tab"><div class="cat-row">
 
             <div class="cat">

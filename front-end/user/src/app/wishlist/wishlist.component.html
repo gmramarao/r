@@ -12,7 +12,7 @@
         <ul>
           <li *ngFor='let b of businesses'>
             <div class="item-name">
-              {{ b.name }}
+              {{ b.business ? b.business.business_registered_name : ''}}
             </div>
             <div class="item-action" (click)='removeFromFavorites(b._id)'>
               <i class="fas fa-heart"></i>

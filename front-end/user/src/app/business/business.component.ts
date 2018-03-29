@@ -65,22 +65,8 @@ export class BusinessComponent implements OnInit {
         }
       });
       // check if busienss is in wishlist
-      const obj = {
-        user_id: this.user_id,
-        business_id: this.business_id
-      };
-      this.userService.checkBusinessInWishlist(obj).subscribe(res => {
-        if (res.success) {
-          if (res.msg.length > 0) {
-            this.added_to_wishlist = true;
-          }else {
-            this.added_to_wishlist = false;
-          }
-        }else {
-          // Error occured
-          console.log(res);
-        }
-      });
+      this.checkWishList();
+      
 
       // Get user cart
       this.userService.getCart(this.user_id).subscribe(cart => {
@@ -98,8 +84,11 @@ export class BusinessComponent implements OnInit {
       });
       
     });
+    
 
     // Post user's visit to vendor
+    
+
 
     $('#tab-one-trig').click(function() {
       $('.tabs').hide();
@@ -169,7 +158,8 @@ export class BusinessComponent implements OnInit {
       this.userService.removeBusinessInWishlist(obj).subscribe(res => {
         if (res.success) {
           // Removed successfully
-          this.added_to_wishlist = false;
+          // this.added_to_wishlist = false;
+          this.checkWishList();
         }else {
           // Error
          
@@ -179,7 +169,8 @@ export class BusinessComponent implements OnInit {
       this.userService.addBusinessInWishlist(obj).subscribe(res => {
         if (res.success) {
           // Added
-          this.added_to_wishlist = true;
+          // this.added_to_wishlist = true;
+          this.checkWishList();
         }else {
           // Error
           
@@ -321,5 +312,23 @@ export class BusinessComponent implements OnInit {
     });
   }
   
+  checkWishList(){
+    const obj = {
+      user_id: this.user_id,
+      business_id: this.business_id
+    };
+    this.userService.checkBusinessInWishlist(obj).subscribe(res => {
+      if (res.success) {
+        if (res.msg.length > 0) {
+          this.added_to_wishlist = true;
+        }else {
+          this.added_to_wishlist = false;
+        }
+      }else {
+        // Error occured
+        console.log(res);
+      }
+    });
+  }
 
 }

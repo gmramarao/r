@@ -8,4 +8,36 @@
     <h2 class="page-head">{{ cat_name || TitleCase }}</h2>
   </div>
 </div>
+<div class="cat-tabs-core">
+    <div>
+        <div class="cat-row">
+            <!-- [routerLink]="['/category', 'fashion']" -->
+            <div class="cat"  *ngFor="let sub of subcategories" [routerLink]="['/sub-category', sub._id]">
+              <div class="cat-ico" >
+                  <i class="fas fa-anchor"></i>
+              </div>
+              <div class="cat-title">
+                {{sub.name}}
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
 <app-main-footer></app-main-footer>
+
+
+<!-- <app-main-header></app-main-header>
+<app-sub-header></app-sub-header>
+<div class="main-container">
+  <div class="banner-core">
+    <div class="db"></div>
+  </div>
+  <div class="width-control">
+    <!-- <h2 class="page-head"  *ngFor="let sub of subcategories">{{sub.name}} </h2> -->
+    <!-- <div class="cat" *ngFor="let sub of subcategories" [routerLink]="['/sub-category', sub._id]"> <h2 class="page-head">{{sub.name}} </h2> </div>
+  </div>
+  <div>
+    
+  </div>
+</div>
+<app-main-footer></app-main-footer> -->

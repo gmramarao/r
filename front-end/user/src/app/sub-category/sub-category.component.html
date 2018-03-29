@@ -29,7 +29,26 @@
       </div>
       <div class="results-core">
 
-        <div class="result">
+        <div class="result"  *ngFor="let bus of business">
+          <div class="img"  [routerLink]="['/business', bus._id]"><div class="db"></div></div>
+          <div class="dets">
+            <div class="open-sp"><div class="op"></div>&nbsp; Open</div>
+            <h5>{{bus.business.business_registered_name}}</h5>
+            <div class="rating">
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+              </div>
+            </div>
+            <div class="o-dets">
+              <h6><span class="ad-ico"><i class="fas fa-home"></i></span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique molestias debitis dignissimos libero quasi eaque?</h6>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="result">
           <div class="img"><div class="db"></div></div>
           <div class="dets">
             <div class="open-sp"><div class="op"></div>&nbsp; Open</div>
@@ -66,26 +85,7 @@
               <h6><span class="ad-ico"><i class="fas fa-home"></i></span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique molestias debitis dignissimos libero quasi eaque?</h6>
             </div>
           </div>
-        </div>
-        <div class="result">
-          <div class="img"><div class="db"></div></div>
-          <div class="dets">
-            <div class="open-sp"><div class="op"></div>&nbsp; Open</div>
-            <h5>Title</h5>
-            <div class="rating">
-              <div class="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="far fa-star"></i>
-              </div>
-            </div>
-            <div class="o-dets">
-              <h6><span class="ad-ico"><i class="fas fa-home"></i></span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique molestias debitis dignissimos libero quasi eaque?</h6>
-            </div>
-          </div>
-        </div>
+        </div> -->
 
       </div>
     </div>

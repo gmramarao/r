@@ -653,9 +653,9 @@ router.post('/post-visit-to-business', (req, res) => {
 
 // Add business to wishlist
 router.post('/add-business-to-wishlist', (req, res) => {
-    user_id = req.body.user_id;
-    business_id = req.body.business_id;
-    time = moment().format('MMMM Do YYYY, h:mm:ss a');
+    var user_id = req.body.user_id;
+    var business_id = req.body.business_id;
+    var time = moment().format('MMMM Do YYYY, h:mm:ss a');
     var bw = BusinessWishlist({
         user_id: user_id,
         business_id: business_id,
@@ -722,8 +722,8 @@ router.post('/check-item-in-wishlist', (req, res) => {
 
 // Remove business to wishlist
 router.post('/remove-business-in-wishlist', (req, res) => {
-    user_id = req.body.user_id;
-    business_id = req.body.business_id;
+    var user_id = req.body.user_id;
+    var business_id = req.body.business_id;
     BusinessWishlist.remove({
         user_id: user_id,
         business_id: business_id
@@ -765,12 +765,12 @@ router.post('/remove-item-in-wishlist', (req, res) => {
 });
 
 // Get user business wishlist
-router.post('/get-user-business-wishlist/:user_id', (req, res) => {
-    console.log('heyy');
-    user_id = req.params.user_id;
+router.get('/get-user-business-wishlist/:user_id', (req, res) => {
+    var user_id = req.params.user_id;
     BusinessWishlist.find({
         user_id: user_id
     }, (err, found) => {
+        console.log(found);
         if (err) {
             res.json({
                 success: false,
@@ -783,6 +783,8 @@ router.post('/get-user-business-wishlist/:user_id', (req, res) => {
             });
         }
     });
+
+   
 });
 
 // Get all lists of business
@@ -1212,6 +1214,46 @@ router.post('/rating', function (req, res) {
                 status: true,
                 msg: doc
             });
+        }
+    })
+})
+
+
+router.get('/get-categories/:section', function(req, res){
+    Category.find({section: req.params.section}, function(err, doc){
+        if(!err){
+            res.json({success: true, msg: doc});
+        } else {
+            res.json({success: false, msg: err});
+        }
+    })
+})
+
+
+router.get('/get-sub-categories/:category_id', function(req, res){
+    async.parallel([
+        function(callback){
+            Category.findOne({_id: req.params.category_id}, callback)
+        },
+        function(callback){
+            SubCategory.find({category_id: req.params.category_id}, callback);
+        }
+        
+    ],function(err, doc){
+        if(!err){
+            res.json({success: true, msg: doc});
+        } else {
+            res.json({success: false, msg: err});
+        }
+    })
+})
+
+router.get('/get-business-subcategorie/:sub_id', function(req, res){
+    Business.find({"business.sub_category": req.params.sub_id}, function(err, doc){
+        if(!err){
+            res.json({success: true, msg: doc});
+        } else {
+            res.json({success: false, msg: err});
         }
     })
 })

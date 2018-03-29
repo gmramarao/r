@@ -34,6 +34,7 @@ export class BusinessDashboardCoreComponent implements OnInit {
       status: this.status ? 'open' : 'close',
       updated_date: moment().add(12, 'hour').format('MMMM Do YYYY, h:mm:ss a')
     };
+    console.log(data);
     this.vendorService.changeBusinesStatus(data).subscribe(res=>{
       console.log(res);
       this.get_business();

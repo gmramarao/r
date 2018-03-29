@@ -84,4 +84,26 @@ export class BusinessSettingsComponent implements OnInit {
       
   }
 
+
+  locateVendor() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log(position);
+        
+        // this.location = position.coords;
+        // this.lat = position.coords.latitude;
+        // this.long = position.coords.longitude;
+        if (position.coords === undefined || position.coords === null) {
+        } else {
+          this.vendorService.getLocation(position.coords.latitude, position.coords.longitude).subscribe(res => {
+            console.log(res);
+            if (res) {
+              this.business_location = res.results[0].formatted_address;
+            }
+          });
+        }
+      });
+    }
+  }
+
 }

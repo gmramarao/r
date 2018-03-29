@@ -1241,7 +1241,14 @@ router.put('/change-business-status', function(req, res){
         function(text, callback){
             if(text){
                 delete text._id;
-                BusinessStatusLogs.insertMany(text, function(err, doc){
+                delete text.__v;
+                console.log(text);
+                const data = {
+                    business_id: text.business_id,
+                    status: text.status,
+                    updated_date: text.updated_date
+                }
+                BusinessStatusLogs.insertMany(data, function(err, doc){
                     if(err){
                         callback(err, null);
                     } else {
@@ -1253,7 +1260,14 @@ router.put('/change-business-status', function(req, res){
             }
         },
         function(text, callback){
-            BusinessStatus.insertMany(req.body, callback);
+            delete req.body._id;
+            console.log(req.body);
+            const data = {
+                business_id: req.body.business_id,
+                status: req.body.status,
+                updated_date: req.body.updated_date
+            }
+            BusinessStatus.insertMany(data, callback);
         }
     ], function(err, doc){
         if(err){
@@ -1268,11 +1282,11 @@ router.put('/change-business-status', function(req, res){
 
 
 function status_change(b_id, callback){
-
     BusinessStatus.findOne({updated_date:{ $lte: moment().format('MMMM Do YYYY, h:mm:ss a')}, business_id:b_id}, function(err1, doc1){
         if(err1){
             callback(err1, null);
         } else {
+            console.log('doc1'+doc1);
             if(doc1){
                 delete doc1._id;
                 BusinessStatusLogs.insertMany(doc1, function(err2, doc2){
@@ -1296,7 +1310,6 @@ function status_change(b_id, callback){
     
 
 }
-
 router.get('/get-visitor/analysis/:b_id', function(req, res){
     res.json({success: true, msg:{
         vistors_today: 10,
@@ -1326,7 +1339,20 @@ router.get('/get-categorieson-onsection/:section', function(req, res){
     })
 })
 
-// Business.remove({_id: '5a8a6355a75ae92b3c7ed842'}, function(err, doc){
-//     console.log(doc);
+// BusinessStatus.findOne({'updated_date':{ '$gte':moment().format('MMMM Do YYYY, h:mm:ss a')}}, function(err, doc){
+//     if(err){
+//         console.log(err);
+//     } else {
+//         console.log(doc);
+//     }
 // })
+// //console.log(moment().format('MMMM Do YYYY, h:mm:ss a').toDate());
+// console.log(moment.utc().format('MMMM Do YYYY, h:mm:ss a'));
+// // BusinessStatus.update({updated_date:{ $lte: moment().format('MMMM Do YYYY, h:mm:ss a')}}, {$set:{updated_date:moment().add(12, 'hour').format('MMMM Do YYYY, h:mm:ss a')}}, function(err, doc){
+// //     if(err){
+// //         console.log(err);
+// //     } else {
+// //         console.log(doc);
+// //     }
+// // })
 module.exports = router;

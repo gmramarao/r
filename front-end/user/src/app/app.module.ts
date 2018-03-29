@@ -85,7 +85,7 @@ const appRoutes: Routes = [
       component: CategoryComponent
   },
   {
-      path: 'sub-category',
+      path: 'sub-category/:sub_id',
       component: SubCategoryComponent
   },
   {
