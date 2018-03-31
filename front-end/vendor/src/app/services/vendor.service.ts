@@ -186,5 +186,8 @@ export class VendorService {
     getCategoriesonSection(section){
       return this.http.get(this.url+'vendor/get-categorieson-onsection/'+ section).map(res => res.json());
     }
+    // getBusinessStatus(b_id){
+    //   return this.http.get(this.url+'vendor/get-business-status/'+ b_id).map(res => res.json());
+    // }
 }
 

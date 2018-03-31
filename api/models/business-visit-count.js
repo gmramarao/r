@@ -13,7 +13,7 @@ BusinessVisitCountSchema = mongoose.Schema({
     last_visited_time: {
       type: String,
       required: false
-    }
+    },
 });
 
 BusinessVisitCountSchema = module.exports = mongoose.model('BusinessVisitCount', BusinessVisitCountSchema);

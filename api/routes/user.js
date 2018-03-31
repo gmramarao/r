@@ -554,36 +554,48 @@ router.post('/post-custom-order', upload.array('uploads[]', 12), (req, res) => {
 
 
 router.post('/post-visit-to-business', (req, res) => {
+    console.log(req.body);
     var user_id = req.body.user_id;
     var user_ip = req.body.user_ip;
     var business_id = req.body.business_id;
     var visited_time = moment().format('MMMM Do YYYY, h:mm:ss a');
+    var type = req.body.type;
+    var platform = req.body.platform;
     // Increase business visit count
-    BusinessVisitCount.find({
+    BusinessVisitCount.findOne({
         business_id: business_id
     }, (error, f) => {
         if (error) {
 
         } else {
-            if (f.length > 0) {
-                var num = parseInt(f[0].number_of_visits) + 1;
-                BusinessVisitCount.findOneAndUpdate({
-                    business_id: business_id
-                }, {
-                    number_of_visits: num,
-                    last_visited_time: visited_time
-                }, (errr, upd) => {
-                    if (errr) {
+            if (f) {
+                var new_date = moment().add(-1, 'hour').format('MMMM Do YYYY, h:mm:ss a');
+                console.log(new_date);
+                if(moment(new_date, 'MMMM Do YYYY, h:mm:ss a').isAfter(moment(f.last_visited_time, 'MMMM Do YYYY, h:mm:ss a'))){
+                    var num = parseInt(f.number_of_visits) + 1;
+                    BusinessVisitCount.findOneAndUpdate({
+                        business_id: business_id
+                    }, {
+                        number_of_visits: num,
+                        last_visited_time: visited_time
+                    }, (errr1, upd) => {
+                        if (errr) {
 
-                    } else {
-                        // Updated
-                    }
-                });
+                        } else {
+                            // Updated
+                        }
+                    });
+                } else {
+
+                }
+                
             } else {
                 let bc = new BusinessVisitCount({
                     business_id: business_id,
                     number_of_visits: 1,
-                    last_visited_time: visited_time
+                    last_visited_time: visited_time,
+                    type: type,
+                    platform: platform
                 });
                 bc.save((rre, sv) => {
                     if (rre) {
@@ -625,27 +637,38 @@ router.post('/post-visit-to-business', (req, res) => {
                     }
                 })
             } else {
+                var new_date = moment().add(-1, 'hour').format('MMMM Do YYYY, h:mm:ss a');
+                console.log(new_date);
                 var num = parseInt(found[0].number_of_visits) + 1;
+                if(moment(new_date, 'MMMM Do YYYY, h:mm:ss a').isAfter(moment(found[0].number_of_visits, 'MMMM Do YYYY, h:mm:ss a'))){
+                    BusinessVisit.findOneAndUpdate({
+                        user_id: user_id,
+                        business_id: business_id
+                    }, {
+                        number_of_visits: num,
+                        last_visited_time: visited_time
+                    }, (er, updated) => {
+                        if (er) {
+                            res.json({
+                                success: false,
+                                msg: er
+                            });
+                        } else {
+                            res.json({
+                                success: true,
+                                msg: updated
+                            });
+                        }
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        msg: 'not updated'
+                    });
+                }
+                
                 // Update the number of visits
-                BusinessVisit.findOneAndUpdate({
-                    user_id: user_id,
-                    business_id: business_id
-                }, {
-                    number_of_visits: num,
-                    last_visited_time: visited_time
-                }, (er, updated) => {
-                    if (er) {
-                        res.json({
-                            success: false,
-                            msg: er
-                        });
-                    } else {
-                        res.json({
-                            success: true,
-                            msg: updated
-                        });
-                    }
-                });
+                
             }
         }
     });

@@ -481,24 +481,7 @@ router.post('/post-business-status', (req, res) => {
     });
 });
 
-router.get('/get-business-status/:id', (req, res) => {
-    var id = req.params.id;
-    BusinessStatus.find({
-        business_id: id
-    }, (er, found) => {
-        if (er) {
-            res.json({
-                success: false,
-                msg: er
-            });
-        } else {
-            res.json({
-                success: true,
-                msg: found
-            });
-        }
-    });
-});
+
 
 // Post list
 router.post('/post-list', (req, res) => {
@@ -1172,7 +1155,7 @@ router.get('/get-custom-orders/:id', function(req, res){
 
 router.get('/get-businesses/:b_id', function (req, res) {
     var b_id = req.params.b_id;
-    status_change(req.params.b_id, function(err1, doc1){
+    status_find(req.params.b_id, function(err1, doc1){
         if(!err1){
             async.parallel([
                 function(callback){
@@ -1281,35 +1264,7 @@ router.put('/change-business-status', function(req, res){
 
 
 
-function status_change(b_id, callback){
-    BusinessStatus.findOne({updated_date:{ $lte: moment().format('MMMM Do YYYY, h:mm:ss a')}, business_id:b_id}, function(err1, doc1){
-        if(err1){
-            callback(err1, null);
-        } else {
-            console.log('doc1'+doc1);
-            if(doc1){
-                delete doc1._id;
-                BusinessStatusLogs.insertMany(doc1, function(err2, doc2){
-                    if(!err2){
-                        BusinessStatus.remove({updated_date:{ $lte: moment().format('MMMM Do YYYY, h:mm:ss a')}, business_id:b_id}, function(err3, doc){
-                            if(!err3){
-                                callback(null, true);
-                            } else {
-                                callback(err3, null);
-                            }
-                        })
-                    } else {
-                        callback(err2, null);
-                    }
-                })
-            } else {
-                callback(null, true);
-            }
-        }
-    })
-    
 
-}
 router.get('/get-visitor/analysis/:b_id', function(req, res){
     res.json({success: true, msg:{
         vistors_today: 10,
@@ -1339,20 +1294,107 @@ router.get('/get-categorieson-onsection/:section', function(req, res){
     })
 })
 
-// BusinessStatus.findOne({'updated_date':{ '$gte':moment().format('MMMM Do YYYY, h:mm:ss a')}}, function(err, doc){
-//     if(err){
-//         console.log(err);
-//     } else {
-//         console.log(doc);
-//     }
-// })
-// //console.log(moment().format('MMMM Do YYYY, h:mm:ss a').toDate());
-// console.log(moment.utc().format('MMMM Do YYYY, h:mm:ss a'));
-// // BusinessStatus.update({updated_date:{ $lte: moment().format('MMMM Do YYYY, h:mm:ss a')}}, {$set:{updated_date:moment().add(12, 'hour').format('MMMM Do YYYY, h:mm:ss a')}}, function(err, doc){
-// //     if(err){
-// //         console.log(err);
-// //     } else {
-// //         console.log(doc);
-// //     }
-// // })
+
+// Business status 
+router.get('/get-business-status/:b_id', (req, res) => {
+    var b_id = req.params.b_id;
+    status_find(b_id, function(err, doc){
+        if(!err){
+            if(doc){
+                res.json({success: true, msg:{status: doc.status}});
+            } else {
+                staus_find_on_dates(b_id, function(err1, doc1){
+                    if(!err1){
+                        res.json({success: true, msg:{status: doc1.status}});
+                    } else {
+                        res.json({success: false, msg:err1});
+                    }
+                })
+            }
+        } else {
+            res.json({success: false, msg:err});
+        }
+    })
+    // BusinessStatus.find({
+    //     business_id: id
+    // }, (er, found) => {
+    //     if (er) {
+    //         res.json({
+    //             success: false,
+    //             msg: er
+    //         });
+    //     } else {
+    //         res.json({
+    //             success: true,
+    //             msg: found
+    //         });
+    //     }
+    // });
+});
+
+function status_find(b_id, callback){
+    BusinessStatus.findOne({business_id:b_id}, function(err1, doc1){
+        if(err1){
+            callback(err1, null);
+        } else {
+            console.log('doc1'+doc1);
+            // console.log(moment(moment(new Date())).isAfter(moment(doc1.updated_date, 'MMMM Do YYYY, h:mm:ss a')))
+            if(doc1){
+                if(moment(moment(new Date())).isAfter(moment(doc1.updated_date, 'MMMM Do YYYY, h:mm:ss a'))){
+                    delete doc1._id;
+                    BusinessStatusLogs.insertMany(doc1, function(err2, doc2){
+                        if(!err2){
+                            BusinessStatus.remove({business_id:b_id}, function(err3, doc){
+                                if(!err3){
+                                    callback(null, false);
+                                } else {
+                                    callback(err3, null);
+                                }
+                            })
+                        } else {
+                            callback(err2, null);
+                        }
+                    })
+                } else {
+                    callback(null, doc1);
+                }
+                
+            } else {
+                callback(null, false);
+            }
+        }
+    })
+}
+
+function staus_find_on_dates(b_id, callback){
+    var today = moment();
+    today = today.format("dddd");
+    Business.findOne({_id: b_id}, function(err, doc){
+        if(!err){
+            if(doc.business.days && doc.business.days[today]){
+                const opening_time = doc.business.timings[today].opening;
+                const closing_time = doc.business.timings[today].closing;
+                const open = moment(opening_time, 'h:mma');
+                const close = moment(closing_time, 'h:mma');
+                const cur_time = moment(new Date());
+                console.log('current_time'+ cur_time);
+                if (cur_time.isAfter(open)) {
+                  if (cur_time.isBefore(close)) {
+                    callback(null, {status: 'open'});
+                  } else {
+                      callback(null, {status: 'close'});
+                  }
+                } else {
+                  callback(null, {status: 'close'});
+                }
+                
+              }else {
+                callback(null, {status: 'close'});
+              }
+            
+        } else {
+            callback(err, null);
+        }
+    })
+}
 module.exports = router;

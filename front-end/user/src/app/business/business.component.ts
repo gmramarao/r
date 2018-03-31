@@ -41,10 +41,12 @@ export class BusinessComponent implements OnInit {
       const visit_obj = {
         user_id: this.user_id,
         user_ip: data.ip,
-        business_id : this.business_id
+        user_type: ((this.user_id) ? 'registered' : 'un-registered'),
+        business_id : this.business_id,
+        platform: 'web'
       };
       this.userService.postVisitToBusiness(visit_obj).subscribe(res => {
-        // console.log(res);
+        console.log(res);
       });
     });
     const raw_user = localStorage.getItem('user');

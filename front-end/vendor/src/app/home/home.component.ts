@@ -51,77 +51,50 @@ export class HomeComponent implements OnInit {
         for( var i in this.vendor_businesses){
           const that = this;
           (function(i) {
-            that.vendorService.getBusinessStatus(that.vendor_businesses[i]._id).subscribe(stat => {
-            if (stat.success && stat.msg[0]) {
-               that.vendor_businesses[i].status = stat.msg[0] ?  stat.msg[0].status: '';
-            } else {
-              if (that.vendor_businesses[i].business.days && that.vendor_businesses[i].business.days[that.today]) {
-                // Today shop is open
-                // Check for time
-                const opening_time = that.vendor_businesses[i].business.timings[that.today].opening;
-                const closing_time = that.vendor_businesses[i].business.timings[that.today].closing;
-                const open = moment(opening_time, 'h:mma');
-                const close = moment(closing_time, 'h:mma');
-                const cur_time = moment(new Date());
-                let status;
-                if (cur_time.isAfter(open)) {
-                  if (cur_time.isBefore(close)) {
-                    that.vendor_businesses[i].status = 'open';
-                  } else {
-                    that.vendor_businesses[i].status = 'close';
-                  }
-                } else {
-                  that.vendor_businesses[i].status = 'close';
-                }
-                console.log(that.vendor_businesses[i].status);
-              }else {
-                // closed
+            that.vendorService.getBusinessStatus(that.vendor_businesses[i]._id).subscribe((res)=>{
+              console.log(res);
+              if(res.success){
+                that.vendor_businesses[i].status = res.msg.status;
+              } else {
                 that.vendor_businesses[i].status = 'close';
               }
-            }
+            })
+          //   that.vendorService.getBusinessStatus(that.vendor_businesses[i]._id).subscribe(stat => {
+          //     console.log(stat);
+          //   if (stat.success && stat.msg[0]) {
+          //      that.vendor_businesses[i].status = stat.msg[0] ?  stat.msg[0].status: '';
+          //   } else {
+          //     if (that.vendor_businesses[i].business.days && that.vendor_businesses[i].business.days[that.today]) {
+          //       // Today shop is open
+          //       // Check for time
+          //       const opening_time = that.vendor_businesses[i].business.timings[that.today].opening;
+          //       const closing_time = that.vendor_businesses[i].business.timings[that.today].closing;
+          //       const open = moment(opening_time, 'h:mma');
+          //       const close = moment(closing_time, 'h:mma');
+          //       console.log(close);
+          //       const cur_time = moment(new Date());
+          //       let status;
+          //       if (cur_time.isAfter(open)) {
+          //         if (cur_time.isBefore(close)) {
+          //           that.vendor_businesses[i].status = 'open';
+          //         } else {
+          //           that.vendor_businesses[i].status = 'close';
+          //         }
+          //       } else {
+          //         that.vendor_businesses[i].status = 'close';
+          //       }
+          //       console.log(that.vendor_businesses[i].status);
+          //     }else {
+          //       // closed
+          //       that.vendor_businesses[i].status = 'close';
+          //     }
+          //   }
             
-          });
+          // });
           
         })(i);
         }
-        // this.vendor_businesses.forEach(element => {
-        //   // element.business.days.forEach(day => {
-        //   //   console.log(day);
-        //   // });
-        //   // Check of object exists
-        //   this.vendorService.getBusinessStatus(element._id).subscribe(stat => {
-        //     console.log(stat);
-        //     if (stat.success) {
-        //       // alert(stat.msg[0]);
-        //       element.status = stat.msg[0] ?  stat.msg[0].status: '';
-        //     }
-        //   });
-        //   if (element.business.days && element.business.days[this.today]) {
-        //     // Today shop is open
-        //     // Check for time
-        //     const opening_time = element.business.timings[this.today].opening;
-        //     const closing_time = element.business.timings[this.today].closing;
-        //     const open = moment(opening_time, 'h:mma');
-        //     const close = moment(closing_time, 'h:mma');
-        //     const cur_time = moment(new Date());
-        //     let status;
-        //     console.log(cur_time.isAfter(open));
-        //     console.log(cur_time.isBefore(close));
-        //     if (cur_time.isAfter(open)) {
-        //       if (cur_time.isBefore(close)) {
-        //         element.status = 'open';
-        //       } else {
-        //         element.status = 'close';
-        //       }
-        //     } else {
-        //       element.status = 'close';
-        //     }
-        //     console.log(element.status);
-        //   }else {
-        //     // closed
-        //     element.status = 'close';
-        //   }
-        // });
+
         this.business_number = this.vendor_businesses.length;
         console.log(this.vendor_businesses);
       }else {
@@ -183,7 +156,7 @@ export class HomeComponent implements OnInit {
           // element.business.days.forEach(day => {
           //   console.log(day);
           // });
-          console.log(element.business.days['monday']);
+          // console.log(element.business.days['monday']);
           // Check of object exists
           this.vendorService.getBusinessStatus(element._id).subscribe(stat => {
             console.log(stat);

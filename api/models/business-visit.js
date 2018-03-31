@@ -21,6 +21,14 @@ BusinessVisitSchema = mongoose.Schema({
     last_visited_time: {
       type: String,
       required: false
+    },
+    user_type: {
+      type: String,
+      required: true
+    },
+    platform: {
+      type: String,
+      required: true
     }
 });
 
